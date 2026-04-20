@@ -1,0 +1,7 @@
+{
+  "name": "@asolaria/fp-infra-session-1-fib-l03",
+  "version": "1.0.0",
+  "description": "FP-INFRA session-1 acer 3rd pick · FIB-L03 · scheduling · classifier-gulp-wire-1500",
+  "type": "commonjs",
+  "main": "src/classifier-gulp-wire.js"
+}
