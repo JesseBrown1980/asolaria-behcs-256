@@ -1,0 +1,8 @@
+{
+  "name": "@asolaria/app-qdd",
+  "version": "0.0.1",
+  "description": "Product-X app · QDD surface (scaffold only · name preserved generic for public repo)",
+  "type": "commonjs",
+  "main": "index.js",
+  "dependencies": { "@asolaria/app-shared": "0.0.1" }
+}
