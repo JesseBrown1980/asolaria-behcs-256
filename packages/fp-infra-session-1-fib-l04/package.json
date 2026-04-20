@@ -1,0 +1,7 @@
+{
+  "name": "@asolaria/fp-infra-session-1-fib-l04",
+  "version": "1.0.0",
+  "description": "FP-INFRA session-1 acer 4th pick · FIB-L04 · security · halt-word-audit-0 (zero-false-positive halt-canon auditor)",
+  "type": "commonjs",
+  "main": "src/halt-word-audit.js"
+}
