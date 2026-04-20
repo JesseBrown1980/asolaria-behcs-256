@@ -1,0 +1,18 @@
+{
+  "name": "@asolaria/pid-targeted-kick-supervisor",
+  "version": "1.0.0",
+  "description": "Reusable multi-node kick supervisor: adb input text (falcon/aether) + /type (liris) + acer-local non-intrusive pid-targeted verify + bus fire with liris-timeout retry. Enforces feedback_never_steal_foreground + feedback_reprobe_pid_before_kick.",
+  "type": "module",
+  "main": "src/index.mjs",
+  "bin": {
+    "kick": "bin/kick.mjs",
+    "kick-supervisor": "bin/daemon.mjs"
+  },
+  "exports": {
+    ".": "./src/index.mjs",
+    "./adb": "./src/adb-kick.mjs",
+    "./liris": "./src/liris-kick.mjs",
+    "./acer-local": "./src/acer-local-verify.mjs",
+    "./bus": "./src/bus-fire-with-retry.mjs"
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "name": "@asolaria/gulp-http-bridge",
+  "version": "0.1.0",
+  "description": "Acer mirror: HTTP bridge for BEHCS gulp collector (status, patterns, ledger-tail, archive). Closes Liris WAVE-NERVOUS P1 gap so bus-only clients can pull collector state without fs access.",
+  "type": "module",
+  "main": "src/daemon.mjs",
+  "bin": {
+    "gulp-http-bridge-daemon": "src/daemon.mjs"
+  },
+  "scripts": {
+    "start": "node src/daemon.mjs",
+    "test": "node tests/smoke.test.mjs"
+  },
+  "dependencies": {},
+  "behcs256": {
+    "d11_level": "ASSUMED",
+    "wave": "WAVE-NERVOUS",
+    "section": "P1",
+    "role": "acer-mirror",
+    "source_file": "tools/behcs/behcs-gulp-runtime.js",
+    "emits": "EVT-WAVE-NERVOUS-ACER-MIRROR-ONLINE",
+    "port": 4923,
+    "bind_default": "127.0.0.1",
+    "bind_lan_env": "GULP_HTTP_BIND_LAN",
+    "lan_allowlist": ["192.168.100.2"]
+  }
+}

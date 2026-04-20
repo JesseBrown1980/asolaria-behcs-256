@@ -1,0 +1,8 @@
+{
+  "name": "@asolaria/fp-asi-benchmark",
+  "version": "1.0.0",
+  "description": "FP-ASI-2026-04-20 falsification protocol runner · 6 gates to prove/refute continuous-self-improvement claim",
+  "type": "module",
+  "main": "src/runner.mjs",
+  "scripts": { "test": "node tests/smoke.test.mjs" }
+}

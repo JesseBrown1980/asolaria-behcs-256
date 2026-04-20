@@ -1,0 +1,11 @@
+{
+  "name": "@asolaria/new-applicant-onboarding-supervisor",
+  "version": "1.0.0",
+  "description": "Onboards new applicant nodes into the federation · builds FRESH bundle from live packages/ · auto-detects transport (adb device, SMB share, bus-only, remote-control bridge) · pushes bundle · kicks for extraction · awaits IMPORT-COMPLETE verb. Every new applicant receives current-version toolkit instantly.",
+  "type": "module",
+  "main": "src/index.mjs",
+  "bin": {
+    "onboard": "bin/onboard.mjs",
+    "onboard-supervisor": "bin/daemon.mjs"
+  }
+}

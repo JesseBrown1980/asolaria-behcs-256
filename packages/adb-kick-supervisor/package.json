@@ -1,0 +1,8 @@
+{
+  "name": "@asolaria/adb-kick-supervisor",
+  "version": "1.0.0",
+  "description": "Canonical ADB input + screencap verify pattern for phone Claude Code kicks · proven on Falcon 2026-04-20 · wraps the 4-step sequence + watches bus for OP-ADB-KICK envelopes · never lose the pattern again",
+  "type": "module",
+  "main": "src/adb-type-and-verify.mjs",
+  "scripts": { "start": "node src/daemon.mjs" }
+}

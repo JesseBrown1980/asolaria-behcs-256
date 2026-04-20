@@ -1,0 +1,11 @@
+{
+  "name": "@asolaria/remote-control-claude-supervisor",
+  "version": "1.0.0",
+  "description": "Whiteroomed supervisor for the aether-remote-control HTTP bridge (:8765). Wraps /health /proc /exec /write /read /ls with bearer auth + bus-envelope emission on every call. Reusable for any node that runs a compatible bridge.",
+  "type": "module",
+  "main": "src/index.mjs",
+  "bin": {
+    "rc": "bin/rc.mjs",
+    "rc-supervisor": "bin/daemon.mjs"
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "name": "@asolaria/cross-platform-spawn",
+  "version": "1.0.0",
+  "description": "Tiny cross-platform spawn helper fixing the Windows .cmd/.bat ENOENT bug for child_process.spawn",
+  "type": "module",
+  "main": "src/index.mjs",
+  "exports": {
+    ".": "./src/index.mjs"
+  },
+  "scripts": {
+    "test": "node tests/resolve.test.mjs"
+  },
+  "keywords": [
+    "spawn",
+    "cross-platform",
+    "windows",
+    "cmd",
+    "bat",
+    "enoent",
+    "child_process"
+  ],
+  "author": "Asolaria",
+  "license": "MIT"
+}

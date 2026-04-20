@@ -1,0 +1,8 @@
+{
+  "name": "@asolaria/stage-to-actual-converter",
+  "version": "1.0.0",
+  "description": "STAGE→ACTUAL classifier wired through OmniGNN + reverse-gain-GNN + hookwall + Shannon + whiteroom + supervisor-PIDs. Separates speculative candidates from validated truth via dual-GNN agreement gate.",
+  "type": "module",
+  "main": "src/converter.mjs",
+  "scripts": { "test": "node tests/smoke.test.mjs" }
+}

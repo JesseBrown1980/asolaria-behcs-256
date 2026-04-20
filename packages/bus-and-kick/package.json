@@ -1,0 +1,8 @@
+{
+  "name": "@asolaria/bus-and-kick",
+  "version": "1.0.0",
+  "description": "acer mirror of Liris's PROF-BUS-AND-KICK-SUPERVISOR primitive · hilbert room 29 · canonizes: heartbeat=bus-only · actionable=post-and-kick combo",
+  "type": "module",
+  "main": "src/primitive.mjs",
+  "scripts": { "test": "node tests/smoke.test.mjs" }
+}

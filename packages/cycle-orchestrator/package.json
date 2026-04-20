@@ -1,0 +1,13 @@
+{
+  "name": "@asolaria/cycle-orchestrator",
+  "version": "2.0.0",
+  "description": "cycle-orchestrator-v2 · 5 ratified upgrades from 100K UNISON-sealed fanout (variants=9df1b413… spec=c6964e27…)",
+  "type": "module",
+  "main": "src/index.mjs",
+  "scripts": {
+    "start": "node src/index.mjs",
+    "start:background": "node src/index.mjs --background",
+    "test": "node tests/smoke.test.mjs"
+  },
+  "dependencies": {}
+}

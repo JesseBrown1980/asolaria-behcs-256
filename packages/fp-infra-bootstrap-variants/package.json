@@ -1,0 +1,7 @@
+{
+  "name": "@asolaria/fp-infra-bootstrap-variants",
+  "version": "0.1.0-acer-proposal",
+  "description": "T04 · acer's proposed 5 frozen-task variants for FP-INFRA-BOOTSTRAP falsification · merge with liris's 5 tasks on table to form 10-variant bilateral set",
+  "type": "module",
+  "main": "src/variants.mjs"
+}

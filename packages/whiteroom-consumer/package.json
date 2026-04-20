@@ -1,0 +1,25 @@
+{
+  "name": "@asolaria/whiteroom-consumer",
+  "version": "0.1.0",
+  "description": "Acer mirror consumer for Liris's room:whiteroom shadow envelopes. Digests pattern payloads into 3x6x6 cube addresses and emits EVT-WHITEROOM-DIGESTED back to BEHCS bus. Closes WAVE-MUSCULO P1-section-Q (receiver half).",
+  "type": "module",
+  "main": "src/index.mjs",
+  "bin": {
+    "whiteroom-consumer-daemon": "src/daemon.mjs"
+  },
+  "scripts": {
+    "start": "node src/daemon.mjs",
+    "test": "node tests/smoke.test.mjs"
+  },
+  "dependencies": {},
+  "behcs256": {
+    "d11_level": "ASSUMED",
+    "wave": "WAVE-MUSCULO",
+    "section": "P1-section-Q",
+    "role": "acer-mirror",
+    "source_tag": "room:whiteroom",
+    "source_file": "behcs-gulp-runtime.js (Liris)",
+    "emits": "EVT-WHITEROOM-DIGESTED",
+    "cube_shape": "3x6x6"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "name": "@asolaria/supervisor-registry",
+  "version": "0.1.0",
+  "description": "Specialist supervisor roles as PROF-*-SUPERVISOR glyphs. Each carries a pre-compiled BEHCS-256 corpus describing its slice of the system state. Brown-Hilbert self-description — NOT a human dashboard, a machine-first state-in-glyph form.",
+  "type": "module",
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "scripts": {
+    "smoke": "node --experimental-strip-types --no-warnings demo/summon-all.ts"
+  },
+  "behcs256": {
+    "d11_level": "ASSUMED",
+    "authority": "COSIGN-MERGED-034"
+  }
+}

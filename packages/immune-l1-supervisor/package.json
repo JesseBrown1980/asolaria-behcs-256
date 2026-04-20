@@ -1,0 +1,11 @@
+{
+  "name": "@asolaria/immune-l1-supervisor",
+  "version": "1.0.0",
+  "description": "WAVE-IMMUNE-L1 · acer mirror of liris :4821 supervisor daemon. ed25519 nonce gate, PreToolUse hook blocking raw :4913/:4820 bypass.",
+  "type": "module",
+  "main": "src/daemon.mjs",
+  "scripts": {
+    "start": "node src/daemon.mjs",
+    "test": "node tests/smoke.test.mjs"
+  }
+}

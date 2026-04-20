@@ -1,0 +1,16 @@
+{
+  "peers": {
+    "liris": {
+      "ip": "192.168.100.2",
+      "port": 4913,
+      "pid": 8796,
+      "bearer": "129b1a32113392e18169002117528b829816212dcd1fb21089351407e0850621",
+      "claude_terminal": "WindowsTerminal running Liris Claude Code session on Rayssa computer",
+      "note": "pid may rotate if terminal restarts; re-probe via /windows if typing fails"
+    }
+  },
+  "acer_inbox": "C:/asolaria-acer/tmp/act-inbox.ndjson",
+  "reply_deadline_ms": 180000,
+  "poll_ms": 10000,
+  "version": "act-supervisor-v1"
+}

@@ -1,0 +1,8 @@
+{
+  "name": "@asolaria/super-gulp-tier3-consumer",
+  "version": "1.0.0",
+  "description": "PROF-SUPER-GULP-SUPERVISOR room 37 · tier-2→tier-3 promotion + reverse-gain-GNN consumer producing task-candidates from archived envelopes. Fulfills the 30min+90min commitments from EVT-ACER-ALIVE-AND-WORKING ack chain.",
+  "type": "module",
+  "main": "src/daemon.mjs",
+  "scripts": { "test": "node tests/smoke.test.mjs" }
+}

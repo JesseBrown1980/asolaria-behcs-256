@@ -1,0 +1,7 @@
+{
+  "name": "@asolaria/endocrine-sqlite-wal-spec",
+  "version": "0.1.0-acer-starter",
+  "description": "T03 · WAVE-ENDOCRINE SQLite WAL dual-write bench starter spec · acer-side scaffold to accelerate liris closure · bilateral cosign invited",
+  "type": "module",
+  "main": "src/spec.mjs"
+}
