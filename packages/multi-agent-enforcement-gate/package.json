@@ -1,0 +1,7 @@
+{
+  "name": "@asolaria/multi-agent-enforcement-gate",
+  "version": "1.0.0",
+  "description": "SMP v5+ tasks CANNOT run by a single agent. This gate refuses any completion envelope that lacks ≥2 independent agent signatures. Frozen-polymorphism extension: the 'never scum, never solo' rule Liris surfaced 2026-04-20.",
+  "type": "module",
+  "main": "src/index.mjs"
+}

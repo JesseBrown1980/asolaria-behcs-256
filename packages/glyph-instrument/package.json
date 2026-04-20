@@ -1,0 +1,7 @@
+{
+  "name": "@asolaria/glyph-instrument",
+  "version": "1.0.0",
+  "description": "Shared helper · every supervisor op attaches BEHCS-256 hilbertAddress glyph (D1 actor D2 verb D_room target) to logs + bus envelopes. Makes every supervisor coordinate via the glyph system.",
+  "type": "module",
+  "main": "src/index.mjs"
+}

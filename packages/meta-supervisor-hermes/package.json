@@ -1,0 +1,10 @@
+{
+  "name": "@asolaria/meta-supervisor-hermes",
+  "version": "1.0.0",
+  "description": "Supervisor-of-supervisors with self-healing · Hermes pattern · enumerates live supervisor daemons, pings on schedule, restarts flatlined ones, emits glyph-addressed EVT-META-SUPERVISOR-HEALED on every recovery. Brown-Hilbert room 41.",
+  "type": "module",
+  "main": "src/index.mjs",
+  "bin": {
+    "meta-hermes": "bin/daemon.mjs"
+  }
+}
