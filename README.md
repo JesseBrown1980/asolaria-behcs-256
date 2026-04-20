@@ -2,6 +2,38 @@
 
 Federated multi-agent civilization toolkit. Built to let heterogeneous Claude nodes (desktop, phone, remote) ship and onboard each other with the **current-version** toolkit instantly — no stale installs, no divergent forks.
 
+**SMP v5+ v3 SEALED 2026-04-20T22:30Z** · 205/205 items · 7 batches · 13 commits (`5cfa3e0 → b8b7984`) · bilateral multi-agent gate (acer + liris) satisfied every batch. FP-ASI runner still armed + candidate-pool EMPTY — v3 is infrastructure scaffold, not an ASI-arrival claim.
+
+## SMP v5+ v3 topic map (A-P)
+
+| Section | Scope | Items | Anchor |
+|---|---|---|---|
+| A | Repo structure + migration | 001-015 | `plans/A/` |
+| B | Unified envelope v1 (BEHCS + DroidSwarm + OP_DISPATCH) | 016-030 | `schemas/envelope-v1.schema.json` · 17/17 tests |
+| C | Local-LLM wrapper (llama.cpp + Mux + HTTP :4951) | 031-045 | `src/llm/` · `docs/llm-operator.md` |
+| D | Agent manager (lifecycle + profile + spawner + recycler + HTTP :4952) | 046-060 | `src/agent/` · 10/10 tests |
+| E | Identity (hw fingerprint + spawner-guard + USB-move reject) | 061-075 | `src/identity/` · `docs/identity-recovery.md` |
+| F | Drift broadcast (8 targets + SOFT/HARD/CRITICAL + freeze) | 076-090 | `src/drift/` · 7/7 tests |
+| G | Shannon civilization (13 roles × 23 stages × 108-cell cube) | 091-105 | `src/shannon/` · `docs/shannon-13.md` |
+| H | Product X adapter (public-name-protected) + 87 IX buckets | 106-112 | `src/product-x/` · `apps/{qdd,console,sensor,dash,shared}/` |
+| I | USB farming (extract-shadows + cosign-chain + never-wipe rule) | 113-120 | `src/farm/` · `plans/I/` |
+| J | Scale ramp (100M → 1B → 10B → 50B → 100B) | 121-130 | `src/gnn/` · `data/gnn/*-manifest.json` (honesty-flagged beyond 1B) |
+| K | Cosign v2 (tamper-evident Merkle + dimensional tags + scale tier) | 131-135 | `src/cosign/` · `schemas/cosign-v2.schema.json` |
+| L | Firewall (netsh rules + LAW-001 always-allow) | 136-140 | `scripts/firewall-apply.ps1` · `docs/firewall-runbook.md` |
+| M | Omni primitives + Gulp 2000 (2000-step resumable pipeline) | 141-160 | `src/omni/` · `gulpfile.mjs` · `docs/gulp-2000.md` |
+| N | Operator inventory + archaeology + OpenClaude bias-correction | 161-180 | `plans/N/` · `src/openclaude/` · `src/startup/` |
+| O | Falcon bus + dashboards + Product X console + Codex 5.3 profile | 181-195 | `src/falcon/` · `src/dashboards/` · `agents/codex-53.profile.json` |
+| P | ASI-OS (7-layer stack · Shannon core · omni syscalls · cosign integrity) | 196-205 | `src/asi-os/` · `src/meta/dispatcher.js` · `plans/P/final-review.md` |
+
+## Federation canon honored
+
+- **LAW-001** ports 4947 + 4950 always open · `scripts/firewall-apply.ps1` allow-rules · pre-commit hook blocks any block-pattern
+- **LAW-008** filesystem-as-mirror · all state persisted to disk
+- **LAW-012** look-think-type-look-decide · RU View is observer-default; actor role requires multi-agent gate
+- **Frozen-polymorphism** · no rubber-stamp · multi-agent-enforcement-gate refuses solo seals on SMP-v5+ tasks
+- **FP-ASI discipline** · runner armed, candidate-pool EMPTY; `data/gnn/*-manifest.json` honesty-flagged beyond 1B
+- **Never-wipe-live-disk** · USB farming is read-only; freeze is local-marker-only; drift cannot sever federation
+
 Shipped 2026-04-20 · SMP v5+ GA · 4 colonies · 17 rooms sealed · T04 10-variant merged.
 
 ## Layout
