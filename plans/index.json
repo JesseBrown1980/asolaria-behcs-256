@@ -1,0 +1,37 @@
+{
+  "smp_v5_plus_item": "009",
+  "section": "A",
+  "task": "Enumerate all plan files",
+  "last_updated": "2026-04-20T21:05:00Z",
+  "plans": {
+    "smp-v5-plus/SUPER-MASTER-PLAN-v3-200-items.md": {
+      "item": "root-canonical",
+      "source": "liris-USB via LAW-001 bus 2026-04-20T20:56Z",
+      "sha256": "74ff910692c7efaf9cd86c016d62f4776d35829063d308bc93d256d4631b991d",
+      "bytes": 24941,
+      "items": 205,
+      "sections": "A-P"
+    },
+    "A/inventory.json":       { "item": "001", "agent": "EXP", "deps": [],          "priority": "P0" },
+    "A/namespace-map.md":     { "item": "002", "agent": "PLN", "deps": [1],         "priority": "P0" },
+    "A/dedupe.json":          { "item": "003", "agent": "EXP", "deps": [1],         "priority": "P1", "status": "deferred-needs-fs-scan" },
+    "A/port-audit.md":        { "item": "007", "agent": "REV", "deps": [],          "priority": "P0" }
+  },
+  "pending_sections_preview": {
+    "B": "LAW-001 transport (items 016-030)",
+    "C": "Supervisors (items 031-060)",
+    "D": "Bus + kick (items 061-075)",
+    "E": "Gulp/tier-1-2-3 pipeline (items 076-090)",
+    "F": "Shannon civ (items 091-105)",
+    "G": "GNN sidecar (items 106-115)",
+    "H": "Hermes absorption (items 116-125)",
+    "I": "Immune + crypto (items 126-135)",
+    "J": "Mirrors + absorption (items 136-142)",
+    "K": "Omni primitives (items 143-155)",
+    "L": "Cycle orch upgrades (items 156-165)",
+    "M": "Dashboard (items 166-170)",
+    "N": "Onboarding + registry (items 171-180)",
+    "O": "Falsification (FP-ASI + FP-INFRA) (items 181-195)",
+    "P": "ASI-OS + Instruct-KR (items 196-205)"
+  }
+}

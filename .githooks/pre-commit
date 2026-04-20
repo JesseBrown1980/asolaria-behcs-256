@@ -1,0 +1,58 @@
+#!/usr/bin/env bash
+# SMP v5+ Section A · Item 010 · pre-commit hook
+# Blocks commits that (a) leak secrets, (b) attempt to close LAW-001 ports 4947/4950
+
+set -euo pipefail
+
+FAIL=0
+
+# --- Secret substrings (regex). Extend as needed ---
+SECRET_PATTERNS=(
+  'BEGIN (RSA|OPENSSH|EC|PRIVATE|ENCRYPTED) KEY'
+  'ghp_[A-Za-z0-9]{20,}'
+  'AKIA[0-9A-Z]{16,}'
+  'AIza[0-9A-Za-z\-_]{30,}'
+  'xox[baprs]-[0-9a-zA-Z\-]{10,}'
+  'eyJ[A-Za-z0-9_\-]{15,}\.eyJ[A-Za-z0-9_\-]{15,}'
+  '-----BEGIN (CERTIFICATE|RSA PRIVATE KEY|OPENSSH PRIVATE KEY)-----'
+)
+
+# --- Port-blocking patterns (LAW-001 defense) ---
+PORT_BLOCK_PATTERNS=(
+  'Block-NetFirewallRule.*(4947|4950)'
+  'iptables -A INPUT .*(4947|4950).*DROP'
+  'netsh advfirewall .*block.*(4947|4950)'
+  'ufw deny .*(4947|4950)'
+)
+
+STAGED=$(git diff --cached --name-only --diff-filter=ACM)
+if [ -z "$STAGED" ]; then exit 0; fi
+
+for f in $STAGED; do
+  if [ ! -f "$f" ]; then continue; fi
+  case "$f" in
+    *.pt|*.png|*.jpg|*.jpeg|*.gz|*.zip|*.wasm|*.traineddata|*.pdf) continue ;;
+  esac
+
+  for pat in "${SECRET_PATTERNS[@]}"; do
+    if grep -Eq "$pat" "$f" 2>/dev/null; then
+      echo "REJECT: secret-pattern detected in $f (pattern: $pat)"
+      FAIL=1
+    fi
+  done
+
+  for pat in "${PORT_BLOCK_PATTERNS[@]}"; do
+    if grep -Eq "$pat" "$f" 2>/dev/null; then
+      echo "REJECT: LAW-001 port-block attempt in $f (pattern: $pat)"
+      FAIL=1
+    fi
+  done
+done
+
+if [ "$FAIL" -eq 1 ]; then
+  echo ""
+  echo "Pre-commit failed. Fix the flagged files or pass --no-verify only with operator authorization."
+  exit 1
+fi
+
+exit 0
