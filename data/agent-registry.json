@@ -1,0 +1,20 @@
+{
+  "smp_v5_plus_item": "056",
+  "registry_version": "1.0.0",
+  "last_updated": "2026-04-20T21:25:00Z",
+  "agents": {},
+  "format_example": {
+    "<named_agent>": {
+      "role": "PLN|EXP|BLD|REV|CHAIR|SUPERVISOR",
+      "state": "SPAWN|RUN|PAUSE|RECYCLE|CLOSE",
+      "pid": 0,
+      "device_binding": "acer|liris|falcon|aether|any",
+      "room": 0,
+      "colony_prefix": "COL-ACER|COL-LIRIS|COL-FELIPE|...",
+      "spawned_at": "<iso>",
+      "last_transition": "<iso>",
+      "tokens_today": 0,
+      "daily_usd": 0
+    }
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "smp_v5_plus_item": "041",
+  "policy": "quarantine all LLM model binaries under signed-model/; repo contains manifest only (models .gitignored)",
+  "models": {},
+  "format_example": {
+    "<model-id>": {
+      "url": "https://huggingface.co/...",
+      "filename": "llama-3.1-8b-instruct-q4_k_m.gguf",
+      "sha256": "<fill-on-download>",
+      "bytes": 0,
+      "notes": "Q4_K_M quant · 8192 ctx · verified by llama.cpp"
+    }
+  },
+  "verify_cmd": "certutil -hashfile signed-model/<filename> SHA256",
+  "last_updated": "2026-04-20T21:20:00Z"
+}

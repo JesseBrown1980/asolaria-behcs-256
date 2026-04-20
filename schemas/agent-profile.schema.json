@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/JesseBrown1980/asolaria-behcs-256/schemas/agent-profile.schema.json",
+  "title": "Agent Profile",
+  "type": "object",
+  "required": ["named_agent", "role", "tools", "limits"],
+  "properties": {
+    "named_agent": { "type": "string", "minLength": 3 },
+    "role": { "type": "string", "enum": ["PLN", "EXP", "BLD", "REV", "CHAIR", "SUPERVISOR"] },
+    "tools": { "type": "array", "items": { "type": "string" } },
+    "model_tier": { "type": "string", "enum": ["7B", "13B", "cloud-opus", "cloud-sonnet", "cloud-haiku"] },
+    "room": { "type": "integer", "minimum": 24, "maximum": 64 },
+    "colony_prefix": { "type": "string", "pattern": "^COL-[A-Z]+$" },
+    "device_binding": { "type": "string", "description": "canonical device/node name e.g. acer/falcon/aether/liris" },
+    "limits": {
+      "type": "object",
+      "properties": {
+        "max_concurrent": { "type": "integer", "minimum": 1, "maximum": 64 },
+        "max_tokens_per_request": { "type": "integer" },
+        "max_daily_tokens": { "type": "integer" },
+        "wall_timeout_seconds": { "type": "integer" }
+      },
+      "additionalProperties": false
+    },
+    "budget": {
+      "type": "object",
+      "properties": {
+        "daily_usd_cap": { "type": "number" }
+      }
+    }
+  },
+  "additionalProperties": true
+}
