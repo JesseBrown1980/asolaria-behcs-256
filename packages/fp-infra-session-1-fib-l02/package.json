@@ -1,0 +1,7 @@
+{
+  "name": "@asolaria/fp-infra-session-1-fib-l02",
+  "version": "1.0.0",
+  "description": "FP-INFRA session-1 acer 2nd data point · FIB-L02 · network · supervised-kick-roundtrip-pid-target · t-to-green measurement",
+  "type": "commonjs",
+  "main": "src/supervised-kick-roundtrip.js"
+}
