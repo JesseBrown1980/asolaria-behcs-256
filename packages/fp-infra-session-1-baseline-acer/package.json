@@ -1,0 +1,7 @@
+{
+  "name": "@asolaria/fp-infra-session-1-baseline-acer",
+  "version": "1.0.0",
+  "description": "FP-INFRA-BOOTSTRAP session-1 baseline · acer pick FIB-L01 · storage · ledger-rotate-gzip-30m · clock T0 2026-04-20T22:35 · t-to-green measurement",
+  "type": "commonjs",
+  "main": "src/ledger-rotate-gzip-30m.js"
+}
