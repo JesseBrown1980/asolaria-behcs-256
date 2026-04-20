@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/JesseBrown1980/asolaria-behcs-256/schemas/drift-envelope.schema.json",
+  "title": "Drift Announce Envelope",
+  "type": "object",
+  "allOf": [
+    { "$ref": "./envelope-v1.schema.json" },
+    {
+      "properties": {
+        "kind": { "type": "string", "pattern": "^drift\\.(announce|halt|recover)$" },
+        "body": {
+          "type": "object",
+          "required": ["class", "hw_pid", "expected_fp", "actual_fp"],
+          "properties": {
+            "class":    { "type": "string", "enum": ["NONE","SOFT","HARD","CRITICAL"] },
+            "hw_pid":   { "type": "string" },
+            "expected_fp": { "type": "string" },
+            "actual_fp":   { "type": "string" },
+            "surface":  { "type": "string" },
+            "ts_detected": { "type": "string", "format": "date-time" }
+          }
+        }
+      }
+    }
+  ]
+}

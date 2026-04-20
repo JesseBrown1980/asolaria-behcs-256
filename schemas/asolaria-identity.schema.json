@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/JesseBrown1980/asolaria-behcs-256/schemas/asolaria-identity.schema.json",
+  "title": "Asolaria Identity",
+  "type": "object",
+  "required": ["hw_pid", "surface", "stable_tuple", "shape_fingerprint"],
+  "properties": {
+    "hw_pid":       { "type": "string", "pattern": "^PID-" },
+    "surface":      { "type": "string", "description": "canonical surface name: acer-desktop, liris-rayssa, falcon-s24fe, aether-a06, etc" },
+    "parent":       { "type": ["string", "null"] },
+    "stable_tuple": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 8,
+      "items": { "type": "string" },
+      "description": "ordered list of hardware-derived stable identifiers (cpu_id, mobo_uuid, disk_serial, mac)"
+    },
+    "shape_fingerprint": { "type": "string", "pattern": "^sha256:" },
+    "provenance": {
+      "type": "object",
+      "properties": {
+        "origin":    { "type": "string" },
+        "ts":        { "type": "string", "format": "date-time" },
+        "parent_pid": { "type": ["string", "null"] }
+      }
+    },
+    "copy_vs_original": { "type": "string", "enum": ["original", "copy", "unknown"] }
+  },
+  "additionalProperties": true
+}
