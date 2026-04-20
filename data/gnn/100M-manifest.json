@@ -1,0 +1,9 @@
+{
+  "smp_v5_plus_item": "125",
+  "scale": "100M",
+  "N": 100000000,
+  "status": "STUB · produced by scaffold, NOT a real 100M-agent measurement",
+  "note": "Actual 100M run requires hardware capacity. This is the canonical manifest shape.",
+  "placeholder_composite_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+  "honesty_flag": "UNVERIFIED · per feedback_300B_gnn_validation_was_false · don't claim unless manifest matches bilateral sha"
+}

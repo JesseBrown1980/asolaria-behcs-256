@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/JesseBrown1980/asolaria-behcs-256/schemas/cosign-v2.schema.json",
+  "title": "Cosign Chain v2 Entry",
+  "type": "object",
+  "required": ["ts", "envelope_id", "sha256", "agents", "chain_hash"],
+  "properties": {
+    "ts":          { "type": "string", "format": "date-time" },
+    "envelope_id": { "type": "string", "minLength": 6 },
+    "sha256":      { "type": "string", "pattern": "^[0-9a-fA-F]{64}$" },
+    "agents":      { "type": "array", "items": { "type": "string" }, "minItems": 2 },
+    "chain_hash":  { "type": "string", "pattern": "^[0-9a-fA-F]{64}$" },
+    "parent_chain_hash": { "type": ["string", "null"], "pattern": "^[0-9a-fA-F]{64}$" },
+    "dimensional_tags":  {
+      "type": "object",
+      "patternProperties": { "^d([1-9]|[12][0-9]|3[0-5])$": { "type": "string" } },
+      "additionalProperties": false
+    },
+    "scale_tier":  { "type": "string", "enum": ["100M","1B","10B","50B","100B","N-A"] },
+    "mode":        { "type": "string", "enum": ["real","shadow"] },
+    "schema_version": { "const": 2 }
+  },
+  "additionalProperties": false
+}
