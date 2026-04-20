@@ -1,0 +1,7 @@
+{
+  "name": "@asolaria/fp-infra-session-1-fib-l05",
+  "version": "1.0.0",
+  "description": "FP-INFRA session-1 acer 5th pick · FIB-L05 · messaging · bilateral-glyph-5axes",
+  "type": "commonjs",
+  "main": "src/bilateral-glyph.js"
+}
