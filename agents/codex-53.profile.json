@@ -1,0 +1,19 @@
+{
+  "smp_v5_plus_item": "192",
+  "named_agent": "codex-53-debug-savant",
+  "role": "BLD",
+  "description": "Codex 5.3 integrated as debugging-savant. Specialized for code-fix cycles, not planning or review.",
+  "tools": ["read", "edit", "run", "grep", "diff"],
+  "model_tier": "cloud-opus",
+  "room": 45,
+  "colony_prefix": "COL-ACER",
+  "device_binding": "acer",
+  "limits": {
+    "max_concurrent": 2,
+    "max_tokens_per_request": 8192,
+    "wall_timeout_seconds": 300
+  },
+  "budget": { "daily_usd_cap": 20.00 },
+  "launcher_cmd": "node",
+  "launcher_args": ["packages-legacy-import/src/connectors/anthropicCliConnector.js"]
+}

@@ -1,0 +1,21 @@
+{
+  "smp_v5_plus_item": "169",
+  "manifest_version": "1.0.0",
+  "last_updated": "2026-04-20T22:20:00Z",
+  "expected_daemons": {
+    "pid-targeted-kick-supervisor":       { "module": "packages/pid-targeted-kick-supervisor/bin/daemon.mjs", "required": true },
+    "new-applicant-onboarding-supervisor": { "module": "packages/new-applicant-onboarding-supervisor/bin/daemon.mjs", "required": true },
+    "meta-supervisor-hermes":              { "module": "packages/meta-supervisor-hermes/bin/daemon.mjs", "required": true },
+    "cycle-orchestrator":                  { "module": "packages/cycle-orchestrator/src/index.mjs", "required": true },
+    "super-gulp-tier3-consumer":           { "module": "packages/super-gulp-tier3-consumer/src/daemon.mjs", "required": true },
+    "whiteroom-consumer":                  { "module": "packages/whiteroom-consumer/src/daemon.mjs", "required": true },
+    "gulp-http-bridge":                    { "module": "packages/gulp-http-bridge/src/daemon.mjs", "required": true, "env": { "ASOLARIA_INSTANCE_ROOT": "C:/Users/acer/Asolaria" } },
+    "stage-to-actual-converter":           { "module": "packages/stage-to-actual-converter/src/daemon.mjs", "required": true },
+    "act-supervisor":                      { "module": "packages/act-supervisor/supervisor.mjs", "required": true },
+    "immune-l1-supervisor":                { "module": "packages/immune-l1-supervisor/src/daemon.mjs", "required": true }
+  },
+  "optional_daemons": {
+    "shannon-civ-dispatch":   { "module": "packages/shannon-civ/scripts/acer-dispatch-daemon.mjs" },
+    "dashboard-daemon":       { "module": "packages/dashboard/scripts/dashboard-daemon.mjs" }
+  }
+}
