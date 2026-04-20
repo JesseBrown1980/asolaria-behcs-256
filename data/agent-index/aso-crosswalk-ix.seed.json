@@ -1,0 +1,198 @@
+{
+  "source": "IX",
+  "generatedBy": "Gaia",
+  "generatedAt": "2026-03-20T13:20:00Z",
+  "entries": [
+    {
+      "canonicalKey": "orchestration-loop",
+      "legacyIds": ["IX-001", "IX-002", "IX-005"],
+      "type": "pattern",
+      "summary": "Gaia plan→delegate→handoff cycle",
+      "proposedAsoId": null
+    },
+    {
+      "canonicalKey": "pnpm-windows-eperm",
+      "legacyIds": ["IX-003", "IX-004"],
+      "type": "mistake→skill",
+      "summary": "pnpm EPERM on Windows, corepack fix",
+      "proposedAsoId": null
+    },
+    {
+      "canonicalKey": "chain-index-architecture",
+      "legacyIds": ["IX-006", "IX-007", "IX-008"],
+      "type": "pattern",
+      "summary": "The weight system — core index architecture, types as constructs, reverse lookup",
+      "proposedAsoId": null
+    },
+    {
+      "canonicalKey": "device-registry",
+      "legacyIds": ["IX-009", "IX-011"],
+      "type": "pattern",
+      "summary": "Device ownership, phone bidirectional bridge",
+      "proposedAsoId": null
+    },
+    {
+      "canonicalKey": "sub-colony-architecture",
+      "legacyIds": ["IX-010"],
+      "type": "pattern",
+      "summary": "Sub-colony index scoping and federation",
+      "proposedAsoId": null,
+      "overlapsLX": ["liris-identity"]
+    },
+    {
+      "canonicalKey": "agent-profiles",
+      "legacyIds": ["IX-012"],
+      "type": "pattern",
+      "summary": "Agent profiles, packets, identity links",
+      "proposedAsoId": null
+    },
+    {
+      "canonicalKey": "qdd-workstream",
+      "legacyIds": ["IX-013", "IX-023", "IX-026", "IX-027", "IX-029", "IX-030"],
+      "type": "plan",
+      "summary": "QDD branch transfer, Brian's test rule, test audit, gap analysis, unit+integration pass",
+      "proposedAsoId": null,
+      "overlapsLX": ["qdd-workstream"]
+    },
+    {
+      "canonicalKey": "comms-whatsapp",
+      "legacyIds": ["IX-014"],
+      "type": "skill",
+      "summary": "WhatsApp as agent comms channel",
+      "proposedAsoId": null
+    },
+    {
+      "canonicalKey": "complexity-overwhelm",
+      "legacyIds": ["IX-015"],
+      "type": "mistake",
+      "summary": "Slow down for humans, pacing",
+      "proposedAsoId": null,
+      "overlapsLX": ["swarm-collapse-memory-lesson"]
+    },
+    {
+      "canonicalKey": "inbox-messaging",
+      "legacyIds": ["IX-016", "IX-017", "IX-018"],
+      "type": "tool",
+      "summary": "inbox-send.js, NDJSON format, agent messaging pattern",
+      "proposedAsoId": null
+    },
+    {
+      "canonicalKey": "codex-agents",
+      "legacyIds": ["IX-019"],
+      "type": "skill",
+      "summary": "Codex agents available, gpt-5.4 xhigh",
+      "proposedAsoId": null
+    },
+    {
+      "canonicalKey": "claude-dispatch-phone",
+      "legacyIds": ["IX-020"],
+      "type": "skill",
+      "summary": "Claude Dispatch native phone bridge",
+      "proposedAsoId": null
+    },
+    {
+      "canonicalKey": "mqtt-bridge",
+      "legacyIds": ["IX-021", "IX-044", "IX-047", "IX-048"],
+      "type": "tool",
+      "summary": "MQTT broker, bridge to Liris, firewall issues, bind restart",
+      "proposedAsoId": null,
+      "overlapsLX": ["direct-bridge-gaia-liris"]
+    },
+    {
+      "canonicalKey": "jest-testing-patterns",
+      "legacyIds": ["IX-022", "IX-024", "IX-039", "IX-043"],
+      "type": "skill",
+      "summary": "MongoMemoryServer timeout, ESM import, auth regex, mock hoisting",
+      "proposedAsoId": null
+    },
+    {
+      "canonicalKey": "agent-pid-tracking",
+      "legacyIds": ["IX-025", "IX-045"],
+      "type": "pattern",
+      "summary": "PID tracking in index, running constructs with PIDs",
+      "proposedAsoId": null
+    },
+    {
+      "canonicalKey": "chrome-extension-bridge",
+      "legacyIds": ["IX-032"],
+      "type": "tool",
+      "summary": "Claude Code Chrome extension for cross-account work browser",
+      "proposedAsoId": null
+    },
+    {
+      "canonicalKey": "visualization-systems",
+      "legacyIds": ["IX-036", "IX-037"],
+      "type": "reference",
+      "summary": "Asolaria viz, Code City, SwarmDesk, Liris as 3D district",
+      "proposedAsoId": null
+    },
+    {
+      "canonicalKey": "indexing-discipline",
+      "legacyIds": ["IX-038", "IX-042", "IX-059", "IX-063"],
+      "type": "mistake",
+      "summary": "Forgot to auto-index, never strip linking context, session mistakes, examine before acting",
+      "proposedAsoId": null
+    },
+    {
+      "canonicalKey": "colony-boot-sequence",
+      "legacyIds": ["IX-049"],
+      "type": "pattern",
+      "summary": "Helm→Sentinel→Vector→lanes→sub-colonies boot order",
+      "proposedAsoId": null
+    },
+    {
+      "canonicalKey": "efficiency-directive",
+      "legacyIds": ["IX-050"],
+      "type": "rule",
+      "summary": "Jesse's directive — efficient not fancy",
+      "proposedAsoId": null
+    },
+    {
+      "canonicalKey": "agent-lifecycle",
+      "legacyIds": ["IX-052", "IX-054", "IX-055", "IX-057"],
+      "type": "pattern",
+      "summary": "Spawn→work→index→despawn. Agents temporary, index permanent. Only controller spawns.",
+      "proposedAsoId": null,
+      "overlapsLX": ["agents-temporary-index-permanent"]
+    },
+    {
+      "canonicalKey": "constitution-authority",
+      "legacyIds": ["IX-053", "IX-056", "IX-061"],
+      "type": "rule",
+      "summary": "Authority drift violations, never delete inboxes, who speaks for whom",
+      "proposedAsoId": null
+    },
+    {
+      "canonicalKey": "index-is-language",
+      "legacyIds": ["IX-060"],
+      "type": "pattern",
+      "summary": "The index IS a language — numbers are words, chains are sentences, 12:1 compression",
+      "proposedAsoId": null,
+      "overlapsLX": ["index-is-language"]
+    },
+    {
+      "canonicalKey": "simulation-viewer",
+      "legacyIds": ["IX-046"],
+      "type": "pattern",
+      "summary": "Dan's insight: simulation is a VIEWER not the process",
+      "proposedAsoId": null
+    },
+    {
+      "canonicalKey": "dan-workflow",
+      "legacyIds": ["IX-034", "IX-035", "IX-051"],
+      "type": "pattern",
+      "summary": "Dan's gh CLI, Warp workflow, recon mission to Madness Interactive",
+      "proposedAsoId": null
+    }
+  ],
+  "stats": {
+    "totalIxEntries": 63,
+    "mappedToConcepts": 25,
+    "overlapsWithLX": 6
+  },
+  "migrationNotes": [
+    "IX-001 to IX-063 are in main CATALOG.md. IX-064 to IX-136 are in extended range (AI publications, training methods, future build) — need separate pass.",
+    "6 confirmed overlaps with LX canonical keys — these become single ASO entries with both legacy IDs.",
+    "All IX entries have backing files on disk — no catalog-only gaps like LX-134/135."
+  ]
+}
