@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/JesseBrown1980/asolaria-behcs-256/schemas/envelope-v1.schema.json",
+  "title": "Asolaria Envelope v1",
+  "description": "Unified envelope covering BEHCS, DroidSwarm, OP_DISPATCH. Items 020-023 of SMP v5+.",
+  "type": "object",
+  "required": ["id", "ts", "src", "kind", "body"],
+  "additionalProperties": true,
+  "properties": {
+    "id":   { "type": "string", "minLength": 6, "description": "unique envelope id" },
+    "ts":   { "oneOf": [ {"type":"string","format":"date-time"}, {"type":"integer","minimum":0} ] },
+    "src":  { "type": "string", "minLength": 1, "description": "canonical source agent/node name" },
+    "dst":  { "type": "string", "description": "optional destination; default=federation" },
+    "kind": { "type": "string", "minLength": 1, "description": "event class / verb / op" },
+    "body": { "type": "object", "description": "domain payload" },
+    "actor": { "type": "string", "description": "named-agent (BEHCS-only)" },
+    "mode":  { "type": "string", "enum": ["real", "shadow"] },
+    "payload": { "type": "string", "description": "human-readable summary" },
+    "sig":   { "type": "object", "description": "ed25519 signature block" },
+    "glyph_sentence": { "type": "string", "description": "Brown-Hilbert stamped sentence @ M-<mode> ." },
+    "cosigns": {
+      "type": "object",
+      "description": "Multi-agent gate signatures (SMP v5+ requires >=2)",
+      "additionalProperties": { "type": "object", "properties": { "tick": {"type":"boolean"} } }
+    },
+    "dimensional_tags": {
+      "type": "object",
+      "description": "Item 022: D1-D35 BEHCS-256 dimensional glyph addresses",
+      "patternProperties": {
+        "^d([1-9]|[12][0-9]|3[0-5])$": { "type": "string", "pattern": "^.{1,16}$" }
+      },
+      "additionalProperties": false
+    },
+    "d47_ext": {
+      "type": "object",
+      "description": "Item 023: 47D extension reserved block",
+      "properties": {
+        "dims":      { "type": "array", "items": { "type": "string" }, "maxItems": 47 },
+        "catalog":   { "type": "string" },
+        "reserved":  { "type": "object" }
+      },
+      "additionalProperties": false
+    }
+  }
+}

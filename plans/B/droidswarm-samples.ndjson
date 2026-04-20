@@ -1,0 +1,2 @@
+{"source":"DroidSwarm","swarm_id":"falcon-s24-fe-3474","kind":"SWARM_HEARTBEAT","src":"falcon","t":1776320000,"data":{"termux_pid":3474,"ncat_ports":[4947,4950]}}
+{"source":"DroidSwarm","swarm_id":"aether-a06-10646","kind":"SWARM_ROLL_CALL","src":"aether","t":1776320100,"data":{"room":40,"prof":"PROF-AETHER-EDGE-AGENT","remote_control_port":8765}}

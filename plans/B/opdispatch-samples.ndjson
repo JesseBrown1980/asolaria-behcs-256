@@ -1,0 +1,3 @@
+{"source":"OP_DISPATCH","op":"OP-KICK-AETHER","issued_by":"acer","t":"2026-04-20T18:52:41Z","args":{"text":"kick aether test","serial":"R9QY205KAKJ"}}
+{"source":"OP_DISPATCH","op":"OP-LOCATE-PID","issued_by":"acer","t":"2026-04-20T18:51:09Z","args":{"pid":17988}}
+{"source":"OP_DISPATCH","op":"OP-ONBOARD-APPLICANT","issued_by":"acer","t":"2026-04-20T20:00:00Z","args":{"name":"rose","kind":"adb","serial":"<future>"}}
