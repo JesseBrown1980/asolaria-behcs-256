@@ -1,0 +1,7 @@
+{
+  "name": "ix-codex",
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Brown Hilbert codex — alphabet + 47-catalog registry + launch loader. Mandatory load for any colony agent. IX-700.",
+  "main": "launch.js"
+}

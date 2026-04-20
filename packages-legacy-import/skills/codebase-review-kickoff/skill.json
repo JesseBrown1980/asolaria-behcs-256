@@ -1,0 +1,61 @@
+{
+  "id": "codebase.review_kickoff",
+  "title": "Codebase Review Kickoff (MCP + WebMCP)",
+  "description": "Collect local readiness evidence for codebase review using Asolaria-native MCP/WebMCP paths (tools status, health, skills index, and external MCP status).",
+  "version": "0.1.0",
+  "risk": "medium",
+  "permissions": ["host.read", "web.read", "web.run", "mcp.web", "integrations.read"],
+  "tags": ["codebase", "review", "mcp", "webmcp", "readiness"],
+  "steps": [
+    {
+      "action": "tools_status",
+      "note": "Capture local tool-path and OpenClaw mode baseline.",
+      "permissions": ["host.read"]
+    },
+    {
+      "action": "web_mcp_inspect",
+      "note": "Inspect local health endpoint through headless WebMCP flow.",
+      "payload": {
+        "url": "http://127.0.0.1:4781/api/health",
+        "waitMs": 300,
+        "maxChars": 18000,
+        "maxLinks": 8
+      },
+      "permissions": ["web.read", "mcp.web"]
+    },
+    {
+      "action": "web_mcp_task",
+      "note": "Extract skills-tools index JSON (includes MCP provider summaries and cache counters).",
+      "payload": {
+        "url": "http://127.0.0.1:4781/api/skills/index?force=true",
+        "waitMs": 300,
+        "maxChars": 24000,
+        "maxLinks": 8,
+        "allowLoopback": true,
+        "allowPrivateNetwork": false,
+        "allowedHosts": ["127.0.0.1", "localhost"],
+        "steps": [
+          { "action": "extract_text", "selector": "body", "name": "skills_index_json", "limit": 18000 }
+        ]
+      },
+      "permissions": ["web.run", "mcp.web"]
+    },
+    {
+      "action": "web_mcp_task",
+      "note": "Extract external providers status JSON for MCP readiness checks.",
+      "payload": {
+        "url": "http://127.0.0.1:4781/api/integrations/external/status",
+        "waitMs": 300,
+        "maxChars": 22000,
+        "maxLinks": 8,
+        "allowLoopback": true,
+        "allowPrivateNetwork": false,
+        "allowedHosts": ["127.0.0.1", "localhost"],
+        "steps": [
+          { "action": "extract_text", "selector": "body", "name": "external_status_json", "limit": 16000 }
+        ]
+      },
+      "permissions": ["web.run", "mcp.web"]
+    }
+  ]
+}

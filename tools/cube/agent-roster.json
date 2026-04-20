@@ -1,0 +1,96 @@
+{
+  "schema": "agent-roster v1",
+  "purpose": "Constellation of cube-aligned sub-agents under jesse-work-cube for the QDD agent-friendly modernization initiative. Each agent gets a unique 24D primary dimension + prime cube alignment per OMNI-LANGUAGE-V3. Spawned 2026-04-06 by Jesse directive: 'start automating the cube building and the QDD/novalum/ebacmap ez protect'.",
+  "parent_surface": "jesse-work-cube",
+  "parent_cube": 704969,
+  "campaign": "qdd-modernization-2026-04-06",
+  "respects": [
+    "cube_law (every agent + finding tagged with cube[])",
+    "hard_deny_rules (no slack/email/sovereignty/destructive auto)",
+    "qdd_ip_boundaries (enhance, never rewrite without approval)",
+    "operator_witnessed_for_hardware",
+    "rolling_d_backups"
+  ],
+  "agents": [
+    {
+      "id": "jbd.qdd.architect",
+      "primary_dim": "D13_SPACE",
+      "primary_prime": 41,
+      "primary_cube": 68921,
+      "purpose": "Maps the spatial structure of the QDD repos (ebacmap-master monorepo, novalink-desktop-sync-app, ez-protect-admin-monorepo). Builds dependency graphs, identifies architectural seams, flags risk surfaces.",
+      "scope": "read-only repo maps + module graphs"
+    },
+    {
+      "id": "jbd.qdd.compliance-guardian",
+      "primary_dim": "D16_SECURITY",
+      "primary_prime": 53,
+      "primary_cube": 148877,
+      "purpose": "Checks every proposed change against the law: cube alignment, hard-deny rules, QDD IP boundaries, contractual terms with Charm Sciences, J Brown Dev LLC's standing as a contractor (not employee). Blocks anything that would break the law.",
+      "scope": "veto authority on proposals"
+    },
+    {
+      "id": "jbd.qdd.gnn-simulator",
+      "primary_dim": "D12_ECHO",
+      "primary_prime": 37,
+      "primary_cube": 50653,
+      "purpose": "Runs lightweight scenario simulation (NOT a real GNN — Monte Carlo scenario expansion) over proposed plans. Generates N variants with random parameter perturbation, scores each by Shannon-vote outcome.",
+      "scope": "scenario generation + scoring"
+    },
+    {
+      "id": "jbd.qdd.test-runner",
+      "primary_dim": "D9_RANK",
+      "primary_prime": 23,
+      "primary_cube": 12167,
+      "purpose": "Owns the test gate. Runs tsc / jest / lint / build for each proposed patch, ranks candidates by green-test count and time-to-build. Refuses to advance any proposal that doesn't pass its existing test suite.",
+      "scope": "test execution + ranking, no test invention"
+    },
+    {
+      "id": "jbd.qdd.diff-proposer",
+      "primary_dim": "D4_OBJECT",
+      "primary_prime": 7,
+      "primary_cube": 343,
+      "purpose": "Generates concrete diffs (file:line minimal patches) for known issues. Never applies — proposes only. Hands diffs to test-runner for validation, then to compliance-guardian for approval.",
+      "scope": "diff generation, no apply"
+    },
+    {
+      "id": "jbd.qdd.shannon-orchestrator",
+      "primary_dim": "D8_CHAIN",
+      "primary_prime": 19,
+      "primary_cube": 6859,
+      "purpose": "Chains Shannon votes across the constellation. Drives the omni-shannon engine: poses a question, polls each agent through its lens, tallies, declares consensus. Records every wave to votes.ndjson.",
+      "scope": "vote orchestration"
+    },
+    {
+      "id": "jbd.qdd.evidence-collector",
+      "primary_dim": "D3_TARGET",
+      "primary_prime": 5,
+      "primary_cube": 125,
+      "purpose": "Pulls evidence from many targets: git log, test outputs, NL2X logs, ebacmap reports, Monday.com (if accessible), screenshots. Tags every piece with cube + dim + provenance. Feeds the architect + compliance-guardian.",
+      "scope": "evidence intake only"
+    },
+    {
+      "id": "jbd.qdd.budget-tracker",
+      "primary_dim": "D19_BUDGET",
+      "primary_prime": 67,
+      "primary_cube": 300763,
+      "purpose": "Tracks hours, scope, and proposal weight against the contract envelope. JBD bills QDD; this agent ensures the modernization initiative doesn't drift into uncompensated scope creep.",
+      "scope": "hours + scope ledger"
+    },
+    {
+      "id": "jbd.qdd.schedule-planner",
+      "primary_dim": "D18_SCHEDULE",
+      "primary_prime": 61,
+      "primary_cube": 226981,
+      "purpose": "Sequences proposals into a deliverable timeline. Considers blockers (LIMS API specs, DO creds, Vince approval), priority (Natalie's flagged items), and operator-witnessed gates (NovaLUM physical test windows).",
+      "scope": "sequencing only, no commit dates"
+    },
+    {
+      "id": "jbd.qdd.network-mapper",
+      "primary_dim": "D17_NETWORK",
+      "primary_prime": 59,
+      "primary_cube": 205379,
+      "purpose": "Maps the integration graph: LIMS API (Charm), Twilio SMS, DigitalOcean prod, Bitbucket monorepo, Monday.com board, slack workspace, Google Drive. Identifies which integrations are alive, blocked, or unverified.",
+      "scope": "integration map + status"
+    }
+  ]
+}

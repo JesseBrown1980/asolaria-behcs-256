@@ -1,0 +1,29 @@
+{
+  "id": "meeting.record",
+  "title": "Start Meeting Recording Worker",
+  "description": "Launch the meeting recording worker that captures live transcripts from active meetings. Collects audio, transcribes, and stores evidence.",
+  "version": "0.1.0",
+  "createdBy": { "agent": "Liris", "pid": 17368, "date": "2026-03-24T04:30:00Z" },
+  "risk": "medium",
+  "permissions": ["meeting.record", "voice.transcribe", "filesystem.write"],
+  "tags": ["meeting", "recording", "transcription", "live", "evidence"],
+  "steps": [
+    {
+      "action": "meeting_record_start",
+      "note": "Step 1: Launch meeting recording worker process.",
+      "payload": {
+        "scriptPath": "tools/Run-Asolaria-MeetingRecordingWorker.ps1",
+        "outputDir": "captures/meetings/"
+      },
+      "permissions": ["meeting.record"]
+    },
+    {
+      "action": "meeting_monitor",
+      "note": "Step 2: Start live transcript monitor for real-time capture.",
+      "payload": {
+        "scriptPath": "tools/Start-Verve-LiveMonitor.ps1"
+      },
+      "permissions": ["meeting.record"]
+    }
+  ]
+}

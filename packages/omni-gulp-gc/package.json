@@ -1,0 +1,15 @@
+{
+  "name": "@asolaria/omni-gulp-gc",
+  "version": "0.1.0",
+  "description": "Garbage collector + gulp pattern-extraction. Prevents ~/.asolaria-workers/ NDJSON logs from growing unbounded. Archives rotated files with glyph-sentence summaries. Gulp batches events into OP-GULP-SUMMARY patterns for the mistake-ledger feedback loop.",
+  "type": "module",
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "scripts": {
+    "smoke": "node --experimental-strip-types --no-warnings demo/smoke.ts"
+  },
+  "behcs256": {
+    "d11_level": "ASSUMED",
+    "authority": "COSIGN-MERGED-034"
+  }
+}

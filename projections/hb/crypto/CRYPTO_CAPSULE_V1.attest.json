@@ -1,0 +1,49 @@
+{
+  "capsuleId": "crypto-profile.v1.local",
+  "claimsClass": "integrity_attestation_only",
+  "createdAt": "2026-04-15T02:54:31.199Z",
+  "denyFlags": [
+    "NO_PUBLIC_READY_CLAIMS",
+    "NO_SECURITY_GUARANTEES",
+    "NO_REMOTE",
+    "PROMOTION_DENY_UNTIL_PROOFS"
+  ],
+  "glyph256": {
+    "algorithm": "☯①A☪∞Π¥B",
+    "capsule": "♡☱y\\|DΦF",
+    "hash": "♪✰zcρ⟨☰❃",
+    "key": "☮^╗\\\\┴⑭x",
+    "mistakes": "γi↖☳k⚡ψO",
+    "scope": "N⇨θ≥✪⇩&;",
+    "trinity": "χ⦃⑯~✰♠♫⑭",
+    "whiteRoom": "✰+π~↗◇G\\"
+  },
+  "gulpEveryMistakes": 2000,
+  "integrityOnly": true,
+  "keyId": "crypto-capsule-ed25519-798878705c40",
+  "language": {
+    "dialect": "BEHCS_HG256",
+    "dimensions": {
+      "D25": "TRINITY_MODALITY",
+      "D38": "ENCRYPTION",
+      "D44": "HEARTBEAT",
+      "D46": "VAULT",
+      "D47": "BOUNDARY"
+    },
+    "liveBase": "47D",
+    "overlay": "49D_proposal_only",
+    "transport": {
+      "asciiSafeTransport": true,
+      "encoding": "ascii_hex_hilbert_addresses"
+    }
+  },
+  "noConfidentialityGuarantee": true,
+  "noRemoteTrust": true,
+  "payloadSha256": "e4f387d00abe2ccdbb771c32232867a8d31e304e54cb4c2871b57465b6e5fd55",
+  "status": "local_clean_projection",
+  "trinity": {
+    "compute": "LX-489_compute",
+    "hardware": "LX-490_hardware",
+    "inference": "LX-491_omni_GNN_inference"
+  }
+}

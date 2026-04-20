@@ -1,0 +1,7 @@
+{
+  "bind": "127.0.0.1",
+  "port": 5444,
+  "livingFilesDir": "living-files",
+  "maxFiles": 300,
+  "maxFileChars": 200000
+}

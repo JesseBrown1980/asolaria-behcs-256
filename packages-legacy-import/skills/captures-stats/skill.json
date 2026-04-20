@@ -1,0 +1,17 @@
+{
+  "id": "captures.stats",
+  "title": "Captures Stats",
+  "description": "Summarize capture storage usage and retention policy.",
+  "version": "1.0.0",
+  "risk": "low",
+  "tags": ["captures", "maintenance"],
+  "permissions": [],
+  "steps": [
+    {
+      "action": "captures_stats",
+      "note": "Collect captures stats (desktop, important, trash).",
+      "payload": {}
+    }
+  ]
+}
+

@@ -1,0 +1,20 @@
+{
+  "id": "swarm.mode.status",
+  "title": "Swarm Mode Status",
+  "description": "Returns swarm-mode enablement and compact runtime status for colony orchestration.",
+  "version": "0.1.0",
+  "risk": "low",
+  "permissions": ["swarm.read"],
+  "tags": ["swarm", "colony", "status", "orchestration"],
+  "steps": [
+    {
+      "action": "tools_status",
+      "note": "Collect local tool + swarm + taxonomy flags."
+    },
+    {
+      "action": "swarm_mode_status",
+      "note": "Collect compact runtime swarm-mode status."
+    }
+  ]
+}
+

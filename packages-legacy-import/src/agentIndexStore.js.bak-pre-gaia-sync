@@ -1,0 +1,462 @@
+const fs = require("fs");
+const path = require("path");
+const { projectRoot } = require("./runtimePaths");
+
+const agentIndexRoot = path.join(projectRoot, "data", "agent-index");
+const catalogPath = path.join(agentIndexRoot, "CATALOG.md");
+const TYPE_SUBDIRS = ["skill", "pattern", "mistake", "tool", "plan", "reference", "rule", "project", "identity", "task"];
+const DEFAULT_CACHE_TTL_MS = Math.max(
+  5 * 1000,
+  Math.min(10 * 60 * 1000, Number(process.env.ASOLARIA_AGENT_INDEX_CACHE_TTL_MS || 45 * 1000))
+);
+const STOPWORDS = new Set([
+  "a", "an", "and", "are", "as", "at", "be", "been", "being", "but", "by", "for", "from", "if", "in", "into",
+  "is", "it", "its", "of", "on", "or", "that", "the", "their", "them", "there", "these", "they", "this", "to",
+  "was", "we", "were", "with", "you", "your", "task", "tasks", "note", "notes", "workspace", "asolaria",
+  "lx", "agent"
+]);
+
+let cache = {
+  loadedAt: 0,
+  signature: "",
+  catalogRows: [],
+  entries: []
+};
+
+function normalizeLxId(value) {
+  const match = String(value || "").match(/(\d{1,4})/);
+  if (!match) return "";
+  return `LX-${String(match[1]).padStart(3, "0")}`;
+}
+
+function normalizeArray(value) {
+  if (Array.isArray(value)) {
+    return value.map((item) => String(item || "").trim()).filter(Boolean);
+  }
+  const text = String(value || "").trim();
+  if (!text) return [];
+  const cleaned = text.startsWith("[") && text.endsWith("]")
+    ? text.slice(1, -1)
+    : text;
+  return cleaned
+    .split(",")
+    .map((item) => String(item || "").trim())
+    .filter(Boolean)
+    .map((item) => item.replace(/^["']|["']$/g, ""));
+}
+
+function cleanLine(text) {
+  return String(text || "")
+    .replace(/\r/g, "")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function parseFrontMatter(rawText) {
+  const source = String(rawText || "");
+  if (!source.startsWith("---")) {
+    return { attrs: {}, body: source };
+  }
+  const marker = source.indexOf("\n---", 3);
+  if (marker < 0) {
+    return { attrs: {}, body: source };
+  }
+  const frontmatter = source.slice(3, marker).trim();
+  const body = source.slice(marker + 4).trim();
+  const attrs = {};
+  for (const line of frontmatter.split(/\r?\n/g)) {
+    const match = line.match(/^([a-zA-Z0-9_]+):\s*(.+)$/);
+    if (!match) continue;
+    const key = String(match[1] || "").trim();
+    const value = String(match[2] || "").trim();
+    if (!key) continue;
+    if (["tags", "chain", "agents"].includes(key)) {
+      attrs[key] = normalizeArray(value);
+    } else {
+      attrs[key] = value.replace(/^["']|["']$/g, "");
+    }
+  }
+  return { attrs, body };
+}
+
+function parseCatalogRows(rawText) {
+  const rows = [];
+  for (const line of String(rawText || "").split(/\r?\n/g)) {
+    const match = line.match(/^\|\s*(\d{1,4})\s*\|/);
+    if (!match) continue;
+    const parts = line.split("|").map((part) => part.trim());
+    if (parts.length < 8) continue;
+    rows.push({
+      lx: normalizeLxId(match[1]),
+      name: String(parts[2] || "").trim(),
+      type: String(parts[3] || "").trim(),
+      tags: normalizeArray(parts[4]),
+      chain: normalizeArray(String(parts[5] || "").replace(/\u2192/g, ",")),
+      agents: normalizeArray(parts[6])
+    });
+  }
+  return rows;
+}
+
+function buildSummaryFromBody(body) {
+  const lines = String(body || "")
+    .split(/\r?\n/g)
+    .map((line) => cleanLine(line))
+    .filter(Boolean)
+    .filter((line) => !/^#/.test(line));
+  if (lines.length < 1) {
+    return "";
+  }
+  return cleanLine(lines.slice(0, 3).join(" "));
+}
+
+function buildSnippet(text, terms, maxChars = 220) {
+  const source = cleanLine(text);
+  if (!source) return "";
+  const lower = source.toLowerCase();
+  let firstIndex = -1;
+  for (const term of terms) {
+    const idx = lower.indexOf(term);
+    if (idx >= 0 && (firstIndex < 0 || idx < firstIndex)) {
+      firstIndex = idx;
+    }
+  }
+  if (firstIndex < 0) {
+    if (source.length <= maxChars) return source;
+    return `${source.slice(0, Math.max(0, maxChars - 3)).trim()}...`;
+  }
+  const start = Math.max(0, firstIndex - 80);
+  const end = Math.min(source.length, firstIndex + maxChars - 40);
+  const snippet = source.slice(start, end).trim();
+  return snippet.length <= maxChars
+    ? snippet
+    : `${snippet.slice(0, Math.max(0, maxChars - 3)).trim()}...`;
+}
+
+function tokenizeQuery(text) {
+  return Array.from(
+    new Set(
+      String(text || "")
+        .toLowerCase()
+        .split(/[^a-z0-9]+/g)
+        .map((token) => token.trim())
+        .filter((token) => token.length >= 2 && token.length <= 40 && !STOPWORDS.has(token))
+    )
+  ).slice(0, 20);
+}
+
+function extractLxRefs(text) {
+  const refs = new Set();
+  const source = String(text || "");
+  const regex = /\blx[-_\s]?(\d{1,4})\b/gi;
+  let match = regex.exec(source);
+  while (match) {
+    refs.add(normalizeLxId(match[1]));
+    match = regex.exec(source);
+  }
+  return Array.from(refs);
+}
+
+function computeSignature(catalogStat, lxFiles) {
+  const payload = [
+    `${catalogPath}:${Number(catalogStat?.mtimeMs || 0)}:${Number(catalogStat?.size || 0)}`,
+    ...lxFiles.map((row) => `${row.path}:${row.mtimeMs}:${row.size}`)
+  ];
+  return payload.join("|");
+}
+
+function listLxFiles() {
+  if (!fs.existsSync(agentIndexRoot)) {
+    return [];
+  }
+  const seen = new Map(); // filename -> {path, mtimeMs, size}
+  const lxPattern = /^LX-\d{3,4}\.md$/i;
+
+  // Scan type subdirectories first (preferred source)
+  for (const subdir of TYPE_SUBDIRS) {
+    const subdirPath = path.join(agentIndexRoot, subdir);
+    if (!fs.existsSync(subdirPath)) continue;
+    try {
+      const entries = fs.readdirSync(subdirPath, { withFileTypes: true });
+      for (const entry of entries) {
+        if (!entry.isFile() || !lxPattern.test(entry.name)) continue;
+        const fullPath = path.join(subdirPath, entry.name);
+        const stat = fs.statSync(fullPath);
+        seen.set(entry.name, {
+          path: fullPath,
+          mtimeMs: Number(stat.mtimeMs || 0),
+          size: Number(stat.size || 0)
+        });
+      }
+    } catch (_error) { /* skip unreadable subdirs */ }
+  }
+
+  // Scan root for any LX files not yet in type folders (backward compat)
+  try {
+    const rootEntries = fs.readdirSync(agentIndexRoot, { withFileTypes: true });
+    for (const entry of rootEntries) {
+      if (!entry.isFile() || !lxPattern.test(entry.name)) continue;
+      if (seen.has(entry.name)) continue; // type folder wins
+      const fullPath = path.join(agentIndexRoot, entry.name);
+      const stat = fs.statSync(fullPath);
+      seen.set(entry.name, {
+        path: fullPath,
+        mtimeMs: Number(stat.mtimeMs || 0),
+        size: Number(stat.size || 0)
+      });
+    }
+  } catch (_error) { /* skip */ }
+
+  return Array.from(seen.values())
+    .sort((a, b) => a.path.localeCompare(b.path));
+}
+
+function loadAgentIndex(options = {}) {
+  const force = Boolean(options.force);
+  const ttlMs = Math.max(1000, Number(options.cacheTtlMs) || DEFAULT_CACHE_TTL_MS);
+  if (!fs.existsSync(catalogPath)) {
+    return {
+      loadedAt: 0,
+      catalogRows: [],
+      entries: []
+    };
+  }
+
+  const catalogStat = fs.statSync(catalogPath);
+  const lxFiles = listLxFiles();
+  const signature = computeSignature(catalogStat, lxFiles);
+  const now = Date.now();
+  const cacheAgeMs = now - Number(cache.loadedAt || 0);
+  const canReuse = !force
+    && cache.loadedAt > 0
+    && cache.signature === signature
+    && cacheAgeMs <= ttlMs;
+
+  if (canReuse) {
+    return {
+      loadedAt: cache.loadedAt,
+      catalogRows: cache.catalogRows.slice(),
+      entries: cache.entries.slice()
+    };
+  }
+
+  const catalogRaw = String(fs.readFileSync(catalogPath, "utf8") || "");
+  const catalogRows = parseCatalogRows(catalogRaw);
+  const catalogMap = new Map(catalogRows.map((row) => [row.lx, row]));
+  const entries = [];
+  for (const file of lxFiles) {
+    let rawText = "";
+    try {
+      rawText = String(fs.readFileSync(file.path, "utf8") || "");
+    } catch (_error) {
+      rawText = "";
+    }
+    if (!rawText.trim()) {
+      continue;
+    }
+    const parsed = parseFrontMatter(rawText);
+    const lx = normalizeLxId(parsed.attrs.lx || parsed.attrs.ix || path.basename(file.path));
+    const catalogRow = catalogMap.get(lx) || {};
+    const body = String(parsed.body || "").trim();
+    const summary = buildSummaryFromBody(body);
+    const title = cleanLine(parsed.attrs.name || catalogRow.name || lx);
+    const type = cleanLine(parsed.attrs.type || catalogRow.type || "reference");
+    const tags = normalizeArray(parsed.attrs.tags || catalogRow.tags || []);
+    const chain = normalizeArray(parsed.attrs.chain || catalogRow.chain || []);
+    const source = path.relative(projectRoot, file.path).replace(/\\/g, "/");
+    const searchable = [
+      lx,
+      title,
+      type,
+      tags.join(" "),
+      chain.join(" "),
+      summary,
+      body
+    ].filter(Boolean).join("\n");
+    entries.push({
+      lx,
+      title,
+      type,
+      tags,
+      chain,
+      source,
+      absolutePath: file.path,
+      updatedAt: new Date(file.mtimeMs).toISOString(),
+      summary,
+      body,
+      searchable,
+      searchableLower: searchable.toLowerCase()
+    });
+  }
+
+  cache = {
+    loadedAt: now,
+    signature,
+    catalogRows,
+    entries
+  };
+  return {
+    loadedAt: cache.loadedAt,
+    catalogRows: cache.catalogRows.slice(),
+    entries: cache.entries.slice()
+  };
+}
+
+function scoreEntry(entry, query, tokens, lxRefs) {
+  const lower = String(entry.searchableLower || "");
+  const titleLower = String(entry.title || "").toLowerCase();
+  const tagLower = entry.tags.map((item) => String(item || "").toLowerCase());
+  const chainLower = entry.chain.map((item) => String(item || "").toLowerCase());
+  let score = 0;
+
+  for (const lxRef of lxRefs) {
+    if (!lxRef) continue;
+    if (entry.lx === lxRef) {
+      score += 240;
+    }
+    if (chainLower.includes(lxRef.toLowerCase())) {
+      score += 30;
+    }
+  }
+
+  for (const token of tokens) {
+    if (!token) continue;
+    if (titleLower.includes(token)) {
+      score += 18;
+    }
+    if (tagLower.some((value) => value.includes(token))) {
+      score += 12;
+    }
+    if (String(entry.type || "").toLowerCase() === token) {
+      score += 10;
+    }
+    if (chainLower.some((value) => value.includes(token))) {
+      score += 8;
+    }
+    if (lower.includes(token)) {
+      score += 4;
+    }
+  }
+
+  if (query && lower.includes(query.toLowerCase())) {
+    score += 24;
+  }
+
+  return score;
+}
+
+function getAgentIndexStatus(options = {}) {
+  const loaded = loadAgentIndex(options);
+  return {
+    ok: true,
+    enabled: fs.existsSync(catalogPath),
+    loadedAt: loaded.loadedAt ? new Date(loaded.loadedAt).toISOString() : "",
+    root: agentIndexRoot,
+    catalogPath,
+    catalogEntries: loaded.catalogRows.length,
+    lxFiles: loaded.entries.length
+  };
+}
+
+function searchAgentIndex(query, options = {}) {
+  const text = cleanLine(query);
+  const loaded = loadAgentIndex(options);
+  if (!text) {
+    return {
+      ok: true,
+      enabled: fs.existsSync(catalogPath),
+      query: "",
+      count: 0,
+      matches: []
+    };
+  }
+  const tokens = tokenizeQuery(text);
+  const lxRefs = extractLxRefs(text);
+  const safeLimit = Math.max(1, Math.min(30, Number(options.limit) || 6));
+  const scored = loaded.entries
+    .map((entry) => ({
+      entry,
+      score: scoreEntry(entry, text, tokens, lxRefs)
+    }))
+    .filter((row) => row.score > 0)
+    .sort((left, right) => {
+      if (left.score !== right.score) return right.score - left.score;
+      return String(right.entry.updatedAt || "").localeCompare(String(left.entry.updatedAt || ""));
+    })
+    .slice(0, safeLimit)
+    .map((row) => ({
+      kind: "index",
+      lx: row.entry.lx,
+      source: row.entry.source,
+      title: row.entry.title,
+      type: row.entry.type,
+      tags: row.entry.tags.slice(0, 12),
+      chain: row.entry.chain.slice(0, 8),
+      line: 1,
+      score: row.score,
+      snippet: buildSnippet(
+        [row.entry.summary, row.entry.body].filter(Boolean).join(" "),
+        tokens.concat(lxRefs.map((value) => value.toLowerCase())),
+        Math.max(80, Math.min(420, Number(options.maxSnippetChars) || 220))
+      ),
+      updatedAt: row.entry.updatedAt
+    }));
+
+  return {
+    ok: true,
+    enabled: fs.existsSync(catalogPath),
+    query: text,
+    tokens,
+    lxRefs,
+    count: scored.length,
+    matches: scored
+  };
+}
+
+function buildAgentIndexContextForPrompt(query, options = {}) {
+  const costMode = String(options.costMode || "low").toLowerCase();
+  const limit = costMode === "quality" ? 4 : costMode === "balanced" ? 3 : 2;
+  const result = searchAgentIndex(query, {
+    limit,
+    maxSnippetChars: costMode === "quality" ? 260 : costMode === "balanced" ? 220 : 180
+  });
+  if (result.count < 1) {
+    return "";
+  }
+  const lines = result.matches.map((row) => {
+    const tagText = row.tags.length > 0 ? ` [${row.tags.join(", ")}]` : "";
+    return `- ${row.lx} ${row.type} "${row.title}"${tagText} ${row.snippet}`;
+  });
+  return ["Agent index:", ...lines].join("\n");
+}
+
+function collectAgentIndexDocuments(limit = 120, options = {}) {
+  const safeLimit = Math.max(1, Math.min(800, Number(limit) || 120));
+  const loaded = loadAgentIndex(options);
+  return loaded.entries.slice(0, safeLimit).map((entry) => ({
+    id: `agent-index:${entry.lx}`,
+    sourceKind: "agent_index",
+    sourceLabel: entry.source,
+    title: `${entry.lx} ${entry.title}`.trim(),
+    updatedAt: entry.updatedAt,
+    text: [
+      entry.lx,
+      `Name: ${entry.title}`,
+      `Type: ${entry.type}`,
+      entry.tags.length > 0 ? `Tags: ${entry.tags.join(", ")}` : "",
+      entry.chain.length > 0 ? `Chain: ${entry.chain.join(", ")}` : "",
+      entry.summary,
+      entry.body
+    ].filter(Boolean).join("\n"),
+    snippet: entry.summary || buildSnippet(entry.body, [], 240),
+    hash: `${entry.lx}:${entry.updatedAt}:${entry.title}`
+  }));
+}
+
+module.exports = {
+  getAgentIndexStatus,
+  searchAgentIndex,
+  buildAgentIndexContextForPrompt,
+  collectAgentIndexDocuments,
+  normalizeLxId
+};

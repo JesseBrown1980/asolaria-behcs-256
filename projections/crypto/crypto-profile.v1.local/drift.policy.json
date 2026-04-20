@@ -1,0 +1,17 @@
+{
+  "capsuleId": "crypto-profile.v1.local",
+  "createdAt": "2026-04-15T02:54:31.267Z",
+  "policyId": "crypto-capsule.v1.drift-policy",
+  "stopRules": [
+    "gate_result_regression",
+    "transport_channel_change_without_reauth",
+    "payload_sha256_drift",
+    "scope_boundary_change_without_owner_override"
+  ],
+  "thresholds": {
+    "packetHashMismatch": "stop",
+    "payloadHashMismatch": "stop",
+    "repeatedSkippedChecks": "hold_after_3",
+    "unknownRoute": "stop"
+  }
+}

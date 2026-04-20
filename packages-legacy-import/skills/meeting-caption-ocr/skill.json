@@ -1,0 +1,22 @@
+{
+  "id": "meeting.caption.ocr",
+  "title": "Meeting Caption OCR Bridge",
+  "description": "Start the caption OCR bridge that reads live captions from meeting windows (Zoom, Teams, Meet) and feeds them to the agent pipeline.",
+  "version": "0.1.0",
+  "createdBy": { "agent": "Liris", "pid": 17368, "date": "2026-03-24T04:30:00Z" },
+  "risk": "medium",
+  "permissions": ["desktop.capture", "voice.transcribe"],
+  "tags": ["meeting", "caption", "ocr", "live", "zoom", "teams", "meet"],
+  "steps": [
+    {
+      "action": "caption_ocr_start",
+      "note": "Launch caption OCR bridge. Reads live captions from meeting window and pipes to agent.",
+      "payload": {
+        "scriptPath": "tools/caption_ocr_bridge.py",
+        "captureInterval": 2000,
+        "outputPath": "captures/captions/"
+      },
+      "permissions": ["desktop.capture"]
+    }
+  ]
+}

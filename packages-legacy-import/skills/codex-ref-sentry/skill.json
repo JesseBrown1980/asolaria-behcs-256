@@ -1,0 +1,40 @@
+{
+  "id": "codex.ref.sentry",
+  "title": "Codex Wrapper: sentry",
+  "description": "Reference wrapper for local Codex skill \"sentry\" (sentry).",
+  "version": "0.1.0",
+  "risk": "low",
+  "tags": [
+    "codex",
+    "wrapper",
+    "reference",
+    "scope:custom",
+    "risk:low",
+    "approval:none"
+  ],
+  "permissions": [],
+  "steps": [
+    {
+      "action": "codex_skill_reference",
+      "note": "Expose reference metadata for Codex skill sentry.",
+      "payload": {
+        "source": "codex",
+        "integration": "wrapper",
+        "wrapperSkillId": "codex.ref.sentry",
+        "codexId": "sentry",
+        "codexName": "sentry",
+        "scope": "custom",
+        "relativePath": "sentry",
+        "fullPath": "",
+        "labels": [
+          "source:codex",
+          "scope:custom",
+          "integration:wrapper"
+        ],
+        "codexRisk": "low",
+        "codexApprovalRequired": false
+      },
+      "requiresApproval": false
+    }
+  ]
+}

@@ -1,0 +1,176 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "asolaria.crypto-capsule.v1",
+  "title": "Asolaria Crypto Capsule V1",
+  "type": "object",
+  "required": [
+    "capsuleId",
+    "version",
+    "createdAt",
+    "mode",
+    "claimsClass",
+    "scope",
+    "crypto",
+    "trinity",
+    "language",
+    "whiteRoom",
+    "mistakePolicy",
+    "glyph256"
+  ],
+  "properties": {
+    "capsuleId": {
+      "type": "string"
+    },
+    "version": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "createdAt": {
+      "type": "string"
+    },
+    "mode": {
+      "type": "string"
+    },
+    "claimsClass": {
+      "type": "string"
+    },
+    "scope": {
+      "type": "object",
+      "required": [
+        "profile",
+        "hostClass",
+        "lanes",
+        "artifactClass"
+      ],
+      "properties": {
+        "profile": {
+          "type": "string"
+        },
+        "hostClass": {
+          "type": "string"
+        },
+        "lanes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "artifactClass": {
+          "type": "string"
+        }
+      }
+    },
+    "crypto": {
+      "type": "object",
+      "required": [
+        "algorithm",
+        "hash",
+        "purpose",
+        "keyId",
+        "publicKeyPem",
+        "rotation",
+        "recursiveDerivation"
+      ],
+      "properties": {
+        "algorithm": {
+          "type": "string"
+        },
+        "hash": {
+          "type": "string"
+        },
+        "purpose": {
+          "type": "string"
+        },
+        "keyId": {
+          "type": "string"
+        },
+        "publicKeyPem": {
+          "type": "string"
+        },
+        "rotation": {
+          "type": "object",
+          "required": [
+            "intervalDays",
+            "revokeOnCompromise",
+            "replaceOnExpiry"
+          ]
+        },
+        "recursiveDerivation": {
+          "type": "object",
+          "required": [
+            "enabled",
+            "sourceMode",
+            "maxDepth",
+            "cycleDeny"
+          ]
+        }
+      }
+    },
+    "trinity": {
+      "type": "object",
+      "required": [
+        "compute",
+        "hardware",
+        "inference"
+      ]
+    },
+    "language": {
+      "type": "object",
+      "required": [
+        "dialect",
+        "liveBase",
+        "overlay",
+        "dimensions"
+      ],
+      "properties": {
+        "dialect": {
+          "type": "string"
+        },
+        "liveBase": {
+          "type": "string"
+        },
+        "overlay": {
+          "type": "string"
+        },
+        "dimensions": {
+          "type": "object"
+        },
+        "transport": {
+          "type": "object",
+          "properties": {
+            "asciiSafeTransport": {
+              "type": "boolean"
+            },
+            "encoding": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "whiteRoom": {
+      "type": "object",
+      "required": [
+        "consumeMode",
+        "failClosed",
+        "cleanProjectionClass"
+      ]
+    },
+    "mistakePolicy": {
+      "type": "object",
+      "required": [
+        "collectUntil",
+        "gulpThenCheckpoint",
+        "whiteRoomBound",
+        "replayRequired"
+      ]
+    },
+    "glyph256": {
+      "type": "object",
+      "minProperties": 4,
+      "additionalProperties": {
+        "type": "string"
+      }
+    }
+  }
+}

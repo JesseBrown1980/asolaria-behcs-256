@@ -1,0 +1,22 @@
+{
+  "name": "@asolaria/device-instance",
+  "version": "0.1.0",
+  "description": "Device-bound-instance primitive. Section E SMP-v5 (E-067+). Canonical _asolaria_identity.json manifest schema + AsolariaInstance API. Dissolves AUTHORITY + DELEGATION failures. Zero external deps (vanilla TS validator mirroring zod shape).",
+  "type": "module",
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "scripts": {
+    "test": "node --import tsx --test tests/"
+  },
+  "devDependencies": {
+    "tsx": "^4.7.0",
+    "typescript": "^5.3.0"
+  },
+  "behcs256": {
+    "d11_level": "ASSUMED",
+    "week_override": "COSIGN-MERGED-034-EXTENDED",
+    "operator_witness": "jesse+dan+felipe+rayssa+amy",
+    "spec": "plans/section-E-device-bound-instance.md",
+    "anchor": "memory/project_asolaria_identity_manifest_schema.md"
+  }
+}

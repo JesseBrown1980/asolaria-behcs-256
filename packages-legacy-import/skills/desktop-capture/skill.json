@@ -1,0 +1,19 @@
+{
+  "id": "desktop.capture",
+  "title": "Desktop Capture (Approval Required)",
+  "description": "Captures a local desktop screenshot to Asolaria/captures/desktop. Requires explicit owner approval per run.",
+  "version": "0.1.0",
+  "risk": "high",
+  "permissions": ["desktop.capture"],
+  "tags": ["desktop", "capture", "safety"],
+  "steps": [
+    {
+      "action": "desktop_capture",
+      "note": "Capture primary screen to file desktop-capture.png",
+      "payload": { "fileName": "desktop-capture.png", "captureAll": false, "screenIndex": -1, "timeoutMs": 25000 },
+      "permissions": ["desktop.capture"],
+      "requiresApproval": true
+    }
+  ]
+}
+

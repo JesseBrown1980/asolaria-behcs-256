@@ -1,0 +1,40 @@
+{
+  "id": "codex.ref.render-deploy",
+  "title": "Codex Wrapper: render-deploy",
+  "description": "Reference wrapper for local Codex skill \"render-deploy\" (render-deploy).",
+  "version": "0.1.0",
+  "risk": "low",
+  "tags": [
+    "codex",
+    "wrapper",
+    "reference",
+    "scope:custom",
+    "risk:low",
+    "approval:none"
+  ],
+  "permissions": [],
+  "steps": [
+    {
+      "action": "codex_skill_reference",
+      "note": "Expose reference metadata for Codex skill render-deploy.",
+      "payload": {
+        "source": "codex",
+        "integration": "wrapper",
+        "wrapperSkillId": "codex.ref.render-deploy",
+        "codexId": "render-deploy",
+        "codexName": "render-deploy",
+        "scope": "custom",
+        "relativePath": "render-deploy",
+        "fullPath": "",
+        "labels": [
+          "source:codex",
+          "scope:custom",
+          "integration:wrapper"
+        ],
+        "codexRisk": "low",
+        "codexApprovalRequired": false
+      },
+      "requiresApproval": false
+    }
+  ]
+}

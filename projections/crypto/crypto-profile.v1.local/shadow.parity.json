@@ -1,0 +1,11 @@
+{
+  "createdAt": "2026-04-15T02:54:31.266Z",
+  "liveSha256": "ffa17c5109ee06ea19ab2bf6fbb937a7df2d8ff3e1e3cd42625d0dc2dfc9ab25",
+  "match": true,
+  "refs": {
+    "packet": "packets/crypto/crypto-capsule.v1.packet.json",
+    "packetSha": "projections/crypto/crypto-profile.v1.local/capsule.packet.sha256",
+    "packetSig": "projections/crypto/crypto-profile.v1.local/capsule.sig.json"
+  },
+  "shadowSha256": "ffa17c5109ee06ea19ab2bf6fbb937a7df2d8ff3e1e3cd42625d0dc2dfc9ab25"
+}

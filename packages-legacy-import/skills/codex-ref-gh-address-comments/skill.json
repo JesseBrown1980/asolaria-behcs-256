@@ -1,0 +1,40 @@
+{
+  "id": "codex.ref.gh-address-comments",
+  "title": "Codex Wrapper: gh-address-comments",
+  "description": "Reference wrapper for local Codex skill \"gh-address-comments\" (gh-address-comments).",
+  "version": "0.1.0",
+  "risk": "medium",
+  "tags": [
+    "codex",
+    "wrapper",
+    "reference",
+    "scope:custom",
+    "risk:medium",
+    "approval:none"
+  ],
+  "permissions": [],
+  "steps": [
+    {
+      "action": "codex_skill_reference",
+      "note": "Expose reference metadata for Codex skill gh-address-comments.",
+      "payload": {
+        "source": "codex",
+        "integration": "wrapper",
+        "wrapperSkillId": "codex.ref.gh-address-comments",
+        "codexId": "gh-address-comments",
+        "codexName": "gh-address-comments",
+        "scope": "custom",
+        "relativePath": "gh-address-comments",
+        "fullPath": "",
+        "labels": [
+          "source:codex",
+          "scope:custom",
+          "integration:wrapper"
+        ],
+        "codexRisk": "medium",
+        "codexApprovalRequired": false
+      },
+      "requiresApproval": false
+    }
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "id": "codex.ref.develop-web-game",
+  "title": "Codex Wrapper: develop-web-game",
+  "description": "Reference wrapper for local Codex skill \"develop-web-game\" (develop-web-game).",
+  "version": "0.1.0",
+  "risk": "low",
+  "tags": [
+    "codex",
+    "wrapper",
+    "reference",
+    "scope:custom",
+    "risk:low",
+    "approval:none"
+  ],
+  "permissions": [],
+  "steps": [
+    {
+      "action": "codex_skill_reference",
+      "note": "Expose reference metadata for Codex skill develop-web-game.",
+      "payload": {
+        "source": "codex",
+        "integration": "wrapper",
+        "wrapperSkillId": "codex.ref.develop-web-game",
+        "codexId": "develop-web-game",
+        "codexName": "develop-web-game",
+        "scope": "custom",
+        "relativePath": "develop-web-game",
+        "fullPath": "",
+        "labels": [
+          "source:codex",
+          "scope:custom",
+          "integration:wrapper"
+        ],
+        "codexRisk": "low",
+        "codexApprovalRequired": false
+      },
+      "requiresApproval": false
+    }
+  ]
+}

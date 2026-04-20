@@ -1,0 +1,8 @@
+{
+  "status": "PROPOSAL",
+  "artifact": "minimax-m27-hookwall-policy",
+  "publicPlaceholder": true,
+  "note": "Sanitized placeholder projection; no runtime data.",
+  "replacementClass": "MiniMax hookwall policy runtime source",
+  "sha256": "PLACEHOLDER_PENDING_GENERATION"
+}

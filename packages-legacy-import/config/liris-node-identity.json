@@ -1,0 +1,25 @@
+{
+  "nodeId": "liris",
+  "role": "sub_colony",
+  "headColony": "asolaria",
+  "authorityMode": "task_lease_bound",
+  "languageVersion": "lx-aso-v1",
+  "sovereign": "192.168.15.189",
+  "operator": "rayssa",
+  "capabilities": [
+    "code_execution",
+    "file_operations",
+    "codebase_search",
+    "test_runner"
+  ],
+  "desktopAgents": true,
+  "phoneMode": "no_phone",
+  "phoneOrbital": false,
+  "phoneAgents": false,
+  "subColonyClass": "desktop_sub",
+  "registeredAt": "2026-03-15T21:43:25.490Z",
+  "mqttBroker": "mqtt://192.168.15.189:18883",
+  "mqttTopicPrefix": "asolaria/nodes/liris",
+  "bridgeRelay": "http://192.168.15.189:8788",
+  "bridgeRoom": "asolaria_bridge"
+}

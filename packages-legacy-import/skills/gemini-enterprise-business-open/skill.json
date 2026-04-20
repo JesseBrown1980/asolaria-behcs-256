@@ -1,0 +1,58 @@
+{
+  "id": "gemini.enterprise_business_open",
+  "title": "Gemini Enterprise Business Open (Plasmatoid)",
+  "description": "Open Gemini Enterprise in managed plasmatoid Chrome and run non-visual webMCP-style backend checks.",
+  "version": "0.1.0",
+  "risk": "medium",
+  "permissions": ["chrome.open", "chrome.read", "web.read", "web.run", "mcp.web"],
+  "tags": ["gemini", "enterprise", "chrome", "plasmatoid", "webmcp"],
+  "steps": [
+    {
+      "action": "chrome_open_url",
+      "note": "Open Gemini Enterprise landing page in managed plasmatoid Chrome profile.",
+      "payload": {
+        "url": "https://cloud.google.com/gemini-enterprise",
+        "isolatedProfile": false,
+        "newWindow": true,
+        "profileEmail": "plasmatoid@gmail.com"
+      },
+      "permissions": ["chrome.open"]
+    },
+    {
+      "action": "web_mcp_task",
+      "note": "Run backend-only extraction of page text and links (no screenshot requirement).",
+      "payload": {
+        "url": "https://cloud.google.com/gemini-enterprise",
+        "waitMs": 1200,
+        "maxChars": 18000,
+        "maxLinks": 80,
+        "steps": [
+          {
+            "action": "extract_text",
+            "selector": "body",
+            "name": "landing_text",
+            "limit": 7000
+          },
+          {
+            "action": "extract_links",
+            "selector": "a[href]",
+            "name": "landing_links",
+            "limit": 80
+          }
+        ]
+      },
+      "permissions": ["web.run", "mcp.web"]
+    },
+    {
+      "action": "web_mcp_inspect",
+      "note": "Inspect business auth entry point for manual handoff cues.",
+      "payload": {
+        "url": "https://auth.business.gemini.google/login",
+        "waitMs": 1200,
+        "maxChars": 14000,
+        "maxLinks": 20
+      },
+      "permissions": ["web.read", "mcp.web"]
+    }
+  ]
+}

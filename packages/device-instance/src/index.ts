@@ -1,0 +1,41 @@
+// @asolaria/device-instance — Section E SMP-v5 runtime.
+
+export {
+  validateManifest,
+  validateShapeFingerprint,
+  validateFirstObservationTuple,
+  validateLocationHistoryEntry,
+  validateDriftLogEntry,
+  checkAppendOnlyDiff,
+  OBSERVER_SURFACES,
+  OPERATOR_IDS,
+  PROVENANCE_VALUES,
+  LOCATION_STATUS_VALUES,
+  DRIFT_TYPES,
+  DRIFT_RESOLUTIONS,
+  DRIFT_CLASSIFICATIONS,
+  CONSTITUTIONAL_CLAUSES,
+  type AsolariaIdentityManifest,
+  type ShapeFingerprint,
+  type FirstObservationTuple,
+  type LocationHistoryEntry,
+  type DriftLogEntry,
+  type ObserverSurface,
+  type OperatorId,
+  type Provenance,
+  type LocationStatus,
+  type DriftType,
+  type DriftResolution,
+  type DriftClassification,
+  type ConstitutionalClause,
+  type ValidateResult,
+  type Violation,
+  type ViolationKind,
+} from "./manifest-schema.ts";
+
+export {
+  AsolariaInstance,
+  deriveKeyBinding,
+  type SpawnRequest,
+  type KeyBindingDescriptor,
+} from "./instance.ts";

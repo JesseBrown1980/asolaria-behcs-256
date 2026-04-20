@@ -1,0 +1,7 @@
+{
+  "name": "@asolaria/omnimets",
+  "version": "0.1.0",
+  "type": "module",
+  "description": "OmniMets per-lane telemetry + 6×6×6×6×6×12 convergence engine (SMP-v5 Section M.3 + Task #29).",
+  "main": "./src/index.ts"
+}

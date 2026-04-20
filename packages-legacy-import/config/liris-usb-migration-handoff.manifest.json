@@ -1,0 +1,32 @@
+{
+  "ok": true,
+  "taskId": "USB-MOVE-LIRIS-001",
+  "builtAt": "2026-04-04T00:00:00-03:00",
+  "state": "prepared_not_executed",
+  "sourceHost": "jesse-desktop",
+  "targetHost": "kuromi",
+  "targetRuntime": "Liris",
+  "activeRuler": "jesse",
+  "securityFallbacks": [
+    "black_hole",
+    "double_black_hole"
+  ],
+  "requiredTargetCatalog": "data\\liris-index\\leader-connector-catalog-local",
+  "requiredTargetCatalogSource": "E:\\runtime\\leader-connector-catalog",
+  "requiredTargetStartup": "machine+situation+ruler+omni_shannon packet regenerated on target host",
+  "requiredTargetOmniShannon": "omnihannon-kuromi with exact pid profile host device_id captured_at verified_at",
+  "requiredTargetLane": "phone/adb active on target host",
+  "sequence": [
+    "mount_catalog_on_target",
+    "regenerate_target_startup",
+    "move_usb",
+    "verify_adb_on_target",
+    "declare_target_active",
+    "demote_source_host"
+  ],
+  "cutoverResult": {
+    "sourceHostRole": "relay_reference_only_for_that_device",
+    "targetHostRole": "active_usb_adb_executor"
+  },
+  "boundary": "USB migration moves device-control truth with the cable; it is not just a physical transfer."
+}

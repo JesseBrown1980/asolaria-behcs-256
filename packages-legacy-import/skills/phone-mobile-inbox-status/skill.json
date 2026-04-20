@@ -1,0 +1,21 @@
+{
+  "id": "phone.mobile_inbox.status",
+  "title": "Phone Mobile Inbox Status",
+  "description": "Build the local Asolaria phone inbox projection with current approvals, tasks, notes, inferred channel, and recovered phone surface context.",
+  "version": "0.1.0",
+  "risk": "low",
+  "permissions": ["phone.read", "tasks.read", "notes.read"],
+  "tags": ["phone", "inbox", "dashboard", "notes", "tasks", "novalum", "falcon"],
+  "steps": [
+    {
+      "action": "phone_mobile_inbox_status",
+      "note": "Build the local phone inbox projection with current approvals, tasks, notes, and inferred phone channel.",
+      "payload": {
+        "approvalLimit": 6,
+        "taskLimit": 8,
+        "noteLimit": 6
+      },
+      "permissions": ["phone.read", "tasks.read", "notes.read"]
+    }
+  ]
+}

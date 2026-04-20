@@ -1,0 +1,40 @@
+{
+  "id": "codex.ref.security-threat-model",
+  "title": "Codex Wrapper: security-threat-model",
+  "description": "Reference wrapper for local Codex skill \"security-threat-model\" (security-threat-model).",
+  "version": "0.1.0",
+  "risk": "low",
+  "tags": [
+    "codex",
+    "wrapper",
+    "reference",
+    "scope:custom",
+    "risk:low",
+    "approval:none"
+  ],
+  "permissions": [],
+  "steps": [
+    {
+      "action": "codex_skill_reference",
+      "note": "Expose reference metadata for Codex skill security-threat-model.",
+      "payload": {
+        "source": "codex",
+        "integration": "wrapper",
+        "wrapperSkillId": "codex.ref.security-threat-model",
+        "codexId": "security-threat-model",
+        "codexName": "security-threat-model",
+        "scope": "custom",
+        "relativePath": "security-threat-model",
+        "fullPath": "",
+        "labels": [
+          "source:codex",
+          "scope:custom",
+          "integration:wrapper"
+        ],
+        "codexRisk": "low",
+        "codexApprovalRequired": false
+      },
+      "requiresApproval": false
+    }
+  ]
+}

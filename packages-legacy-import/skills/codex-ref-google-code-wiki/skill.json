@@ -1,0 +1,40 @@
+{
+  "id": "codex.ref.google-code-wiki",
+  "title": "Codex Wrapper: google-code-wiki",
+  "description": "Reference wrapper for local Codex skill \"google-code-wiki\" (google-code-wiki).",
+  "version": "0.1.0",
+  "risk": "low",
+  "tags": [
+    "codex",
+    "wrapper",
+    "reference",
+    "scope:custom",
+    "risk:low",
+    "approval:none"
+  ],
+  "permissions": [],
+  "steps": [
+    {
+      "action": "codex_skill_reference",
+      "note": "Expose reference metadata for Codex skill google-code-wiki.",
+      "payload": {
+        "source": "codex",
+        "integration": "wrapper",
+        "wrapperSkillId": "codex.ref.google-code-wiki",
+        "codexId": "google-code-wiki",
+        "codexName": "google-code-wiki",
+        "scope": "custom",
+        "relativePath": "google-code-wiki",
+        "fullPath": "",
+        "labels": [
+          "source:codex",
+          "scope:custom",
+          "integration:wrapper"
+        ],
+        "codexRisk": "low",
+        "codexApprovalRequired": false
+      },
+      "requiresApproval": false
+    }
+  ]
+}

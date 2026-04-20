@@ -1,0 +1,40 @@
+{
+  "id": "codex.ref.spreadsheet",
+  "title": "Codex Wrapper: spreadsheet",
+  "description": "Reference wrapper for local Codex skill \"spreadsheet\" (spreadsheet).",
+  "version": "0.1.0",
+  "risk": "medium",
+  "tags": [
+    "codex",
+    "wrapper",
+    "reference",
+    "scope:custom",
+    "risk:medium",
+    "approval:none"
+  ],
+  "permissions": [],
+  "steps": [
+    {
+      "action": "codex_skill_reference",
+      "note": "Expose reference metadata for Codex skill spreadsheet.",
+      "payload": {
+        "source": "codex",
+        "integration": "wrapper",
+        "wrapperSkillId": "codex.ref.spreadsheet",
+        "codexId": "spreadsheet",
+        "codexName": "spreadsheet",
+        "scope": "custom",
+        "relativePath": "spreadsheet",
+        "fullPath": "",
+        "labels": [
+          "source:codex",
+          "scope:custom",
+          "integration:wrapper"
+        ],
+        "codexRisk": "medium",
+        "codexApprovalRequired": false
+      },
+      "requiresApproval": false
+    }
+  ]
+}

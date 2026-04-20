@@ -1,0 +1,18 @@
+@handoff LIRIS-USB
+task=USB-MOVE-LIRIS-001
+state=prepared_not_executed
+source_host=jesse-desktop
+target_host=kuromi
+target_runtime=Liris
+active_ruler=jesse
+security_fallbacks=black_hole double_black_hole
+leader_connector_catalog_source=E:\runtime\leader-connector-catalog
+required_target_catalog=data\liris-index\leader-connector-catalog-local
+required_target_startup=machine+situation+ruler+omni_shannon packet regenerated on target host
+required_target_omni_shannon=omnihannon-kuromi with exact pid profile host device_id captured_at verified_at
+required_target_lane=phone/adb active on target host
+required_target_truth=target host must become the live USB and ADB executor before control claims switch
+sequence=mount_catalog_on_target -> regenerate_target_startup -> move_usb -> verify_adb_on_target -> declare_target_active -> demote_source_host
+source_host_after_cutover=relay_reference_only_for_that_device
+forbidden=do_not_claim_live_cutover_before_mount_and_adb_verification
+boundary=USB migration moves device-control truth with the cable; it is not just a physical transfer

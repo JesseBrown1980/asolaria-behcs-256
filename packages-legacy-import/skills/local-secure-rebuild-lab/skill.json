@@ -1,0 +1,37 @@
+{
+  "id": "local.secure_rebuild.lab",
+  "title": "Local Secure Rebuild Lab",
+  "description": "Study external app behavior from local evidence and generate a security-first local rebuild plan with phased delivery, test matrix, and policy gates.",
+  "version": "0.1.0",
+  "risk": "low",
+  "permissions": ["analysis.read", "mistakes.read"],
+  "tags": ["rebuild", "security", "local-first", "analysis", "reverse-design"],
+  "steps": [
+    {
+      "action": "tools_status",
+      "note": "Snapshot local runtime/tool posture before designing replacements.",
+      "permissions": ["host.read"]
+    },
+    {
+      "action": "mistake_avoidance_hints",
+      "note": "Load active mistake-prevention hints for rebuild activity.",
+      "payload": {
+        "status": "active",
+        "activityType": "local-rebuild",
+        "limit": 10
+      },
+      "permissions": ["mistakes.read"]
+    },
+    {
+      "action": "local_rebuild_plan",
+      "note": "Produce local secure rebuild blueprint from available evidence.",
+      "payload": {
+        "includeDefaultEvidence": true,
+        "persistReport": true,
+        "reportTag": "secure-rebuild"
+      },
+      "permissions": ["analysis.read"]
+    }
+  ]
+}
+

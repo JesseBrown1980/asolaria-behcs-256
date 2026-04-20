@@ -1,0 +1,56 @@
+{
+  "id": "codebase.review_external_mcp_cache",
+  "title": "Codebase Review External MCP Cache Audit",
+  "description": "Gather focused MCP cache evidence for external providers through loopback WebMCP extraction endpoints before codebase review.",
+  "version": "0.1.0",
+  "risk": "medium",
+  "permissions": ["web.read", "web.run", "mcp.web", "integrations.read"],
+  "tags": ["codebase", "review", "mcp", "cache", "webmcp"],
+  "steps": [
+    {
+      "action": "web_mcp_task",
+      "note": "Extract external MCP cache state.",
+      "payload": {
+        "url": "http://127.0.0.1:4781/api/integrations/external/mcp-cache",
+        "waitMs": 300,
+        "maxChars": 22000,
+        "maxLinks": 8,
+        "allowLoopback": true,
+        "allowPrivateNetwork": false,
+        "allowedHosts": ["127.0.0.1", "localhost"],
+        "steps": [
+          { "action": "extract_text", "selector": "body", "name": "external_mcp_cache_json", "limit": 16000 }
+        ]
+      },
+      "permissions": ["web.run", "mcp.web"]
+    },
+    {
+      "action": "web_mcp_task",
+      "note": "Extract external provider MCP config summary for policy verification.",
+      "payload": {
+        "url": "http://127.0.0.1:4781/api/integrations/external/status",
+        "waitMs": 300,
+        "maxChars": 22000,
+        "maxLinks": 8,
+        "allowLoopback": true,
+        "allowPrivateNetwork": false,
+        "allowedHosts": ["127.0.0.1", "localhost"],
+        "steps": [
+          { "action": "extract_text", "selector": "body", "name": "external_mcp_status_json", "limit": 16000 }
+        ]
+      },
+      "permissions": ["web.run", "mcp.web"]
+    },
+    {
+      "action": "web_mcp_inspect",
+      "note": "Inspect skills index endpoint to confirm skill/tool and MCP summary shape.",
+      "payload": {
+        "url": "http://127.0.0.1:4781/api/skills/index",
+        "waitMs": 300,
+        "maxChars": 18000,
+        "maxLinks": 8
+      },
+      "permissions": ["web.read", "mcp.web"]
+    }
+  ]
+}

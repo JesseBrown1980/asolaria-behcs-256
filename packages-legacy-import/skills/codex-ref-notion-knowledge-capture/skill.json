@@ -1,0 +1,40 @@
+{
+  "id": "codex.ref.notion-knowledge-capture",
+  "title": "Codex Wrapper: notion-knowledge-capture",
+  "description": "Reference wrapper for local Codex skill \"notion-knowledge-capture\" (notion-knowledge-capture).",
+  "version": "0.1.0",
+  "risk": "low",
+  "tags": [
+    "codex",
+    "wrapper",
+    "reference",
+    "scope:custom",
+    "risk:low",
+    "approval:none"
+  ],
+  "permissions": [],
+  "steps": [
+    {
+      "action": "codex_skill_reference",
+      "note": "Expose reference metadata for Codex skill notion-knowledge-capture.",
+      "payload": {
+        "source": "codex",
+        "integration": "wrapper",
+        "wrapperSkillId": "codex.ref.notion-knowledge-capture",
+        "codexId": "notion-knowledge-capture",
+        "codexName": "notion-knowledge-capture",
+        "scope": "custom",
+        "relativePath": "notion-knowledge-capture",
+        "fullPath": "",
+        "labels": [
+          "source:codex",
+          "scope:custom",
+          "integration:wrapper"
+        ],
+        "codexRisk": "low",
+        "codexApprovalRequired": false
+      },
+      "requiresApproval": false
+    }
+  ]
+}

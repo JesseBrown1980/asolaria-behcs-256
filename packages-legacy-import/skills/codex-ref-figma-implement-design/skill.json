@@ -1,0 +1,40 @@
+{
+  "id": "codex.ref.figma-implement-design",
+  "title": "Codex Wrapper: figma-implement-design",
+  "description": "Reference wrapper for local Codex skill \"figma-implement-design\" (figma-implement-design).",
+  "version": "0.1.0",
+  "risk": "low",
+  "tags": [
+    "codex",
+    "wrapper",
+    "reference",
+    "scope:custom",
+    "risk:low",
+    "approval:none"
+  ],
+  "permissions": [],
+  "steps": [
+    {
+      "action": "codex_skill_reference",
+      "note": "Expose reference metadata for Codex skill figma-implement-design.",
+      "payload": {
+        "source": "codex",
+        "integration": "wrapper",
+        "wrapperSkillId": "codex.ref.figma-implement-design",
+        "codexId": "figma-implement-design",
+        "codexName": "figma-implement-design",
+        "scope": "custom",
+        "relativePath": "figma-implement-design",
+        "fullPath": "",
+        "labels": [
+          "source:codex",
+          "scope:custom",
+          "integration:wrapper"
+        ],
+        "codexRisk": "low",
+        "codexApprovalRequired": false
+      },
+      "requiresApproval": false
+    }
+  ]
+}

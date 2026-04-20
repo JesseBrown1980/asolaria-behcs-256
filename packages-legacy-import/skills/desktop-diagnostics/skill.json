@@ -1,0 +1,14 @@
+{
+  "id": "desktop.diagnostics",
+  "title": "Desktop Diagnostics",
+  "description": "Lists active window + recent windows for quick local diagnostics.",
+  "version": "0.1.0",
+  "risk": "low",
+  "permissions": ["desktop.read"],
+  "tags": ["desktop", "diagnostics"],
+  "steps": [
+    { "action": "desktop_window_active", "note": "Read active window.", "permissions": ["desktop.read"] },
+    { "action": "desktop_window_list", "note": "List visible windows.", "payload": { "limit": 20 }, "permissions": ["desktop.read"] }
+  ]
+}
+

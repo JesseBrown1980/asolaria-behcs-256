@@ -1,0 +1,22 @@
+{
+  "id": "desktop.dual_capture",
+  "title": "Desktop Dual Capture (Approval Required)",
+  "description": "Captures multi-screen layout plus focused window evidence in a single run. Requires explicit owner approval per run.",
+  "version": "0.1.0",
+  "risk": "high",
+  "permissions": ["desktop.read", "desktop.capture"],
+  "tags": ["desktop", "capture", "layout", "window", "safety"],
+  "steps": [
+    {
+      "action": "desktop_dual_capture",
+      "note": "Capture each screen, optional virtual desktop, and focused window into one run folder.",
+      "payload": {
+        "includeVirtualDesktop": true,
+        "skipPerScreen": false,
+        "timeoutMs": 45000
+      },
+      "permissions": ["desktop.read", "desktop.capture"],
+      "requiresApproval": true
+    }
+  ]
+}

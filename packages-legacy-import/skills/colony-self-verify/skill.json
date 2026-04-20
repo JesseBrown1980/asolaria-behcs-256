@@ -1,0 +1,138 @@
+{
+  "id": "colony.self.verify",
+  "title": "Colony Self-Verification Audit",
+  "description": "Full self-verification audit of the Liris colony. Checks all 12 subsystems: PIDs, skills, mistakes, routes, projects, surfaces, orchestrator, index, memory, cross-colony sync, installed tools, and gaps/blockers. Produces a structured local-first report for operator review.",
+  "version": "1.0.0",
+  "createdBy": { "agent": "Liris", "pid": 17368, "date": "2026-03-24T22:30:00Z" },
+  "risk": "low",
+  "permissions": ["ops.monitor", "health.check"],
+  "tags": ["audit", "self-verify", "health", "system-status", "colony", "PID", "index", "memory", "FOUNDATIONAL"],
+  "notes": "Run this at session start or when Jesse asks for a full system check. Spawn as parallel agents for speed. Keep the report local by default and forward it upward only when explicitly requested.",
+  "steps": [
+    {
+      "action": "verify_pid_registry",
+      "note": "Step 1: Read data/spawn-pid-registry.json. Verify active PIDs are real. Check history for anomalies. Count active vs despawned.",
+      "payload": {
+        "registryPath": "data/spawn-pid-registry.json",
+        "checks": ["active_pids_valid", "history_not_corrupt", "no_stale_active"]
+      },
+      "permissions": ["ops.monitor"]
+    },
+    {
+      "action": "verify_agent_roles",
+      "note": "Step 2: Load spawnContextBuilder. List all roles. Test buildSpawnContext for each. Verify 10 roles exist with correct permissions.",
+      "payload": {
+        "module": "src/spawnContextBuilder.js",
+        "expectedRoles": 10,
+        "checks": ["all_roles_load", "permissions_defined", "briefing_includes_despawn_protocol"]
+      },
+      "permissions": ["ops.monitor"]
+    },
+    {
+      "action": "verify_index_counts",
+      "note": "Step 3: Count all LX entries on disk by type. Compare to CATALOG.md totals. Find discrepancies. Check for missing files.",
+      "payload": {
+        "indexDir": "data/agent-index",
+        "catalogPath": "data/agent-index/CATALOG.md",
+        "types": ["pattern", "tool", "skill", "mistake", "plan", "rule", "reference", "project", "task", "identity"],
+        "knownMissing": ["LX-134", "LX-135", "LX-136", "LX-137", "LX-138", "LX-216", "LX-217", "LX-218"],
+        "checks": ["disk_vs_catalog", "next_available_correct", "type_counts_match"]
+      },
+      "permissions": ["ops.monitor"]
+    },
+    {
+      "action": "verify_skills",
+      "note": "Step 4: Read skills/CATALOG.md. Count total skills. Check which have skill.json vs just catalog entries. Identify host-dependent codex-ref wrappers.",
+      "payload": {
+        "catalogPath": "skills/CATALOG.md",
+        "checks": ["skill_files_exist", "native_vs_codex_ref", "missing_backend_scripts"]
+      },
+      "permissions": ["ops.monitor"]
+    },
+    {
+      "action": "verify_mistakes",
+      "note": "Step 5: Count mistake-type LX entries. Check for resolved but unmarked mistakes.",
+      "payload": {
+        "dir": "data/agent-index/mistake",
+        "checks": ["count_matches_catalog", "no_resolved_unmarked"]
+      },
+      "permissions": ["ops.monitor"]
+    },
+    {
+      "action": "verify_routes",
+      "note": "Step 6: List all route files in routes/routes/ with line counts. Check omnispindle routes. Verify mount points.",
+      "payload": {
+        "routesDir": "routes/routes",
+        "checks": ["all_routes_list", "omnispindle_routes_exist", "line_counts"]
+      },
+      "permissions": ["ops.monitor"]
+    },
+    {
+      "action": "verify_surfaces",
+      "note": "Step 7: Check if server running on 4791. Test MQTT connection to broker. Check WebSocket surfaces.",
+      "payload": {
+        "httpPort": 4791,
+        "mqttBroker": "mqtt://192.168.15.189:18883",
+        "checks": ["http_port_listening", "mqtt_connected", "websocket_surfaces"]
+      },
+      "permissions": ["ops.monitor"]
+    },
+    {
+      "action": "verify_orchestrator_modules",
+      "note": "Step 8: Verify all 4 core modules load: spawnContextBuilder.js, agentIndexStore.js, indexCatalogSync.js, omnispindle.js. Check exported methods.",
+      "payload": {
+        "modules": [
+          "src/spawnContextBuilder.js",
+          "src/agentIndexStore.js",
+          "src/indexCatalogSync.js",
+          "src/omnispindle.js"
+        ],
+        "checks": ["all_load_clean", "expected_exports_present"]
+      },
+      "permissions": ["ops.monitor"]
+    },
+    {
+      "action": "verify_memory",
+      "note": "Step 9: Read MEMORY.md router. Verify all index files exist. Count total memory files. Flag stale entries.",
+      "payload": {
+        "memoryRoot": "C:/Users/rayss/.claude/projects/C--Users-rayss/memory",
+        "checks": ["all_indexes_exist", "all_referenced_files_exist", "count_total", "flag_stale"]
+      },
+      "permissions": ["ops.monitor"]
+    },
+    {
+      "action": "verify_cross_colony",
+      "note": "Step 10: Check XREF-COLONIES.md pair count. Verify cross-colony bodies on disk. Count retained MQTT messages.",
+      "payload": {
+        "xrefPath": "data/agent-index/XREF-COLONIES.md",
+        "gaiaBodies": ["data/agent-index/gaia-ix-bodies-1.json", "data/agent-index/gaia-ix-bodies-2.json"],
+        "checks": ["xref_pair_count", "gaia_bodies_exist", "mqtt_retained_count"]
+      },
+      "permissions": ["ops.monitor"]
+    },
+    {
+      "action": "verify_universal_auto_pid",
+      "note": "Step 11: Verify all 4 spawn paths have auto-PID wired: omnispindle.js, instantAgentSpawner.js, codexConnector.js, AdminTerminalSidecar.py.",
+      "payload": {
+        "paths": [
+          {"file": "src/omnispindle.js", "marker": "despawnPid"},
+          {"file": "src/instantAgentSpawner.js", "marker": "_persistentPid"},
+          {"file": "src/connectors/codexConnector.js", "marker": "_persistentPid"},
+          {"file": "tools/Run-AdminTerminalSidecar.py", "marker": "spawn-pid-registry"}
+        ],
+        "checks": ["all_markers_present"]
+      },
+      "permissions": ["ops.monitor"]
+    },
+    {
+      "action": "compile_report",
+      "note": "Step 12: Compile all results into a structured report. List every gap, blocker, and broken thing. Keep the report local-first and forward upward only when explicitly requested.",
+      "payload": {
+        "outputFormat": "markdown",
+        "mqttTopic": "asolaria/nodes/liris/system/audit",
+        "checks": ["all_subsystems_reported", "gaps_listed", "blockers_listed"]
+      },
+      "permissions": ["ops.monitor", "health.check"]
+    }
+  ]
+}

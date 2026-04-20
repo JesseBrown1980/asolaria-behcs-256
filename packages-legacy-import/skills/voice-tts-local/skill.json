@@ -1,0 +1,23 @@
+{
+  "id": "voice.tts.local",
+  "title": "Local Text-to-Speech (Kitty TTS)",
+  "description": "Synthesize speech from text using local Kitty TTS adapter. No cloud dependency.",
+  "version": "0.1.0",
+  "createdBy": { "agent": "Liris", "pid": 17368, "date": "2026-03-24T04:30:00Z" },
+  "risk": "low",
+  "permissions": ["voice.synthesize", "filesystem.write"],
+  "tags": ["voice", "tts", "speech", "local", "synthesis", "audio"],
+  "steps": [
+    {
+      "action": "voice_synthesize",
+      "note": "Convert text to speech using Kitty TTS adapter. Output: .wav file.",
+      "payload": {
+        "provider": "kitty-tts",
+        "scriptPath": "tools/kitty-tts-adapter.ps1",
+        "text": "{{text}}",
+        "outputPath": "captures/tts-output.wav"
+      },
+      "permissions": ["voice.synthesize"]
+    }
+  ]
+}

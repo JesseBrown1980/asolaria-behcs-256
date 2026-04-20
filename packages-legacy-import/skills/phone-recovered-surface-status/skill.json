@@ -1,0 +1,19 @@
+{
+  "id": "phone.recovered_surface.status",
+  "title": "Recovered Phone Surface Status",
+  "description": "Summarize the locally integrated Jesse phone surface: recovered catalog, live ADB visibility, UI captures, and local phone tooling scripts.",
+  "version": "0.1.0",
+  "risk": "low",
+  "permissions": ["phone.read"],
+  "tags": ["phone", "adb", "dashboard", "termux", "fdroid", "telegram", "tooling", "recovered"],
+  "steps": [
+    {
+      "action": "phone_recovered_surface_status",
+      "note": "Inspect the recovered phone catalog, live ADB status, local capture evidence, and local phone tooling integration.",
+      "payload": {
+        "sampleLimit": 4
+      },
+      "permissions": ["phone.read"]
+    }
+  ]
+}

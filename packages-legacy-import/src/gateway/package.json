@@ -1,0 +1,14 @@
+{
+  "name": "asolaria-gateway",
+  "private": true,
+  "version": "0.0.1",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "ajv": "^8.17.1",
+    "express": "^4.21.2",
+    "ws": "^8.18.3"
+  }
+}

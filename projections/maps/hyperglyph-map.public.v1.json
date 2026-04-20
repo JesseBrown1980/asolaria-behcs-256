@@ -1,0 +1,9 @@
+{
+  "status": "PROPOSAL",
+  "artifact": "hyperglyph-map",
+  "version": "v1",
+  "publicPlaceholder": true,
+  "note": "Sanitized placeholder projection; no runtime data.",
+  "replacementClass": "HG256 atlas runtime source",
+  "sha256": "PLACEHOLDER_PENDING_GENERATION"
+}

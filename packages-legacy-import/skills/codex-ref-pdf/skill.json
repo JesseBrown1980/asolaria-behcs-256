@@ -1,0 +1,40 @@
+{
+  "id": "codex.ref.pdf",
+  "title": "Codex Wrapper: pdf",
+  "description": "Reference wrapper for local Codex skill \"pdf\" (pdf).",
+  "version": "0.1.0",
+  "risk": "low",
+  "tags": [
+    "codex",
+    "wrapper",
+    "reference",
+    "scope:custom",
+    "risk:low",
+    "approval:none"
+  ],
+  "permissions": [],
+  "steps": [
+    {
+      "action": "codex_skill_reference",
+      "note": "Expose reference metadata for Codex skill pdf.",
+      "payload": {
+        "source": "codex",
+        "integration": "wrapper",
+        "wrapperSkillId": "codex.ref.pdf",
+        "codexId": "pdf",
+        "codexName": "pdf",
+        "scope": "custom",
+        "relativePath": "pdf",
+        "fullPath": "",
+        "labels": [
+          "source:codex",
+          "scope:custom",
+          "integration:wrapper"
+        ],
+        "codexRisk": "low",
+        "codexApprovalRequired": false
+      },
+      "requiresApproval": false
+    }
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "id": "codex.ref.yeet",
+  "title": "Codex Wrapper: yeet",
+  "description": "Reference wrapper for local Codex skill \"yeet\" (yeet).",
+  "version": "0.1.0",
+  "risk": "low",
+  "tags": [
+    "codex",
+    "wrapper",
+    "reference",
+    "scope:custom",
+    "risk:low",
+    "approval:none"
+  ],
+  "permissions": [],
+  "steps": [
+    {
+      "action": "codex_skill_reference",
+      "note": "Expose reference metadata for Codex skill yeet.",
+      "payload": {
+        "source": "codex",
+        "integration": "wrapper",
+        "wrapperSkillId": "codex.ref.yeet",
+        "codexId": "yeet",
+        "codexName": "yeet",
+        "scope": "custom",
+        "relativePath": "yeet",
+        "fullPath": "",
+        "labels": [
+          "source:codex",
+          "scope:custom",
+          "integration:wrapper"
+        ],
+        "codexRisk": "low",
+        "codexApprovalRequired": false
+      },
+      "requiresApproval": false
+    }
+  ]
+}

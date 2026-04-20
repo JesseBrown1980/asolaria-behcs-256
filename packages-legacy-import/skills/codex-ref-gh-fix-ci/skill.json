@@ -1,0 +1,40 @@
+{
+  "id": "codex.ref.gh-fix-ci",
+  "title": "Codex Wrapper: gh-fix-ci",
+  "description": "Reference wrapper for local Codex skill \"gh-fix-ci\" (gh-fix-ci).",
+  "version": "0.1.0",
+  "risk": "high",
+  "tags": [
+    "codex",
+    "wrapper",
+    "reference",
+    "scope:custom",
+    "risk:high",
+    "approval:required"
+  ],
+  "permissions": [],
+  "steps": [
+    {
+      "action": "codex_skill_reference",
+      "note": "Expose reference metadata for Codex skill gh-fix-ci.",
+      "payload": {
+        "source": "codex",
+        "integration": "wrapper",
+        "wrapperSkillId": "codex.ref.gh-fix-ci",
+        "codexId": "gh-fix-ci",
+        "codexName": "gh-fix-ci",
+        "scope": "custom",
+        "relativePath": "gh-fix-ci",
+        "fullPath": "",
+        "labels": [
+          "source:codex",
+          "scope:custom",
+          "integration:wrapper"
+        ],
+        "codexRisk": "high",
+        "codexApprovalRequired": true
+      },
+      "requiresApproval": true
+    }
+  ]
+}

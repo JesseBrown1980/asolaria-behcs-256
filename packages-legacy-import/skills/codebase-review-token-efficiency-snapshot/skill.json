@@ -1,0 +1,73 @@
+{
+  "id": "codebase.review_token_efficiency_snapshot",
+  "title": "Codebase Review Token-Efficiency Snapshot",
+  "description": "Capture MCP cache counters and provider policy signals used to minimize repeated tool-schema/token overhead during codebase-review runs.",
+  "version": "0.1.0",
+  "risk": "medium",
+  "permissions": ["web.read", "web.run", "mcp.web", "integrations.read"],
+  "tags": ["codebase", "review", "token", "efficiency", "mcp", "webmcp", "cache"],
+  "steps": [
+    {
+      "action": "web_mcp_task",
+      "note": "Extract external MCP cache counters and scoped context entries.",
+      "payload": {
+        "url": "http://127.0.0.1:4781/api/integrations/external/mcp-cache",
+        "waitMs": 300,
+        "maxChars": 24000,
+        "maxLinks": 8,
+        "allowLoopback": true,
+        "allowPrivateNetwork": false,
+        "allowedHosts": ["127.0.0.1", "localhost"],
+        "steps": [
+          { "action": "extract_text", "selector": "body", "name": "external_mcp_cache_json", "limit": 16000 }
+        ]
+      },
+      "permissions": ["web.run", "mcp.web"]
+    },
+    {
+      "action": "web_mcp_task",
+      "note": "Extract external providers status for MCP preset/approval-mode correlation.",
+      "payload": {
+        "url": "http://127.0.0.1:4781/api/integrations/external/status",
+        "waitMs": 300,
+        "maxChars": 24000,
+        "maxLinks": 8,
+        "allowLoopback": true,
+        "allowPrivateNetwork": false,
+        "allowedHosts": ["127.0.0.1", "localhost"],
+        "steps": [
+          { "action": "extract_text", "selector": "body", "name": "external_status_json", "limit": 16000 }
+        ]
+      },
+      "permissions": ["web.run", "mcp.web"]
+    },
+    {
+      "action": "web_mcp_task",
+      "note": "Extract skills index to compare reported MCP cache counters and tool catalog size.",
+      "payload": {
+        "url": "http://127.0.0.1:4781/api/skills/index?force=true",
+        "waitMs": 300,
+        "maxChars": 26000,
+        "maxLinks": 8,
+        "allowLoopback": true,
+        "allowPrivateNetwork": false,
+        "allowedHosts": ["127.0.0.1", "localhost"],
+        "steps": [
+          { "action": "extract_text", "selector": "body", "name": "skills_index_json", "limit": 17000 }
+        ]
+      },
+      "permissions": ["web.run", "mcp.web"]
+    },
+    {
+      "action": "web_mcp_inspect",
+      "note": "Inspect health endpoint for selected channel context used by the same run.",
+      "payload": {
+        "url": "http://127.0.0.1:4781/api/health",
+        "waitMs": 300,
+        "maxChars": 14000,
+        "maxLinks": 8
+      },
+      "permissions": ["web.read", "mcp.web"]
+    }
+  ]
+}

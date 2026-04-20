@@ -1,0 +1,21 @@
+{
+  "id": "mistake.avoidance.hints",
+  "title": "Mistake Avoidance Hints",
+  "description": "Returns compact numbered mistake patterns (Dewey-style) linked to tools, skills, and activity types.",
+  "version": "0.1.0",
+  "risk": "low",
+  "permissions": ["mistakes.read"],
+  "tags": ["mistakes", "taxonomy", "safety", "hints"],
+  "steps": [
+    {
+      "action": "mistake_avoidance_hints",
+      "note": "Fetch compact low-token prevention hints for tool/skill selection.",
+      "payload": {
+        "status": "active",
+        "limit": 10
+      },
+      "permissions": ["mistakes.read"]
+    }
+  ]
+}
+

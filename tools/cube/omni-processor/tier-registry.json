@@ -1,0 +1,115 @@
+{
+  "schema": "omni-processor tier-registry v0",
+  "lx_chain": "LX-491",
+  "stage": "Stage 1 — file-only, no listeners, no executors",
+  "novalum_shield_clause": "INHERITS — no tier may auto-trigger NovaLUM device.write",
+  "human_in_loop_clause": "INHERITS — every tier event observable in qdd-recon-allhands meeting room",
+  "registered_at": "2026-04-07T02:31:00Z",
+  "registered_by": "asolaria-instance@acer per Jesse 'Yes begin' tier-2 cosign 2026-04-07T02:30Z",
+  "tiers": {
+    "instant": {
+      "tier_id": "instant",
+      "rank": 1,
+      "latency_budget_ms": 1000,
+      "compute_envelope": "hot path lookups, no GNN inference, in-memory cache hits only",
+      "self_approve_class": "AAR_auto_approve",
+      "cube_alignment": { "primary_cube": 8, "primary_dim": "D1_ACTOR" },
+      "use_cases": [
+        "cube address resolution",
+        "registry lookup (units, agents, devices, peers)",
+        "cached scoring results",
+        "in-memory state queries",
+        "alive checks"
+      ],
+      "registered_units": []
+    },
+    "micro": {
+      "tier_id": "micro",
+      "rank": 2,
+      "latency_budget_ms": 30000,
+      "compute_envelope": "lightweight inference, single-pass model, in-memory data only",
+      "self_approve_class": "SV_self_vote",
+      "cube_alignment": { "primary_cube": 27, "primary_dim": "D2_VERB" },
+      "use_cases": [
+        "per-event scoring",
+        "quick triage votes",
+        "single-candidate evaluation",
+        "rapid omni-shannon 6-part heuristic",
+        "echo-test-v0 (selftest)"
+      ],
+      "registered_units": ["echo-test-v0"]
+    },
+    "medium": {
+      "tier_id": "medium",
+      "rank": 3,
+      "latency_budget_ms": 600000,
+      "compute_envelope": "moderate compute, real GNN inference, single-machine, GPU welcome but not required",
+      "self_approve_class": "SV_self_vote",
+      "cube_alignment": { "primary_cube": 1331, "primary_dim": "D5_LAYER" },
+      "use_cases": [
+        "GSLGNN scoring at moderate scale (1-100K examples)",
+        "scenario-simulator-v2 runs (1M-100M scenarios)",
+        "batch dispatch decisions",
+        "cross-candidate comparison"
+      ],
+      "registered_units": []
+    },
+    "small": {
+      "tier_id": "small",
+      "rank": 4,
+      "latency_budget_ms": 7200000,
+      "compute_envelope": "small hardware footprint — NO GPU REQUIRED, can run on any host including resource-constrained nodes",
+      "naming_rationale": "small refers to hardware footprint (no GPU), NOT to latency. small tier can take longer than medium but uses less hardware.",
+      "self_approve_class": "SV_self_vote",
+      "cube_alignment": { "primary_cube": 343, "primary_dim": "D4_OBJECT" },
+      "use_cases": [
+        "ground-truth git checks (Phase-Zero rule)",
+        "branch enumeration",
+        "evidence collection on low-end nodes",
+        "cross-host reconciliation",
+        "git-branch-merged-check-v0"
+      ],
+      "registered_units": ["git-branch-merged-check-v0"]
+    },
+    "leader": {
+      "tier_id": "leader",
+      "rank": 5,
+      "latency_budget_ms": null,
+      "compute_envelope": "as long as needed — full leader deliberation, cross-tier synthesis, operator-witness gates",
+      "self_approve_class": "operator_explicit",
+      "cube_alignment": { "primary_cube": 704969, "primary_dim": "D24_INTENT" },
+      "use_cases": [
+        "constitutional decisions (LX entry canonization)",
+        "strategy synthesis across multiple workstreams",
+        "dual-cosign rituals",
+        "Local Cosign Rule enforcement",
+        "operator-witnessed events",
+        "trinity-level architectural moves"
+      ],
+      "registered_units": []
+    }
+  },
+  "tier_routing_rules": [
+    "events arrive via webhook (Stage 3+) carrying a tier_target field",
+    "if no tier_target, default to instant + escalate as needed",
+    "tier escalation order: instant -> micro -> medium -> small (if hardware class differs) -> leader",
+    "leader tier output is the final word, no further escalation",
+    "every tier transition logged to omnidirectional calendar with cube tags"
+  ],
+  "constraint_invariants": [
+    "RG-1 NovaLUM shield enforced at every tier",
+    "RG-11 human-in-loop enforced at every tier (events posted to qdd-recon-allhands)",
+    "no tier may bypass omni-request-box hard-deny rules",
+    "tier registry is append-only — tiers may be added but never removed silently",
+    "every registered_unit must exist in units-registry.json",
+    "every unit must declare its tier in units-registry.json (Stage 1 extension)"
+  ],
+  "what_this_does_NOT_include": [
+    "Any executable code (this is JSON registry only)",
+    "Any tier dispatcher (Stage 4+ work)",
+    "Any webhook listener (Stage 3 work)",
+    "Any cross-host wire-up (Stage 5 work)",
+    "Any GNN endpoint (Stage 6+ work)"
+  ],
+  "next_step": "Stage 2 — omnitranslator stub. Pluggable translator framework. omnilanguage <-> JSON pair as the first pair. No cross-host translation yet."
+}

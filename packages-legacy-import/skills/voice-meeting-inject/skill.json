@@ -1,0 +1,69 @@
+{
+  "id": "voice.meeting.inject",
+  "title": "Voice Meeting Injection — Stealth Listen and Speak",
+  "description": "Full pipeline: capture meeting audio/captions, transcribe, inject agent intelligence, generate response via TTS, inject back into audio stream. The 'attend meetings for you' skill.",
+  "version": "0.1.0",
+  "createdBy": { "agent": "Liris", "pid": 17368, "date": "2026-03-24T04:30:00Z" },
+  "risk": "high",
+  "permissions": ["voice.transcribe", "voice.synthesize", "desktop.capture", "meeting.record"],
+  "tags": ["voice", "meeting", "injection", "stealth", "listen", "speak", "pipeline", "orchestration"],
+  "notes": "This is the master orchestration skill. It wires together: caption OCR (input) + Whisper/Gemini (transcription) + agent reasoning (processing) + Kitty TTS (output) + audio injection (delivery). Requires virtual audio device or screen capture for input.",
+  "steps": [
+    {
+      "action": "caption_ocr_start",
+      "note": "Step 1: Start caption OCR to read live meeting captions from screen.",
+      "payload": {
+        "scriptPath": "tools/caption_ocr_bridge.py",
+        "captureInterval": 2000
+      },
+      "permissions": ["desktop.capture"]
+    },
+    {
+      "action": "voice_transcribe",
+      "note": "Step 2: If audio available, run parallel Whisper transcription for higher accuracy.",
+      "payload": {
+        "provider": "whisper-local",
+        "model": "small.en",
+        "streamMode": true
+      },
+      "permissions": ["voice.transcribe"]
+    },
+    {
+      "action": "agent_process",
+      "note": "Step 3: Feed transcript to agent for processing. Agent reads context, generates intelligent response.",
+      "payload": {
+        "mode": "meeting-assistant",
+        "contextSources": ["captions", "transcript", "agenda"],
+        "responseType": "concise"
+      },
+      "permissions": ["meeting.record"]
+    },
+    {
+      "action": "voice_synthesize",
+      "note": "Step 4: Convert agent response to speech via TTS.",
+      "payload": {
+        "provider": "kitty-tts",
+        "outputPath": "captures/tts-inject.wav"
+      },
+      "permissions": ["voice.synthesize"]
+    },
+    {
+      "action": "audio_inject",
+      "note": "Step 5: Inject synthesized speech into meeting audio stream (virtual audio device or speaker).",
+      "payload": {
+        "source": "captures/tts-inject.wav",
+        "target": "virtual-audio-device"
+      },
+      "permissions": ["voice.synthesize"]
+    },
+    {
+      "action": "meeting_evidence_collect",
+      "note": "Step 6: Archive full transcript + agent responses as meeting evidence.",
+      "payload": {
+        "scriptPath": "tools/Collect-LiveTranscript-RealMeetingEvidence.ps1",
+        "outputDir": "captures/meetings/"
+      },
+      "permissions": ["meeting.record"]
+    }
+  ]
+}

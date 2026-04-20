@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "waveId": "omnishannon-6x6x6x12-device-specific",
+  "label": "Omnishannon 6x6x6x12 Device-Specific Wave",
+  "summary": "Use memory and index first, then run a six-by-six-by-six wave matrix with twelve delayed self-reflection slots under device-specific Omnishannon routing.",
+  "patternIds": ["LX-305", "LX-306", "LX-367", "LX-369"],
+  "executionOrder": ["memory", "index", "plan", "scout_6", "backline_6", "record"],
+  "matrix": {
+    "primaryWaveCount": 6,
+    "branchCount": 6,
+    "componentCount": 6,
+    "delayedReflectionCount": 12,
+    "delayedReflectionMode": "single_agent_inherited",
+    "delayedReflectionStepSeconds": 30,
+    "allowControllerSelfReflection": true
+  },
+  "pulse": {
+    "target": "usb",
+    "mode": "device_specific_pre_adb",
+    "recordPath": "data/liris-index/omnishannon-wave-pulses.ndjson"
+  },
+  "scoutLanes": [
+    { "id": "kernel_core", "label": "Kernel Core", "surfaceId": "liris-kuromi", "question": "What is live and portable on this host right now?" },
+    { "id": "spawn_pid_orchestrator", "label": "Spawn / PID / Orchestrator", "surfaceId": "helm", "question": "Which PID/profile chain is actually controlling this wave?" },
+    { "id": "index_runtime", "label": "Index Runtime", "surfaceId": "sentinel", "question": "What does the running index already know that should not be rediscovered?" },
+    { "id": "device_boundary", "label": "Device Boundary", "surfaceId": "falcon-2", "question": "What exact device truth is visible on USB right now?" },
+    { "id": "phone_memory", "label": "Phone Memory", "surfaceId": "dasein", "question": "What phone/runbook memory should stay paired to the device boundary?" },
+    { "id": "host_root", "label": "Host Root", "surfaceId": "asolaria", "question": "What owner-gated boundary remains on this host?" }
+  ],
+  "backlineLanes": [
+    { "id": "verification", "label": "Verification", "surfaceId": "sentinel", "question": "What proof is still missing?" },
+    { "id": "provenance", "label": "Provenance", "surfaceId": "gaia", "question": "What source is canonical for this device state?" },
+    { "id": "quarantine", "label": "Quarantine", "surfaceId": "falcon-2", "question": "What must remain blocked until exact packet proof appears?" },
+    { "id": "transport_truth", "label": "Transport Truth", "surfaceId": "the-beast", "question": "Is USB only visible, or is ADB actually live?" },
+    { "id": "route_truth", "label": "Route Truth", "surfaceId": "liris-kuromi", "question": "What route is valid on this machine right now?" },
+    { "id": "dispatch_bounds", "label": "Dispatch Bounds", "surfaceId": "helm", "question": "What work must stay bounded to admitted surfaces only?" }
+  ]
+}

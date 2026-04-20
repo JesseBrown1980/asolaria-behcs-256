@@ -1,0 +1,71 @@
+{
+  "id": "whatsapp.adb.send",
+  "title": "WhatsApp ADB Send Message",
+  "description": "Send a WhatsApp message via ADB on Rayssa's phone (RQCX907KFTK). Six steps: screenshot to check inbound, evaluate, tap input, type text, press Enter, screenshot to verify delivery.",
+  "version": "0.2.0",
+  "createdBy": { "agent": "Liris", "pid": 17368, "date": "2026-03-23T23:14:05Z" },
+  "updatedBy": { "agent": "Liris", "pid": 17368, "date": "2026-03-24T03:10:00Z" },
+  "risk": "medium",
+  "permissions": ["phone.input", "phone.capture"],
+  "tags": ["whatsapp", "adb", "phone", "messaging", "gaia", "jesse", "fallback-lane"],
+  "notes": "This is the FALLBACK lane. Once MQTT or SSH relay is live, use direct machine-to-machine messaging instead. ADB phone lane becomes Falcon-only.",
+  "steps": [
+    {
+      "action": "adb_capture",
+      "note": "Step 1: Screenshot FIRST to check for new inbound messages before typing.",
+      "payload": {
+        "serial": "RQCX907KFTK",
+        "outputPath": "captures/phone_whatsapp_pre_check.png"
+      },
+      "permissions": ["phone.capture"]
+    },
+    {
+      "action": "evaluate",
+      "note": "Step 2: Read the screenshot. If there is a new inbound message, STOP and process it before sending. If no new message, proceed to Step 3.",
+      "payload": {
+        "inputPath": "captures/phone_whatsapp_pre_check.png",
+        "condition": "check_for_new_inbound_messages",
+        "onNewMessage": "stop_and_process",
+        "onClear": "continue"
+      },
+      "permissions": ["phone.capture"]
+    },
+    {
+      "action": "adb_input",
+      "note": "Step 3: Tap message input field (bottom center of WhatsApp conversation).",
+      "payload": {
+        "serial": "RQCX907KFTK",
+        "command": "input tap 540 2200"
+      },
+      "permissions": ["phone.input"]
+    },
+    {
+      "action": "adb_input",
+      "note": "Step 4: Type message text. Use %s for spaces. Avoid special chars (parentheses, em-dash, quotes, curly braces). Max ~500 chars per ADB input to avoid truncation.",
+      "payload": {
+        "serial": "RQCX907KFTK",
+        "command": "input text '{{message}}'",
+        "maxLength": 500
+      },
+      "permissions": ["phone.input"]
+    },
+    {
+      "action": "adb_input",
+      "note": "Step 5: Press Enter to SEND. keyevent 66 = KEYCODE_ENTER.",
+      "payload": {
+        "serial": "RQCX907KFTK",
+        "command": "input keyevent 66"
+      },
+      "permissions": ["phone.input"]
+    },
+    {
+      "action": "adb_capture",
+      "note": "Step 6: Screenshot AFTER send to verify message was delivered (double checkmarks). ALWAYS take this screenshot — never skip verification.",
+      "payload": {
+        "serial": "RQCX907KFTK",
+        "outputPath": "captures/phone_whatsapp_verify.png"
+      },
+      "permissions": ["phone.capture"]
+    }
+  ]
+}

@@ -1,0 +1,57 @@
+{
+  "id": "avatar.npc.business.v1",
+  "title": "Asolaria NPC Avatar (Business Attire)",
+  "description": "Generates a measurement-specific female NPC avatar package with professional non-revealing business clothing, Unreal-ready physics config, and optional web API render output.",
+  "version": "0.1.0",
+  "risk": "medium",
+  "permissions": ["avatar.generate", "web.run"],
+  "tags": ["avatar", "npc", "unreal", "business", "render", "physics"],
+  "steps": [
+    {
+      "action": "avatar_npc_generate",
+      "note": "Build Asolaria business-avatar NPC package and request web render when API is configured.",
+      "payload": {
+        "profileId": "asolaria-business-female-v1",
+        "personaName": "Asolaria Executive",
+        "ageYears": 28,
+        "quality": "high",
+        "rig": "humanoid_unreal",
+        "outputFormat": "glb",
+        "measurements": {
+          "heightCm": 176,
+          "bustCm": 112,
+          "underbustCm": 82,
+          "waistCm": 66,
+          "hipsCm": 104,
+          "shoulderCm": 42,
+          "inseamCm": 84,
+          "cupSize": "FF"
+        },
+        "outfit": {
+          "style": "modern_business",
+          "top": "tailored blazer with high-coverage blouse",
+          "bottom": "tailored pencil skirt or slim business trousers",
+          "footwear": "formal pumps",
+          "palette": "charcoal, navy, white",
+          "coverage": "modest",
+          "revealing": false
+        },
+        "physics": {
+          "locomotion": "confident_professional",
+          "secondaryMotionProfile": "soft_natural",
+          "chestSoftBody": 0.52,
+          "waistStiffness": 0.68,
+          "clothSimulation": true,
+          "hairSimulation": true
+        },
+        "face": {
+          "expressionStyle": "intelligent_warm",
+          "makeupStyle": "professional_natural",
+          "hairStyle": "executive_waves",
+          "eyeColor": "hazel"
+        }
+      }
+    }
+  ]
+}
+

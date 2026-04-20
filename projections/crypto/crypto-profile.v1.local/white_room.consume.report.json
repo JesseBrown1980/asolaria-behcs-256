@@ -1,0 +1,100 @@
+{
+  "boundaryPolicyId": "hg256-boundary-policy.v1",
+  "canonVer": "hg256-base256-canon.v1",
+  "capsuleId": "crypto-profile.v1.local",
+  "checks": {
+    "asciiSafe": true,
+    "confusableSafe": true,
+    "hashPinned": true
+  },
+  "createdAt": "2026-04-15T02:54:31.270Z",
+  "decode": {
+    "decoded": true,
+    "matchesLiveGlyphs": true
+  },
+  "denyFlags": [
+    "NO_PUBLIC_READY_CLAIMS",
+    "NO_SECURITY_GUARANTEES",
+    "NO_REMOTE",
+    "PROMOTION_DENY_UNTIL_PROOFS"
+  ],
+  "finalStatus": "pass",
+  "gateResults": [
+    {
+      "gate": "schema_shape",
+      "reason": "required fields present",
+      "status": "pass"
+    },
+    {
+      "gate": "sign_verify_roundtrip",
+      "reason": "signature verified",
+      "status": "pass"
+    },
+    {
+      "gate": "payload_hash_match",
+      "reason": "payload sha256 matched",
+      "status": "pass"
+    },
+    {
+      "gate": "no_secret_leak",
+      "reason": "clean projection excludes private key material",
+      "status": "pass"
+    },
+    {
+      "gate": "white_room_bound",
+      "reason": "white-room refs and glyph packet generated",
+      "status": "pass"
+    },
+    {
+      "gate": "gulp_2000",
+      "reason": "mistake policy fixed at 2000 before gulp",
+      "status": "pass"
+    },
+    {
+      "gate": "packet_signature_roundtrip",
+      "reason": "detached packet signature verified",
+      "status": "pass"
+    },
+    {
+      "gate": "packet_hash_match",
+      "reason": "packet sha256 matched",
+      "status": "pass"
+    },
+    {
+      "gate": "ascii_safe_transport",
+      "reason": "glyph transport encoded into ASCII-safe envelope",
+      "status": "pass"
+    },
+    {
+      "gate": "scope_lock_paths",
+      "reason": "scope lock paths recorded",
+      "status": "pass"
+    }
+  ],
+  "inputs": {
+    "packet": {
+      "id": "packet",
+      "path": "packets/crypto/crypto-capsule.v1.packet.json",
+      "sha256": "584c9089bd87e29236d8c8079e4cc8c44deb20f4c4217a6725dbabddb5da54fb"
+    },
+    "packetSig": {
+      "id": "packetSig",
+      "path": "packets/crypto/crypto-capsule.v1.sig",
+      "sha256": "9a4189a1e9949ce961669bd88affe2972cd6690eb06c935814d9ff2180881d29"
+    },
+    "whiteRoomRefId": "white-room-crypto-capsule-v1"
+  },
+  "skipped": [
+    "remote_transport_probe",
+    "independent_review",
+    "d49_seal"
+  ],
+  "trancheId": "Q1_Q5_RUNTIME_WIRING_V1",
+  "transportPolicyId": "hg256-transport-envelope.v1",
+  "verify": {
+    "packetSha256": "ffa17c5109ee06ea19ab2bf6fbb937a7df2d8ff3e1e3cd42625d0dc2dfc9ab25",
+    "packetSignature": true,
+    "payloadSha256": "e4f387d00abe2ccdbb771c32232867a8d31e304e54cb4c2871b57465b6e5fd55",
+    "verifyStatus": "pass"
+  }
+}

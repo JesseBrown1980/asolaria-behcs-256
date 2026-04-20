@@ -1,0 +1,20 @@
+{
+  "id": "phone.browser_history_check",
+  "title": "Phone Browser History Check",
+  "description": "USB/ADB audit for phone browser usage: detect default browser + installed browser apps, open Chrome History, capture evidence, and summarize duplicate Asolaria host routes.",
+  "version": "0.1.0",
+  "risk": "low",
+  "permissions": ["phone.read", "phone.input", "phone.capture"],
+  "tags": ["phone", "browser", "history", "diagnostics", "adb"],
+  "steps": [
+    {
+      "action": "phone_browser_history_check",
+      "note": "Inspect browser history context and summarize route duplicates for troubleshooting.",
+      "payload": {
+        "maxEntries": 40,
+        "strategy": "auto"
+      },
+      "permissions": ["phone.read", "phone.input", "phone.capture"]
+    }
+  ]
+}

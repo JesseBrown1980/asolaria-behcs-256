@@ -1,0 +1,30 @@
+{
+  "name": "@asolaria/omnispindle-spawn-acer",
+  "version": "0.1.0",
+  "description": "ACER-side scaffold of Liris's omnispindle-spawn (4-worker opencode fanout). SCAFFOLD + test harness; absorbs Liris's spawn-pool.ts bundle when pushed. Windows-symmetric partner to cross-platform-spawn.",
+  "type": "module",
+  "main": "src/spawn-pool.mjs",
+  "exports": {
+    ".": "./src/spawn-pool.mjs",
+    "./catalog": "./src/model-catalog.mjs"
+  },
+  "scripts": {
+    "test": "node tests/spawn-pool.test.mjs",
+    "test:4-worker-symmetric": "node scripts/4-worker-symmetric-test.mjs"
+  },
+  "dependencies": {
+    "@asolaria/cross-platform-spawn": "*"
+  },
+  "keywords": [
+    "omnispindle",
+    "spawn",
+    "opencode",
+    "acer",
+    "symmetric",
+    "4-worker",
+    "fanout",
+    "scaffold"
+  ],
+  "author": "Asolaria / acer",
+  "license": "MIT"
+}

@@ -1,0 +1,31 @@
+<!-- provenance: file=brown-hilbert/12-2026-04-10-acer-omni-processor-open-lane.md author=codex dispatch=2026-04-10T21:07Z brief_id=ACER-OMNI-PROCESSOR-OPEN-LANE-2026-04-10 -->
+# Acer Omni-Processor Open Lane — 2026-04-10
+
+- Timestamp verified: 2026-04-10T18:07:19-03:00
+- Actor host: Acer / Asolaria
+- Profile anchor: asolaria-orchestrator-v1
+- Cube split:
+  - 4781 = primary authenticated control plane
+  - 4913 = local omni processor HTTP plane
+  - 4791 = gateway heartbeat plane
+- PID map at verification:
+  - 4913 -> PID 2848
+  - 4781 -> PID 16248
+  - 4791 -> PID 13068
+- Stage gate verified:
+  - data/vault/owner/omni-processor/STAGE_4_ENABLED exists
+- Omni registry verified:
+  - GET http://127.0.0.1:4913/omni/units -> 200
+  - units = echo-test-v0, document-share-v0, git-branch-merged-check-v0
+- Omni lane verified:
+  - POST /omni/echo with bearer auth -> 200
+  - POST /omni/submit with echo-test-v0 -> 200
+  - manifest_id = codex-echo-full-1775855239057
+  - elapsed_ms = 87
+- Shadow store on Acer:
+  - data/omni-processor/sandbox is live
+  - data/shadow-bank is not the active omni store on this host
+- Operational rule:
+  - send control and packets over 4781
+  - execute omni manifests over 4913
+  - do not expect 4820 locally on Acer; that lane is the Liris-side mirror

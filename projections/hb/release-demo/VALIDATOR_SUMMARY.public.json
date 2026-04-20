@@ -1,0 +1,18 @@
+{
+  "status": "PLANNED_OUTPUT",
+  "artifact": "VALIDATOR_SUMMARY",
+  "publicPlaceholder": true,
+  "note": "Sanitized placeholder. Build-PublicRelease.ps1 will overwrite with minimal projection summary on next run.",
+  "expectedOutputs": [
+    "projections/hb/release-demo/LEAK_SCAN_REPORT.public.json",
+    "projections/hb/release-demo/gates.report.public.json",
+    "projections/hb/release-demo/release.index.public.json",
+    "projections/hb/release-demo/VALIDATOR_SUMMARY.public.json"
+  ],
+  "failClosedRules": [
+    "deny if leak findings present",
+    "deny if outputs missing",
+    "never treat SKIPPED as PASS"
+  ]
+}
+

@@ -1,0 +1,40 @@
+{
+  "id": "codex.ref.screenshot",
+  "title": "Codex Wrapper: screenshot",
+  "description": "Reference wrapper for local Codex skill \"screenshot\" (screenshot).",
+  "version": "0.1.0",
+  "risk": "low",
+  "tags": [
+    "codex",
+    "wrapper",
+    "reference",
+    "scope:custom",
+    "risk:low",
+    "approval:none"
+  ],
+  "permissions": [],
+  "steps": [
+    {
+      "action": "codex_skill_reference",
+      "note": "Expose reference metadata for Codex skill screenshot.",
+      "payload": {
+        "source": "codex",
+        "integration": "wrapper",
+        "wrapperSkillId": "codex.ref.screenshot",
+        "codexId": "screenshot",
+        "codexName": "screenshot",
+        "scope": "custom",
+        "relativePath": "screenshot",
+        "fullPath": "",
+        "labels": [
+          "source:codex",
+          "scope:custom",
+          "integration:wrapper"
+        ],
+        "codexRisk": "low",
+        "codexApprovalRequired": false
+      },
+      "requiresApproval": false
+    }
+  ]
+}

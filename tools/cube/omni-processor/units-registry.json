@@ -1,0 +1,102 @@
+{
+  "schema": "omni-processor units-registry v0",
+  "lx_chain": "LX-489",
+  "novalum_shield_clause": "ENFORCED at runner check RG-1",
+  "human_in_loop_clause": "ENFORCED at runner check RG-11",
+  "registered_at": "2026-04-07T01:05:00Z",
+  "units": {
+    "echo-test-v0": {
+      "unit_id": "echo-test-v0",
+      "version": "0.1.0",
+      "owner_agent": "asolaria-instance@acer",
+      "executable": "tools/cube/omni-processor/units/echo-test.js",
+      "tier": "micro",
+      "cube_alignment": {
+        "primary_dim": "D11_PROOF",
+        "primary_cube_value": 29791,
+        "secondary_dims": ["D24_INTENT"]
+      },
+      "purpose": "Trivial echo unit for sandbox-runner self-test. Reads manifest from stdin, writes a record with the inputs back to stdout, exits 0.",
+      "input_schema": {
+        "message": "string (required)"
+      },
+      "output_schema": {
+        "echoed": "string (the message)",
+        "ts": "string (ISO8601)"
+      },
+      "side_effects": "none",
+      "reversibility": "pure",
+      "novalum_shield_compliant": true,
+      "operator_witnessed_required": false,
+      "self_approve_class": "AAR_auto_approve"
+    },
+    "document-share-v0": {
+      "unit_id": "document-share-v0",
+      "version": "0.1.0",
+      "owner_agent": "asolaria-instance@acer",
+      "executable": "tools/cube/omni-processor/units/document-share.js",
+      "tier": "small",
+      "cube_alignment": {
+        "primary_dim": "D22_TRANSLATION",
+        "primary_cube_value": 493039,
+        "secondary_dims": ["D11_PROOF", "D7_STATE"]
+      },
+      "purpose": "Cross-host document transfer via /omni/submit. Decodes base64 content, verifies sha256, writes to a sandboxed incoming dir. NovaLUM shield inherited at file_name + target_subdir checks. Designed bilaterally with liris-rayssa 2026-04-07 to replace the keyboard-channel chunker pattern that locked her terminal twice.",
+      "input_schema": {
+        "file_name": "string (required, basename only, no path traversal)",
+        "content_base64": "string (required, base64 of file content)",
+        "sha256": "string (required, hex sha256 of decoded bytes)",
+        "total_bytes": "int (required, expected decoded byte length)",
+        "chunk_id": "int (optional, for multi-chunk transfers)",
+        "of_total_chunks": "int (optional, total expected chunks)",
+        "target_subdir": "string (optional, subdir under incoming/, no ..)",
+        "overwrite": "bool (optional, default false)"
+      },
+      "output_schema": {
+        "ok": "bool",
+        "bytes_written": "int",
+        "sha256_verified": "bool",
+        "sha256": "string",
+        "path_stored": "string (absolute)",
+        "chunk_id": "int (echoed)",
+        "error": "string (if any)"
+      },
+      "side_effects": "fs_write_in_scope",
+      "reversibility": "reversible_with_backup",
+      "novalum_shield_compliant": true,
+      "novalum_shield_enforcement": "rejects file_name or target_subdir containing /novalum/i or /device-registry/i",
+      "max_payload_bytes": 16777216,
+      "operator_witnessed_required": false,
+      "self_approve_class": "SV_self_vote"
+    },
+    "git-branch-merged-check-v0": {
+      "unit_id": "git-branch-merged-check-v0",
+      "version": "0.1.0",
+      "owner_agent": "jbd.qdd.evidence-collector",
+      "executable": "tools/cube/omni-processor/units/git-branch-merged-check.js",
+      "tier": "small",
+      "cube_alignment": {
+        "primary_dim": "D11_PROOF",
+        "primary_cube_value": 29791,
+        "secondary_dims": ["D8_CHAIN"]
+      },
+      "purpose": "Phase-Zero ground truth: query git for whether a branch is merged into master",
+      "input_schema": {
+        "repo_path": "string (required)",
+        "branch_pattern": "string (required)",
+        "merge_target": "string (default master)"
+      },
+      "output_schema": {
+        "merged": "boolean",
+        "tip_commit_hash": "string",
+        "tip_commit_date": "string",
+        "tip_commit_msg": "string"
+      },
+      "side_effects": "fs_write_in_scope",
+      "reversibility": "pure",
+      "novalum_shield_compliant": true,
+      "operator_witnessed_required": false,
+      "self_approve_class": "AAR_auto_approve"
+    }
+  }
+}

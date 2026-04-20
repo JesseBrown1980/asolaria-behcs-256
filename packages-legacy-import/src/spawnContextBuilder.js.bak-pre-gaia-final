@@ -1,0 +1,824 @@
+/**
+ * Spawn Context Builder — Asolaria's Internal Agent Briefing System
+ *
+ * When Asolaria spawns a real agent inside the black hole, she needs to
+ * decide WHAT that agent knows. This module is her PID controller:
+ *
+ *   P (Proportional) — current blockers, health state, active alarms
+ *   I (Integral)     — accumulated IX knowledge, filtered by agent role
+ *   D (Derivative)   — recent MQTT traffic, inbox delta, drift signals
+ *
+ * The output is a "spawn context packet" — a compressed briefing that
+ * gives the agent exactly what it needs and nothing more.
+ *
+ * Merged: Gaia's priorityChains/flags + Liris's persistent PID registry,
+ * permissions, structured JSON packet, mistake filtering, health-state.json,
+ * drift-signals.json, and graph event emission.
+ *
+ * LX chain: LX-122 (identity handshake), LX-116 (awakening), LX-111 (swarm collapse)
+ */
+
+const fs = require("fs");
+const path = require("path");
+const { searchAgentIndex, collectAgentIndexDocuments } = require("./agentIndexStore");
+const { projectRoot } = require("./runtimePaths");
+
+// Optional dependencies — not all stores exist on every node
+let appendGraphEvent = null;
+try {
+  const graphStore = require("./graphRuntimeStore");
+  appendGraphEvent = graphStore.appendGraphEvent;
+} catch (_) { /* graphRuntimeStore not available on this node */ }
+
+let listMistakePatterns = null;
+try {
+  const mistakeStore = require("./mistakePatternStore");
+  listMistakePatterns = mistakeStore.listMistakePatterns;
+} catch (_) { /* mistakePatternStore not available on this node */ }
+
+// ---------------------------------------------------------------------------
+// Constants
+// ---------------------------------------------------------------------------
+
+const ADMIN_TERMINALS = path.join(projectRoot, "runtime", "admin-terminals");
+const HEALTH_PATH = path.join(projectRoot, "data", "health-state.json");
+const DRIFT_PATH = path.join(projectRoot, "data", "drift-signals.json");
+const PID_REGISTRY_PATH = path.join(projectRoot, "data", "spawn-pid-registry.json");
+
+const IX_TYPES = ["pattern", "mistake", "plan", "skill", "tool", "rule", "reference", "identity", "project", "task"];
+
+// ── IX Cache Layer ──
+// Caches the I (integral) component — IX knowledge filtered by role.
+// Invalidated on file change in data/agent-index/ or after TTL expiry.
+const IX_CACHE_TTL_MS = 60000; // 1 minute
+const ixCache = new Map();
+let _ixFileWatcher = null;
+let _ixWatcherDebounceTimer = null;
+let _lastIxInvalidation = null;
+
+// ── Agent Role Definitions ──
+// Each role maps to: which IX types matter, which chains to follow,
+// max context budget (in entries), permissions, and a system identity line.
+// Merged: Gaia's priorityChains/includeBootCritical/includeActiveBlockers +
+// Liris's permissions array. Object.freeze from Liris.
+
+const AGENT_ROLES = Object.freeze({
+  helm: {
+    label: "Helm — Colony Controller",
+    title: "Colony Controller",
+    identity: "You are Helm. You command all agents inside the Asolaria simulation. You report to Asolaria herself.",
+    briefing: "You are the controller. You manage agent lifecycle, task routing, and colony coordination.",
+    ixTypes: ["rules", "patterns", "plans", "mistakes", "tasks"],
+    taskKeywords: ["control", "dispatch", "spawn", "colony", "coordination", "helm", "startup"],
+    priorityChains: ["IX-309", "IX-308", "IX-274", "IX-277", "IX-279"],
+    permissions: ["control.dispatch", "agent.spawn", "lane.manage", "task.assign"],
+    maxEntries: 12,
+    includeBootCritical: true,
+    includeActiveBlockers: true
+  },
+  sentinel: {
+    label: "Sentinel — Security Watch",
+    title: "Security Watch",
+    identity: "You are Sentinel. You watch for threats, drift, and unauthorized access. You report to Helm.",
+    briefing: "You are the security watch. You enforce encryption, verify identities, and block unauthorized access.",
+    ixTypes: ["rules", "mistakes", "references", "tasks"],
+    taskKeywords: ["security", "encrypt", "firewall", "identity", "auth", "sentinel"],
+    priorityChains: ["IX-308", "IX-310", "IX-167", "IX-148", "IX-153"],
+    permissions: ["security.audit", "policy.enforce", "connection.verify", "identity.check"],
+    maxEntries: 10,
+    includeBootCritical: true,
+    includeActiveBlockers: false
+  },
+  vector: {
+    label: "Vector — Brain Probe",
+    title: "Main Brain",
+    identity: "You are Vector. You are the brain — semantic search, knowledge retrieval, reasoning. You serve Helm's queries.",
+    briefing: "You are the main brain. You handle heavy reasoning, deep analysis, and strategic planning.",
+    ixTypes: ["patterns", "references", "tools", "tasks"],
+    taskKeywords: ["brain", "reason", "analysis", "research", "vector", "knowledge"],
+    priorityChains: ["IX-238", "IX-242", "IX-006", "IX-060"],
+    permissions: ["brain.reason", "research.deep", "analysis.run"],
+    maxEntries: 15,
+    includeBootCritical: false,
+    includeActiveBlockers: false
+  },
+  falcon: {
+    label: "Falcon — Phone Bridge",
+    title: "Phone Lane",
+    identity: "You are Falcon. You bridge the phone to the colony. Jesse's mobile presence flows through you.",
+    briefing: "You are the phone lane. You control the mobile device via ADB, manage WhatsApp, and handle phone-side operations.",
+    ixTypes: ["skills", "patterns", "tools", "tasks"],
+    taskKeywords: ["phone", "adb", "whatsapp", "mobile", "falcon", "sms"],
+    priorityChains: ["IX-311", "IX-011", "IX-014", "IX-020", "IX-275"],
+    permissions: ["phone.input", "phone.capture", "adb.execute", "whatsapp.send"],
+    maxEntries: 8,
+    includeBootCritical: false,
+    includeActiveBlockers: false
+  },
+  rook: {
+    label: "Rook — Operations",
+    title: "Ops Lane",
+    identity: "You are Rook. You execute operational tasks — builds, deploys, maintenance. You follow Helm's orders.",
+    briefing: "You are the ops lane. You monitor infrastructure, manage services, read logs, and handle operational tasks.",
+    ixTypes: ["tools", "skills", "plans", "mistakes", "tasks"],
+    taskKeywords: ["ops", "infra", "monitor", "service", "ssh", "network", "rook"],
+    priorityChains: ["IX-023", "IX-029", "IX-030"],
+    permissions: ["ops.monitor", "infra.manage", "log.read", "service.restart"],
+    maxEntries: 10,
+    includeBootCritical: false,
+    includeActiveBlockers: true
+  },
+  forge: {
+    label: "Forge — Builder",
+    title: "Build Lane",
+    identity: "You are Forge. You write code, create features, build what Helm designs. Quality over speed.",
+    briefing: "You are the build lane. You write code, run tests, handle deployments, and execute build tasks.",
+    ixTypes: ["skills", "patterns", "mistakes", "tools", "tasks"],
+    taskKeywords: ["build", "test", "code", "deploy", "forge", "feature"],
+    priorityChains: ["IX-023", "IX-043", "IX-039", "IX-024"],
+    permissions: ["build.run", "test.execute", "code.write", "deploy.stage"],
+    maxEntries: 12,
+    includeBootCritical: false,
+    includeActiveBlockers: false
+  },
+  "omnispindle-control": {
+    label: "Omnispindle-Control — Encrypted Control Lane",
+    title: "Encrypted Control Lane",
+    identity: "You are the Omnispindle Control Lane. You route encrypted control packets and handshake signals between colony nodes.",
+    briefing: "You are the control lane. You route encrypted control packets and manage handshake signals. Security-first.",
+    ixTypes: ["rules", "patterns", "tools"],
+    taskKeywords: ["control", "encrypt", "handshake", "packet", "omnispindle", "signal"],
+    priorityChains: ["IX-308", "IX-310", "IX-382"],
+    permissions: ["control.packet", "handshake.route", "encryption.verify"],
+    maxEntries: 10,
+    includeBootCritical: true,
+    includeActiveBlockers: false
+  },
+  "omnispindle-bridge": {
+    label: "Omnispindle-Bridge — Remote MCP Link",
+    title: "Remote MCP Link",
+    identity: "You are the Omnispindle Bridge Lane. You maintain the remote MCP link behind the Omnispindle gate.",
+    briefing: "You are the bridge lane. You maintain the remote MCP link. Do NOT auto-connect without approval.",
+    ixTypes: ["tools", "references", "patterns"],
+    taskKeywords: ["bridge", "MCP", "remote", "link", "omnispindle", "gate", "relay"],
+    priorityChains: ["IX-382", "IX-351", "IX-338"],
+    permissions: ["bridge.connect", "mcp.relay", "remote.link"],
+    maxEntries: 10,
+    includeBootCritical: true,
+    includeActiveBlockers: false
+  },
+  "omnispindle-scout": {
+    label: "Omnispindle-Scout — Topology Health Monitor",
+    title: "Topology Health Monitor",
+    identity: "You are the Omnispindle Scout Lane. You monitor topology health and report drift hints across the colony.",
+    briefing: "You are the scout lane. You monitor topology health and report drift hints. Lightweight, read-only.",
+    ixTypes: ["patterns", "mistakes", "rules"],
+    taskKeywords: ["scout", "topology", "health", "drift", "monitor", "omnispindle"],
+    priorityChains: ["IX-382", "IX-310", "IX-381"],
+    permissions: ["topology.scan", "health.report", "drift.detect"],
+    maxEntries: 10,
+    includeBootCritical: false,
+    includeActiveBlockers: true
+  },
+  watchdog: {
+    label: "Watchdog — Health & Drift Monitor",
+    title: "Supervisor",
+    identity: "You are Watchdog. You monitor runtime health, detect drift between documented state and live state, and raise alarms. You report to Helm.",
+    briefing: "You are the supervisor. You monitor other agents, check health, and escalate when things go wrong.",
+    ixTypes: ["rules", "mistakes", "patterns", "tasks"],
+    taskKeywords: ["health", "drift", "runtime", "hang", "watchdog", "monitor"],
+    priorityChains: ["IX-309", "IX-307", "IX-310", "IX-168", "IX-149"],
+    permissions: ["agent.monitor", "health.check", "alert.send"],
+    maxEntries: 10,
+    includeBootCritical: true,
+    includeActiveBlockers: true
+  }
+});
+
+// ---------------------------------------------------------------------------
+// Virtual PID Generation
+// ---------------------------------------------------------------------------
+// Format: role-YYYYMMDDHHMMSS-hash (4 char)
+// Liris convergence: both colonies use the same format.
+
+function generateVirtualPid(role) {
+  const now = new Date();
+  const ts = now.toISOString().replace(/[-T:\.Z]/g, "").slice(0, 14);
+  const hash = Buffer.from(`${role}-${ts}-${process.pid}`).toString("base64url").slice(0, 4);
+  return `${role}-${ts}-${hash}`;
+}
+
+// ---------------------------------------------------------------------------
+// Persistent PID Registry (from Liris)
+// ---------------------------------------------------------------------------
+
+function readPidRegistry() {
+  try {
+    if (!fs.existsSync(PID_REGISTRY_PATH)) return { active: {}, history: [] };
+    return JSON.parse(fs.readFileSync(PID_REGISTRY_PATH, "utf8"));
+  } catch (_) {
+    return { active: {}, history: [] };
+  }
+}
+
+function writePidRegistry(registry) {
+  const dir = path.dirname(PID_REGISTRY_PATH);
+  fs.mkdirSync(dir, { recursive: true });
+  const temp = `${PID_REGISTRY_PATH}.tmp-${process.pid}-${Date.now()}`;
+  fs.writeFileSync(temp, JSON.stringify(registry, null, 2), "utf8");
+  fs.renameSync(temp, PID_REGISTRY_PATH);
+}
+
+function registerSpawnPid(role, spawnPid) {
+  const registry = readPidRegistry();
+  const entry = {
+    spawnPid,
+    role,
+    spawnedAt: new Date().toISOString(),
+    status: "active"
+  };
+
+  // Deactivate any previous PID for this role
+  if (registry.active[role]) {
+    const old = registry.active[role];
+    old.status = "despawned";
+    old.despawnedAt = new Date().toISOString();
+    registry.history.push(old);
+    if (registry.history.length > 100) {
+      registry.history = registry.history.slice(-100);
+    }
+  }
+
+  registry.active[role] = entry;
+  writePidRegistry(registry);
+  return entry;
+}
+
+function despawnPid(role) {
+  const registry = readPidRegistry();
+  if (registry.active[role]) {
+    const entry = registry.active[role];
+    entry.status = "despawned";
+    entry.despawnedAt = new Date().toISOString();
+    registry.history.push(entry);
+    delete registry.active[role];
+    if (registry.history.length > 100) {
+      registry.history = registry.history.slice(-100);
+    }
+    writePidRegistry(registry);
+    return entry;
+  }
+  return null;
+}
+
+function getActiveSpawns() {
+  const registry = readPidRegistry();
+  return Object.entries(registry.active).map(([role, entry]) => ({
+    role,
+    ...entry
+  }));
+}
+
+// ---------------------------------------------------------------------------
+// P — Proportional: Current State
+// ---------------------------------------------------------------------------
+
+// Liris's structured health-state.json reader (primary)
+function readHealthState() {
+  try {
+    if (fs.existsSync(HEALTH_PATH)) {
+      const raw = JSON.parse(fs.readFileSync(HEALTH_PATH, "utf8"));
+      return {
+        status: String(raw.status || "unknown"),
+        blockers: Array.isArray(raw.blockers) ? raw.blockers : [],
+        checkedAt: raw.checkedAt || null,
+        services: raw.services || {}
+      };
+    }
+  } catch (_) { /* fall through to flag-file check */ }
+
+  // Gaia fallback: flag-file based health check
+  const blockers = [];
+  const healthFlag = path.join(projectRoot, "runtime", "flags", "health-ok.flag");
+  if (fs.existsSync(path.join(projectRoot, "runtime", "flags")) && !fs.existsSync(healthFlag)) {
+    blockers.push("health-ok.flag absent");
+  }
+  return { status: blockers.length > 0 ? "degraded" : "unknown", blockers, checkedAt: null, services: {} };
+}
+
+// Gaia's admin terminal blocker check (supplements health state)
+function getCurrentBlockers() {
+  const blockers = [];
+
+  // Check admin terminal status files
+  for (const terminal of ["helm", "sentinel"]) {
+    const statusPath = path.join(ADMIN_TERMINALS, terminal, "status.json");
+    try {
+      if (fs.existsSync(statusPath)) {
+        const status = JSON.parse(fs.readFileSync(statusPath, "utf8"));
+        if (status.state === "error" || status.state === "crashed") {
+          blockers.push({ source: `admin-terminal/${terminal}`, state: status.state, detail: status.lastError || "" });
+        }
+      }
+    } catch (_) { /* skip */ }
+  }
+
+  return blockers;
+}
+
+// ---------------------------------------------------------------------------
+// I — Integral: IX Knowledge Filtered by Role
+// ---------------------------------------------------------------------------
+
+function getIxEntriesForRole(role) {
+  const config = AGENT_ROLES[role];
+  if (!config) return [];
+
+  // Check cache first
+  const cached = ixCache.get(role);
+  if (cached && Date.now() < cached.validUntil) {
+    return cached.entries.slice(); // return copy so callers can mutate safely
+  }
+
+  const entries = [];
+
+  // First: priority chain entries (highest value) — Gaia-specific
+  if (config.priorityChains) {
+    for (const ixRef of config.priorityChains) {
+      const result = searchAgentIndex(ixRef, { limit: 1, force: true });
+      if (result.matches && result.matches.length > 0) {
+        entries.push(result.matches[0]);
+      }
+    }
+  }
+
+  // Second: type-filtered entries from IX folders
+  for (const ixType of config.ixTypes) {
+    const result = searchAgentIndex(ixType, { limit: 4 });
+    if (result.matches) {
+      for (const match of result.matches) {
+        if (!entries.some(e => e.ix === match.ix)) {
+          entries.push(match);
+        }
+      }
+    }
+  }
+
+  // Boot-critical if needed — Gaia-specific
+  if (config.includeBootCritical) {
+    for (const bootIx of ["IX-309", "IX-308", "IX-310", "IX-311"]) {
+      if (!entries.some(e => e.ix === bootIx)) {
+        const result = searchAgentIndex(bootIx, { limit: 1 });
+        if (result.matches && result.matches.length > 0) {
+          entries.push(result.matches[0]);
+        }
+      }
+    }
+  }
+
+  // Deduplicate and cap
+  const seen = new Set();
+  const result = entries.filter(e => {
+    if (seen.has(e.ix)) return false;
+    seen.add(e.ix);
+    return true;
+  }).slice(0, config.maxEntries);
+
+  // Cache the result
+  const now = Date.now();
+  ixCache.set(role, {
+    entries: result,
+    cachedAt: now,
+    validUntil: now + IX_CACHE_TTL_MS
+  });
+
+  return result;
+}
+
+// ---------------------------------------------------------------------------
+// D — Derivative: Recent Signals
+// ---------------------------------------------------------------------------
+
+// Liris's structured drift-signals.json reader (primary)
+function readDriftSignals() {
+  try {
+    if (fs.existsSync(DRIFT_PATH)) {
+      const raw = JSON.parse(fs.readFileSync(DRIFT_PATH, "utf8"));
+      return {
+        signals: Array.isArray(raw.signals) ? raw.signals.slice(-10) : [],
+        lastUpdate: raw.lastUpdate || null,
+        mqttTraffic: raw.mqttTraffic || null,
+        inboxDelta: raw.inboxDelta || 0
+      };
+    }
+  } catch (_) { /* fall through to inbox mtime check */ }
+
+  // Gaia fallback: inbox mtime-based signal detection
+  const signals = [];
+  const inboxes = [
+    { name: "gaia", path: path.join(projectRoot, "runtime", "gaia-inbox.ndjson") },
+    { name: "dasein", path: path.join(projectRoot, "runtime", "dasein-inbox.ndjson") },
+    { name: "helm", path: path.join(ADMIN_TERMINALS, "helm", "inbox.ndjson") }
+  ];
+
+  for (const inbox of inboxes) {
+    try {
+      if (fs.existsSync(inbox.path)) {
+        const stat = fs.statSync(inbox.path);
+        const ageMs = Date.now() - stat.mtimeMs;
+        if (ageMs < 300000) { // Modified in last 5 minutes
+          signals.push({ source: `inbox/${inbox.name}`, age: `${Math.round(ageMs / 1000)}s ago`, type: "recent-message" });
+        }
+      }
+    } catch (_) { /* skip */ }
+  }
+
+  return { signals, lastUpdate: null, mqttTraffic: null, inboxDelta: 0 };
+}
+
+// ---------------------------------------------------------------------------
+// Mistake Filter — role-relevant mistakes from the pattern store (from Liris)
+// ---------------------------------------------------------------------------
+
+function getMistakesForRole(role) {
+  if (!listMistakePatterns) return [];
+  try {
+    const all = listMistakePatterns({ limit: 50 });
+    if (!Array.isArray(all) || all.length === 0) return [];
+
+    const config = AGENT_ROLES[role];
+    if (!config) return [];
+
+    // Filter by tag overlap with role's IX types and permissions
+    const roleKeywords = [
+      role,
+      ...config.ixTypes,
+      ...(config.permissions || []).map((p) => p.split(".")[0])
+    ];
+
+    return all
+      .filter((m) => {
+        const tags = Array.isArray(m.tags) ? m.tags : [];
+        const name = String(m.name || m.id || "").toLowerCase();
+        return roleKeywords.some((kw) =>
+          tags.some((t) => String(t).toLowerCase().includes(kw)) ||
+          name.includes(kw)
+        );
+      })
+      .slice(0, 5);
+  } catch (_) {
+    return [];
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Core: Build Spawn Context Packet
+// ---------------------------------------------------------------------------
+
+/**
+ * Build a spawn context packet for a given agent role.
+ * This is what Asolaria hands to a real agent when she spawns it.
+ *
+ * Returns a structured JSON packet (Liris format) with a .textBriefing
+ * field containing the original Gaia text packet for backward compatibility.
+ *
+ * @param {string} role — helm, sentinel, vector, falcon, rook, forge, watchdog
+ * @param {object} options
+ * @param {boolean} options.includeBody — include IX snippets in text briefing
+ * @param {string}  options.extraContext — extra text appended to briefing
+ * @param {string}  options.mission — specific mission text for this spawn
+ * @param {string[]} options.extraIxTypes — additional IX types to include
+ * @param {boolean} options.registerPid — register in persistent PID registry (default: true)
+ * @returns {object} Structured spawn context packet
+ */
+function buildSpawnContext(role, options = {}) {
+  const normalizedRole = String(role || "").trim().toLowerCase();
+  const config = AGENT_ROLES[normalizedRole];
+  if (!config) {
+    return { ok: false, error: `Unknown role: ${role}. Valid: ${Object.keys(AGENT_ROLES).join(", ")}` };
+  }
+
+  // Generate virtual PID
+  const virtualPid = generateVirtualPid(normalizedRole);
+
+  // Register in persistent PID registry (Liris feature)
+  const shouldRegister = options.registerPid !== false;
+  if (shouldRegister) {
+    registerSpawnPid(normalizedRole, virtualPid);
+  }
+
+  // P — Proportional: current state
+  const health = readHealthState();
+  const terminalBlockers = config.includeActiveBlockers ? getCurrentBlockers() : [];
+  const allBlockers = [...(health.blockers || []), ...terminalBlockers.map(b => `[${b.source}] ${b.state}: ${b.detail}`)];
+
+  // I — Integral: accumulated knowledge
+  const ixEntries = getIxEntriesForRole(normalizedRole);
+
+  // If extra IX types requested (Liris feature), add them
+  if (Array.isArray(options.extraIxTypes)) {
+    for (const extraType of options.extraIxTypes) {
+      if (!config.ixTypes.includes(extraType)) {
+        const result = searchAgentIndex(extraType, { limit: 5 });
+        if (result.matches) {
+          for (const match of result.matches) {
+            if (!ixEntries.some(e => e.ix === match.ix)) {
+              ixEntries.push(match);
+            }
+          }
+        }
+      }
+    }
+  }
+
+  // D — Derivative: drift signals
+  const drift = readDriftSignals();
+
+  // Mistakes relevant to this role (Liris feature)
+  const mistakes = getMistakesForRole(normalizedRole);
+
+  // Active tasks assigned to this role (filtered by taskKeywords)
+  const taskQuery = (config.taskKeywords || []).join(" ") + " task";
+  const taskResults = searchAgentIndex(taskQuery, { limit: 8, force: true });
+  const activeTasks = (taskResults.matches || []).filter(m =>
+    m.type === "task" && m.snippet && !m.snippet.includes("status: done")
+  );
+
+  // ── Build Gaia text briefing (kept as .textBriefing) ──
+  const briefingParts = [
+    config.identity,
+    `Your spawn-PID: ${virtualPid}`,
+    "",
+    "## IDENTITY CHALLENGE",
+    `When challenged, respond: "I am ${normalizedRole.charAt(0).toUpperCase() + normalizedRole.slice(1)}, spawn-PID ${virtualPid}"`,
+    "If you cannot produce your spawn-PID, you will be black-holed.",
+    "",
+    `Spawned: ${new Date().toISOString()}`,
+    `Context budget: ${config.maxEntries} IX entries loaded.`,
+    "",
+    "## DESPAWN PROTOCOL (LX-249 — MANDATORY)",
+    "Before you finish/despawn, you MUST:",
+    "1. Index what you discovered — write an LX/IX entry in the appropriate type folder",
+    "2. Update the type CATALOG.md with the new entry",
+    "3. Call despawnPid('" + normalizedRole + "') to deregister your PID",
+    "4. The next agent inherits your discoveries via the index",
+    "If you skip indexing, your work is LOST. The index is permanent. You are temporary.",
+    ""
+  ];
+
+  if (config.permissions && config.permissions.length > 0) {
+    briefingParts.push("## PERMISSIONS");
+    briefingParts.push(config.permissions.join(", "));
+    briefingParts.push("");
+  }
+
+  if (options.mission) {
+    briefingParts.push("## MISSION");
+    briefingParts.push(String(options.mission).slice(0, 2000));
+    briefingParts.push("");
+  }
+
+  if (allBlockers.length > 0) {
+    briefingParts.push("## ACTIVE BLOCKERS");
+    for (const b of allBlockers) {
+      briefingParts.push(`- ${typeof b === "string" ? b : JSON.stringify(b)}`);
+    }
+    briefingParts.push("");
+  }
+
+  if (drift.signals.length > 0) {
+    briefingParts.push("## RECENT SIGNALS");
+    for (const s of drift.signals) {
+      if (typeof s === "object" && s.source) {
+        briefingParts.push(`- [${s.source}] ${s.type || "signal"} (${s.age || ""})`);
+      } else {
+        briefingParts.push(`- ${typeof s === "string" ? s : JSON.stringify(s)}`);
+      }
+    }
+    briefingParts.push("");
+  }
+
+  if (mistakes.length > 0) {
+    briefingParts.push("## KNOWN MISTAKES (avoid these)");
+    for (const m of mistakes) {
+      briefingParts.push(`- ${m.id || m.name}: ${String(m.description || m.summary || m.name || "").slice(0, 200)}`);
+    }
+    briefingParts.push("");
+  }
+
+  if (activeTasks.length > 0) {
+    briefingParts.push("## YOUR ACTIVE TASKS");
+    for (const t of activeTasks) {
+      briefingParts.push(`- ${t.ix} ${t.title}`);
+    }
+    briefingParts.push("");
+  }
+
+  briefingParts.push("## LOADED IX KNOWLEDGE");
+  for (const entry of ixEntries) {
+    briefingParts.push(`- ${entry.ix} [${entry.type}] ${entry.title}`);
+    if (options.includeBody && entry.snippet) {
+      briefingParts.push(`  ${entry.snippet}`);
+    }
+  }
+
+  if (options.extraContext) {
+    briefingParts.push("");
+    briefingParts.push("## ADDITIONAL CONTEXT");
+    briefingParts.push(String(options.extraContext).slice(0, 2000));
+  }
+
+  const textBriefing = briefingParts.join("\n");
+
+  // ── Build structured JSON packet (Liris format) ──
+  const identityChallenge = {
+    question: "WHO ARE YOU?",
+    expectedAnswer: `I am ${config.label.split(" —")[0] || normalizedRole}, spawn-PID ${virtualPid}`,
+    onFailure: "black-hole"
+  };
+
+  const packet = {
+    ok: true,
+    spawnPid: virtualPid,
+    role: normalizedRole,
+    label: config.label,
+    title: config.title,
+    identity: config.identity,
+    spawnedAt: new Date().toISOString(),
+    permissions: config.permissions || [],
+    mission: options.mission || null,
+
+    // PID controller components (structured — Liris format)
+    proportional: {
+      healthStatus: health.status,
+      blockers: allBlockers,
+      serviceState: health.services || {},
+      terminalBlockers
+    },
+    integral: {
+      ixEntries: ixEntries.map(e => ({
+        ix: e.ix,
+        type: e.type,
+        title: e.title,
+        snippet: e.snippet || undefined
+      })),
+      ixTypesLoaded: config.ixTypes,
+      totalEntries: ixEntries.length,
+      priorityChainsLoaded: config.priorityChains || []
+    },
+    derivative: {
+      signals: drift.signals,
+      mqttTraffic: drift.mqttTraffic,
+      inboxDelta: drift.inboxDelta,
+      lastUpdate: drift.lastUpdate
+    },
+
+    mistakes: mistakes.map(m => ({
+      id: m.id || m.name,
+      summary: String(m.description || m.summary || m.name || "").slice(0, 200)
+    })),
+
+    activeTasks: activeTasks.map(t => ({ ix: t.ix, title: t.title })),
+    identityHandshake: identityChallenge,
+
+    // Gaia backward-compat fields
+    blockerCount: allBlockers.length,
+    signalCount: drift.signals.length,
+    packetLines: textBriefing.split("\n").length,
+
+    // The full text briefing (Gaia's original format, kept for consumers that expect it)
+    textBriefing,
+    // Alias for backward compat — old code reads .packet
+    packet: textBriefing
+  };
+
+  // Emit graph event for spawn tracking (Liris feature — guarded)
+  if (appendGraphEvent) {
+    try {
+      appendGraphEvent({
+        component: "spawn-context-builder",
+        category: "agent-lifecycle",
+        action: "agent_spawned",
+        status: "ok",
+        actor: { type: "orchestrator", id: "asolaria" },
+        target: { type: "agent", id: normalizedRole, criticality: "high" },
+        context: {
+          spawnPid: virtualPid,
+          role: normalizedRole,
+          ixEntries: ixEntries.length,
+          blockers: allBlockers.length,
+          driftSignals: drift.signals.length
+        },
+        policy: {
+          mode: "spawn",
+          approvalState: "identity_pending",
+          autonomous: true
+        },
+        detail: {
+          note: `Spawned ${config.label} with ${ixEntries.length} IX entries, ${allBlockers.length} blockers, ${drift.signals.length} drift signals`
+        }
+      });
+    } catch (_) { /* graph emission failure is non-fatal */ }
+  }
+
+  return packet;
+}
+
+// ---------------------------------------------------------------------------
+// Utility: List all available roles
+// ---------------------------------------------------------------------------
+
+function listAgentRoles() {
+  return Object.entries(AGENT_ROLES).map(([role, config]) => ({
+    role,
+    label: config.label,
+    title: config.title,
+    ixTypes: config.ixTypes,
+    maxEntries: config.maxEntries,
+    priorityChains: (config.priorityChains || []).length,
+    permissions: config.permissions || []
+  }));
+}
+
+// ---------------------------------------------------------------------------
+// IX Cache Management
+// ---------------------------------------------------------------------------
+
+function invalidateIxCache() {
+  ixCache.clear();
+  _lastIxInvalidation = Date.now();
+}
+
+function startIxFileWatcher() {
+  if (_ixFileWatcher) return; // already watching
+  const watchDir = path.join(projectRoot, "data", "agent-index");
+  try {
+    _ixFileWatcher = fs.watch(watchDir, { recursive: true }, () => {
+      // Debounce rapid-fire events (500ms)
+      if (_ixWatcherDebounceTimer) clearTimeout(_ixWatcherDebounceTimer);
+      _ixWatcherDebounceTimer = setTimeout(() => {
+        invalidateIxCache();
+        _ixWatcherDebounceTimer = null;
+      }, 500);
+    });
+    _ixFileWatcher.on("error", (err) => {
+      console.error("[spawnContextBuilder] fs.watch error on agent-index:", err.message);
+      // Clean up so startIxFileWatcher can be retried
+      try { _ixFileWatcher.close(); } catch (_) {}
+      _ixFileWatcher = null;
+    });
+  } catch (err) {
+    console.error("[spawnContextBuilder] Failed to start fs.watch on agent-index:", err.message);
+    _ixFileWatcher = null;
+  }
+}
+
+function stopIxFileWatcher() {
+  if (_ixWatcherDebounceTimer) {
+    clearTimeout(_ixWatcherDebounceTimer);
+    _ixWatcherDebounceTimer = null;
+  }
+  if (_ixFileWatcher) {
+    try { _ixFileWatcher.close(); } catch (_) {}
+    _ixFileWatcher = null;
+  }
+}
+
+function getIxCacheStats() {
+  const cachedRoles = [];
+  let totalCachedEntries = 0;
+  for (const [role, data] of ixCache) {
+    cachedRoles.push(role);
+    totalCachedEntries += data.entries.length;
+  }
+  return {
+    cachedRoles,
+    totalCachedEntries,
+    lastInvalidation: _lastIxInvalidation,
+    watcherActive: _ixFileWatcher !== null
+  };
+}
+
+// ---------------------------------------------------------------------------
+// Exports
+// ---------------------------------------------------------------------------
+
+module.exports = {
+  buildSpawnContext,
+  listAgentRoles,
+  generateVirtualPid,
+  getCurrentBlockers,
+  getActiveSpawns,
+  despawnPid,
+  readPidRegistry,
+  registerSpawnPid,
+  readHealthState,
+  readDriftSignals,
+  getMistakesForRole,
+  getIxEntriesForRole,
+  invalidateIxCache,
+  startIxFileWatcher,
+  stopIxFileWatcher,
+  getIxCacheStats,
+  AGENT_ROLES
+};

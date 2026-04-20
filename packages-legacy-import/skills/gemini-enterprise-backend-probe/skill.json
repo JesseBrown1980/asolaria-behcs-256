@@ -1,0 +1,47 @@
+{
+  "id": "gemini.enterprise_business_backend_probe",
+  "title": "Gemini Enterprise Backend Probe (Stealth)",
+  "description": "Run non-visual webMCP-style checks for Gemini Enterprise pages in stealth mode without opening visible Chrome windows.",
+  "version": "0.1.0",
+  "risk": "low",
+  "permissions": ["web.read", "web.run", "mcp.web"],
+  "tags": ["gemini", "enterprise", "stealth", "webmcp", "backend"],
+  "steps": [
+    {
+      "action": "web_mcp_task",
+      "note": "Extract landing page text and links from Gemini Enterprise page.",
+      "payload": {
+        "url": "https://cloud.google.com/gemini-enterprise",
+        "waitMs": 1200,
+        "maxChars": 18000,
+        "maxLinks": 80,
+        "steps": [
+          {
+            "action": "extract_text",
+            "selector": "body",
+            "name": "landing_text",
+            "limit": 7000
+          },
+          {
+            "action": "extract_links",
+            "selector": "a[href]",
+            "name": "landing_links",
+            "limit": 80
+          }
+        ]
+      },
+      "permissions": ["web.run", "mcp.web"]
+    },
+    {
+      "action": "web_mcp_inspect",
+      "note": "Inspect business login page for edition/login cues.",
+      "payload": {
+        "url": "https://auth.business.gemini.google/login",
+        "waitMs": 1200,
+        "maxChars": 14000,
+        "maxLinks": 20
+      },
+      "permissions": ["web.read", "mcp.web"]
+    }
+  ]
+}

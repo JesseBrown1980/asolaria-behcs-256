@@ -1,0 +1,20 @@
+{
+  "id": "chrome.profiles_list",
+  "title": "Chrome Managed Profiles List",
+  "description": "List managed Chrome profiles available to Asolaria, with restricted profiles excluded by default.",
+  "version": "0.1.0",
+  "risk": "low",
+  "permissions": ["chrome.read"],
+  "tags": ["chrome", "profiles", "managed"],
+  "steps": [
+    {
+      "action": "chrome_profiles_list",
+      "note": "List managed Chrome profiles and the default profile Asolaria will pick.",
+      "payload": {
+        "includeRestricted": false,
+        "limit": 120
+      },
+      "permissions": ["chrome.read"]
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "id": "integrations.snapshot",
+  "title": "Integrations Snapshot",
+  "description": "Collects safe integration status summaries (Google, GCP, Vertex, Gemini API).",
+  "version": "0.1.0",
+  "risk": "low",
+  "permissions": ["integrations.read"],
+  "tags": ["integrations", "status", "snapshot"],
+  "steps": [
+    { "action": "tools_status", "note": "Detect installed tool paths and OpenClaw policy.", "permissions": ["host.read"] },
+    { "action": "google_status", "note": "Google Workspace OAuth status.", "permissions": ["google.read"] },
+    { "action": "gcp_status", "note": "GCP service account status.", "permissions": ["gcp.read"] },
+    { "action": "gcp_services_enabled", "note": "Enabled GCP APIs (Service Usage)", "payload": { "pageSize": 60 }, "permissions": ["gcp.read"] },
+    { "action": "vertex_status", "note": "Vertex Gemini status.", "permissions": ["vertex.read"] },
+    { "action": "vertex_budget_status", "note": "Vertex budget status.", "permissions": ["vertex.read"] },
+    { "action": "gemini_api_status", "note": "Gemini API (AI Studio) status.", "permissions": ["gemini.read"] }
+  ]
+}

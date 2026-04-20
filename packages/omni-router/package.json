@@ -1,0 +1,15 @@
+{
+  "name": "@asolaria/omni-router",
+  "version": "0.1.0",
+  "description": "Single long-running router that holds free-tier cloud connections + glyph↔prose translation + capability-slice dispatch. Thin workers POST to it.",
+  "type": "module",
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "scripts": {
+    "smoke": "node --experimental-strip-types --no-warnings demo/smoke.ts"
+  },
+  "behcs256": {
+    "d11_level": "ASSUMED",
+    "authority": "COSIGN-MERGED-034"
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "includeDirectories": [
+    "src",
+    "public",
+    "skills",
+    "tools",
+    "scripts",
+    "services",
+    "config",
+    "infra",
+    "tools-manifests",
+    "docs"
+  ],
+  "includeFiles": [
+    "package.json",
+    "package-lock.json",
+    "README.md",
+    "PUBLIC_DEPLOYMENT.md",
+    "REFERENCES.md",
+    "Start-Asolaria.cmd",
+    "Stop-Asolaria.cmd",
+    "Start-Asolaria-ControlPlane.cmd",
+    "Stop-Asolaria-ControlPlane.cmd",
+    "Start-Asolaria-Phone.cmd",
+    "ADB-HealthCheck.cmd",
+    ".gitignore"
+  ],
+  "excludePathContains": [
+    "\\data\\",
+    "\\logs\\",
+    "\\captures\\",
+    "\\inbox\\",
+    "\\private\\",
+    "\\certs\\",
+    "\\tmp-http_ece\\",
+    "\\node_modules\\",
+    "\\.git\\",
+    "\\reports\\"
+  ],
+  "excludeFileNameLike": [
+    "*.pid",
+    "*.log",
+    "*.tmp",
+    "*.token",
+    "*.token.txt",
+    "*vault.master.key",
+    "*vault.secrets.json",
+    "PHONE-URLS.md",
+    "TASKS.md",
+    "bridge-token*.txt",
+    "*-tunnel-url.txt"
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "status": "PLANNED_OUTPUT",
+  "artifact": "gates.report",
+  "publicPlaceholder": true,
+  "note": "Sanitized placeholder output for future public validation.",
+  "skippedChecks": [],
+  "denyFlags": [],
+  "sha256": "PLACEHOLDER_PENDING_GENERATION"
+}

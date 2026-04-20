@@ -1,0 +1,10 @@
+{
+  "status": "PROPOSAL",
+  "artifact": "minimax-public-catalog",
+  "version": "v1",
+  "modelFocus": "MiniMax-M2.7",
+  "publicPlaceholder": true,
+  "note": "Sanitized placeholder projection; no runtime data.",
+  "replacementClass": "MiniMax catalog runtime source",
+  "sha256": "PLACEHOLDER_PENDING_GENERATION"
+}

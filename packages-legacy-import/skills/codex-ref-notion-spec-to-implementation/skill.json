@@ -1,0 +1,40 @@
+{
+  "id": "codex.ref.notion-spec-to-implementation",
+  "title": "Codex Wrapper: notion-spec-to-implementation",
+  "description": "Reference wrapper for local Codex skill \"notion-spec-to-implementation\" (notion-spec-to-implementation).",
+  "version": "0.1.0",
+  "risk": "low",
+  "tags": [
+    "codex",
+    "wrapper",
+    "reference",
+    "scope:custom",
+    "risk:low",
+    "approval:none"
+  ],
+  "permissions": [],
+  "steps": [
+    {
+      "action": "codex_skill_reference",
+      "note": "Expose reference metadata for Codex skill notion-spec-to-implementation.",
+      "payload": {
+        "source": "codex",
+        "integration": "wrapper",
+        "wrapperSkillId": "codex.ref.notion-spec-to-implementation",
+        "codexId": "notion-spec-to-implementation",
+        "codexName": "notion-spec-to-implementation",
+        "scope": "custom",
+        "relativePath": "notion-spec-to-implementation",
+        "fullPath": "",
+        "labels": [
+          "source:codex",
+          "scope:custom",
+          "integration:wrapper"
+        ],
+        "codexRisk": "low",
+        "codexApprovalRequired": false
+      },
+      "requiresApproval": false
+    }
+  ]
+}

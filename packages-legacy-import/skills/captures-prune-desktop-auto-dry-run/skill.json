@@ -1,0 +1,22 @@
+{
+  "id": "captures.prune.desktop_auto.dry_run",
+  "title": "Prune Desktop Auto Captures (Dry Run)",
+  "description": "Dry-run report for pruning old auto-generated desktop captures (desktop-<iso8601>.png). No files are modified.",
+  "version": "1.0.0",
+  "risk": "low",
+  "tags": ["captures", "maintenance", "cleanup"],
+  "permissions": [],
+  "steps": [
+    {
+      "action": "captures_prune",
+      "note": "Simulate pruning auto desktop captures (keep newest 500).",
+      "payload": {
+        "keep": 500,
+        "minAgeMinutes": 10,
+        "pruneMode": "delete",
+        "dryRun": true
+      }
+    }
+  ]
+}
+

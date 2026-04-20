@@ -1,0 +1,503 @@
+/**
+ * Colony Anatomy System — Self-Aware Diagnostic Framework
+ *
+ * The civilization's body. Six organ systems, each with specialized
+ * health checks, sharing a common diagnostic interface.
+ *
+ * Like the human body:
+ *   - Nervous (orchestration) — PID, spawn, roles, briefing
+ *   - Circulatory (communication) — MQTT, bridges, catalog sync
+ *   - Skeletal (structure) — index counts, type canonicality, chains
+ *   - Memory (knowledge) — memory files, XREF, cross-colony
+ *   - Muscular (execution) — routes, skills, tools, deps
+ *   - Immune (security) — encryption, identity, vault, ghost cleanup
+ *
+ * Polymorphic: new components classify into existing systems and
+ * inherit their health checks. The body remembers its own anatomy.
+ *
+ * LX chain: LX-290 (self-verify skill), LX-289 (auto-PID), LX-249 (despawn protocol)
+ */
+
+const fs = require("fs");
+const path = require("path");
+
+let projectRoot;
+try {
+  projectRoot = require("./runtimePaths").projectRoot;
+} catch (_) {
+  projectRoot = path.resolve(__dirname, "..");
+}
+
+// ─── Diagnostic Interface ───
+// Every system implements: { name, components[], diagnose() → { system, status, checks[], issues[] } }
+
+class BodySystem {
+  constructor(name, description, components = []) {
+    this.name = name;
+    this.description = description;
+    this.components = components;
+    this._checks = [];
+    this._knownPatterns = new Map(); // learned patterns from past diagnostics
+  }
+
+  addCheck(name, fn) {
+    this._checks.push({ name, fn });
+  }
+
+  // Learn: when a new component is added, record its type for future classification
+  learnComponent(component, pattern) {
+    this._knownPatterns.set(component, pattern);
+  }
+
+  async diagnose() {
+    const results = [];
+    const issues = [];
+
+    for (const check of this._checks) {
+      try {
+        const result = await check.fn();
+        results.push({ name: check.name, ...result });
+        if (result.status !== "ok") {
+          issues.push({ check: check.name, status: result.status, detail: result.detail || "" });
+        }
+      } catch (err) {
+        results.push({ name: check.name, status: "error", detail: err.message });
+        issues.push({ check: check.name, status: "error", detail: err.message });
+      }
+    }
+
+    return {
+      system: this.name,
+      description: this.description,
+      components: this.components,
+      status: issues.length === 0 ? "healthy" : issues.some(i => i.status === "critical") ? "critical" : "degraded",
+      checks: results,
+      issues,
+      knownPatterns: this._knownPatterns.size,
+      diagnosedAt: new Date().toISOString()
+    };
+  }
+}
+
+// ─── SKELETAL SYSTEM (Structure) ───
+
+function createSkeletalSystem() {
+  const system = new BodySystem(
+    "skeletal",
+    "Index structure, catalog integrity, type canonicality, chain links",
+    ["agentIndexStore", "CATALOG.md", "XREF-COLONIES.md", "type folders"]
+  );
+
+  system.addCheck("index_disk_vs_catalog", () => {
+    const indexDir = path.join(projectRoot, "data", "agent-index");
+    const types = ["pattern", "tool", "skill", "mistake", "plan", "rule", "reference", "project", "task", "identity"];
+    const counts = {};
+    let totalDisk = 0;
+
+    for (const t of types) {
+      const dir = path.join(indexDir, t);
+      try {
+        const files = fs.readdirSync(dir).filter(f => f.match(/^LX-\d+\.md$/));
+        counts[t] = files.length;
+        totalDisk += files.length;
+      } catch (_) {
+        counts[t] = 0;
+      }
+    }
+
+    // Read catalog header for claimed total
+    let catalogTotal = 0;
+    try {
+      const catalog = fs.readFileSync(path.join(indexDir, "CATALOG.md"), "utf8");
+      const match = catalog.match(/Total:\s*(\d+)/);
+      if (match) catalogTotal = parseInt(match[1]);
+    } catch (_) {}
+
+    const drift = Math.abs(catalogTotal - totalDisk);
+    return {
+      status: drift <= 2 ? "ok" : drift <= 10 ? "warning" : "critical",
+      detail: `Disk: ${totalDisk}, Catalog: ${catalogTotal}, Drift: ${drift}`,
+      counts,
+      totalDisk,
+      catalogTotal
+    };
+  });
+
+  system.addCheck("type_canonicality", () => {
+    const canonical = ["pattern", "tool", "skill", "mistake", "plan", "rule", "reference", "project", "task", "identity", "policy"];
+    const indexDir = path.join(projectRoot, "data", "agent-index");
+    const folders = [];
+    try {
+      const entries = fs.readdirSync(indexDir, { withFileTypes: true });
+      for (const e of entries) {
+        if (e.isDirectory() && !e.name.startsWith(".") && !e.name.startsWith("gaia-")) {
+          folders.push(e.name);
+        }
+      }
+    } catch (_) {}
+
+    const nonCanonical = folders.filter(f => !canonical.includes(f));
+    return {
+      status: nonCanonical.length === 0 ? "ok" : "warning",
+      detail: nonCanonical.length === 0 ? `All ${folders.length} folders are canonical` : `Non-canonical folders: ${nonCanonical.join(", ")}`,
+      canonical: canonical.length,
+      folders: folders.length,
+      nonCanonical
+    };
+  });
+
+  system.addCheck("chain_integrity", () => {
+    const indexDir = path.join(projectRoot, "data", "agent-index");
+    const types = ["pattern", "tool", "skill", "mistake", "plan", "rule", "project", "task", "identity"];
+    const allLx = new Set();
+    let brokenChains = 0;
+    let totalChains = 0;
+
+    // Collect all LX IDs on disk
+    for (const t of types) {
+      try {
+        const files = fs.readdirSync(path.join(indexDir, t)).filter(f => f.match(/^LX-\d+\.md$/));
+        files.forEach(f => {
+          const m = f.match(/LX-(\d+)/);
+          if (m) allLx.add("LX-" + m[1]);
+        });
+      } catch (_) {}
+    }
+
+    // Check chains in a sample (first 50 files)
+    let checked = 0;
+    for (const t of types) {
+      if (checked > 50) break;
+      try {
+        const dir = path.join(indexDir, t);
+        const files = fs.readdirSync(dir).filter(f => f.match(/^LX-\d+\.md$/)).slice(0, 10);
+        for (const f of files) {
+          checked++;
+          const content = fs.readFileSync(path.join(dir, f), "utf8");
+          const chainMatch = content.match(/chain:\s*\[?([^\]\n]+)/);
+          if (chainMatch) {
+            const refs = chainMatch[1].match(/LX-\d+/g) || [];
+            totalChains += refs.length;
+            refs.forEach(ref => {
+              if (!allLx.has(ref)) brokenChains++;
+            });
+          }
+        }
+      } catch (_) {}
+    }
+
+    return {
+      status: brokenChains === 0 ? "ok" : brokenChains <= 5 ? "warning" : "critical",
+      detail: `${totalChains} chain refs checked (sample of ${checked} files), ${brokenChains} broken`,
+      totalChains,
+      brokenChains,
+      lxOnDisk: allLx.size
+    };
+  });
+
+  system.addCheck("xref_pairs", () => {
+    const xrefPath = path.join(projectRoot, "data", "agent-index", "XREF-COLONIES.md");
+    try {
+      const content = fs.readFileSync(xrefPath, "utf8");
+      const pairs = (content.match(/\| IX-\d+/g) || []).length;
+      return {
+        status: pairs >= 50 ? "ok" : pairs >= 20 ? "warning" : "critical",
+        detail: `${pairs} IX/LX pairs in XREF`,
+        pairs
+      };
+    } catch (_) {
+      return { status: "critical", detail: "XREF-COLONIES.md not found", pairs: 0 };
+    }
+  });
+
+  return system;
+}
+
+// ─── MEMORY SYSTEM (Knowledge) ───
+
+function createMemorySystem() {
+  const system = new BodySystem(
+    "memory",
+    "Memory files, XREF, cross-colony sync, knowledge persistence",
+    ["MEMORY.md", "data/agent-index/", "gaia-ix-bodies", "memory folders"]
+  );
+
+  system.addCheck("memory_files_exist", () => {
+    const memRoot = path.join(projectRoot, "..", ".claude", "projects", "C--Users-rayss", "memory");
+    const indexes = ["boot/INDEX.md", "user/INDEX.md", "feedback/INDEX.md", "project/INDEX.md", "reference/INDEX.md"];
+    let missing = 0;
+    const details = [];
+
+    for (const idx of indexes) {
+      const p = path.join(memRoot, idx);
+      if (!fs.existsSync(p)) {
+        missing++;
+        details.push("MISSING: " + idx);
+      }
+    }
+
+    // Count total memory files
+    let totalFiles = 0;
+    const folders = ["boot", "user", "feedback", "project", "reference"];
+    for (const f of folders) {
+      try {
+        const files = fs.readdirSync(path.join(memRoot, f)).filter(f => f.endsWith(".md"));
+        totalFiles += files.length;
+      } catch (_) {}
+    }
+
+    return {
+      status: missing === 0 ? "ok" : "critical",
+      detail: missing === 0 ? `All ${indexes.length} indexes exist, ${totalFiles} memory files total` : details.join("; "),
+      totalFiles,
+      missing
+    };
+  });
+
+  system.addCheck("cross_colony_sync", () => {
+    const bodies1 = path.join(projectRoot, "data", "agent-index", "gaia-ix-bodies-1.json");
+    const bodies2 = path.join(projectRoot, "data", "agent-index", "gaia-ix-bodies-2.json");
+    const has1 = fs.existsSync(bodies1);
+    const has2 = fs.existsSync(bodies2);
+    let ixCount = 0;
+
+    if (has1) {
+      try { ixCount += Object.keys(JSON.parse(fs.readFileSync(bodies1, "utf8")).entries).length; } catch (_) {}
+    }
+    if (has2) {
+      try { ixCount += Object.keys(JSON.parse(fs.readFileSync(bodies2, "utf8")).entries).length; } catch (_) {}
+    }
+
+    return {
+      status: has1 && has2 ? "ok" : has1 || has2 ? "warning" : "critical",
+      detail: `${ixCount} IX bodies on disk (batch1: ${has1}, batch2: ${has2})`,
+      ixCount,
+      hasBatch1: has1,
+      hasBatch2: has2
+    };
+  });
+
+  system.addCheck("stale_memory_check", () => {
+    const memRoot = path.join(projectRoot, "..", ".claude", "projects", "C--Users-rayss", "memory");
+    const memoryMd = path.join(memRoot, "MEMORY.md");
+    try {
+      const content = fs.readFileSync(memoryMd, "utf8");
+      // Check for stale session date
+      const dateMatch = content.match(/SESSION.*?(\d{4}-\d{2}-\d{2})/);
+      const sessionDate = dateMatch ? dateMatch[1] : "unknown";
+      const today = new Date().toISOString().slice(0, 10);
+      const isCurrent = sessionDate === today;
+
+      return {
+        status: isCurrent ? "ok" : "warning",
+        detail: `Session date: ${sessionDate}, today: ${today}`,
+        sessionDate,
+        isCurrent
+      };
+    } catch (_) {
+      return { status: "warning", detail: "Could not read MEMORY.md" };
+    }
+  });
+
+  return system;
+}
+
+// ─── MUSCULAR SYSTEM (Execution) ───
+
+function createMuscularSystem() {
+  const system = new BodySystem(
+    "muscular",
+    "Routes, skills, tools, dependencies, execution readiness",
+    ["routes/", "skills/", "node", "python", "torch", "faster-whisper"]
+  );
+
+  system.addCheck("routes_on_disk", () => {
+    const routesDir = path.join(projectRoot, "routes", "routes");
+    try {
+      const files = fs.readdirSync(routesDir).filter(f => f.endsWith(".js"));
+      return {
+        status: files.length > 0 ? "ok" : "critical",
+        detail: `${files.length} route files in routes/routes/`,
+        files: files.length
+      };
+    } catch (_) {
+      return { status: "critical", detail: "routes/routes/ not found", files: 0 };
+    }
+  });
+
+  system.addCheck("skills_coverage", () => {
+    const skillsDir = path.join(projectRoot, "skills");
+    let totalFolders = 0;
+    let withSkillJson = 0;
+    let codexRef = 0;
+
+    try {
+      const entries = fs.readdirSync(skillsDir, { withFileTypes: true });
+      for (const e of entries) {
+        if (e.isDirectory()) {
+          totalFolders++;
+          const sjPath = path.join(skillsDir, e.name, "skill.json");
+          if (fs.existsSync(sjPath)) {
+            withSkillJson++;
+            try {
+              const sj = JSON.parse(fs.readFileSync(sjPath, "utf8"));
+              const steps = sj.steps || [];
+              if (steps.some(s => JSON.stringify(s).includes("C:\\\\Users\\\\acer"))) {
+                codexRef++;
+              }
+            } catch (_) {}
+          }
+        }
+      }
+    } catch (_) {}
+
+    const native = withSkillJson - codexRef;
+    return {
+      status: native >= 20 ? "ok" : native >= 10 ? "warning" : "critical",
+      detail: `${totalFolders} folders, ${withSkillJson} with skill.json, ${native} native, ${codexRef} codex-ref (Gaia-only)`,
+      totalFolders,
+      withSkillJson,
+      native,
+      codexRef
+    };
+  });
+
+  system.addCheck("orchestrator_modules", () => {
+    const modules = [
+      { name: "spawnContextBuilder", path: "src/spawnContextBuilder.js" },
+      { name: "agentIndexStore", path: "src/agentIndexStore.js" },
+      { name: "indexCatalogSync", path: "src/indexCatalogSync.js" },
+      { name: "omnispindle", path: "src/omnispindle.js" }
+    ];
+    const results = [];
+    let failures = 0;
+
+    for (const mod of modules) {
+      const fullPath = path.join(projectRoot, mod.path);
+      try {
+        const m = require(fullPath);
+        results.push({ name: mod.name, status: "ok", exports: Object.keys(m).length });
+      } catch (err) {
+        results.push({ name: mod.name, status: "error", detail: err.message });
+        failures++;
+      }
+    }
+
+    return {
+      status: failures === 0 ? "ok" : "critical",
+      detail: `${modules.length - failures}/${modules.length} modules load clean`,
+      modules: results,
+      failures
+    };
+  });
+
+  system.addCheck("auto_pid_wired", () => {
+    const paths = [
+      { file: "src/omnispindle.js", marker: "despawnPid" },
+      { file: "src/instantAgentSpawner.js", marker: "_persistentPid" },
+      { file: "src/connectors/codexConnector.js", marker: "_persistentPid" },
+      { file: "tools/Run-AdminTerminalSidecar.py", marker: "spawn-pid-registry" }
+    ];
+    let wired = 0;
+    const details = [];
+
+    for (const p of paths) {
+      try {
+        const content = fs.readFileSync(path.join(projectRoot, p.file), "utf8");
+        if (content.includes(p.marker)) {
+          wired++;
+          details.push(p.file + ": WIRED");
+        } else {
+          details.push(p.file + ": NOT WIRED");
+        }
+      } catch (_) {
+        details.push(p.file + ": MISSING");
+      }
+    }
+
+    return {
+      status: wired === paths.length ? "ok" : wired >= 2 ? "warning" : "critical",
+      detail: `${wired}/${paths.length} spawn paths have auto-PID`,
+      wired,
+      total: paths.length,
+      details
+    };
+  });
+
+  return system;
+}
+
+// ─── Colony Anatomy (the body) ───
+
+class ColonyAnatomy {
+  constructor() {
+    this.systems = new Map();
+    this.history = []; // past diagnostic results
+  }
+
+  addSystem(system) {
+    this.systems.set(system.name, system);
+  }
+
+  // Classify a new component into existing systems
+  classify(component, systemNames) {
+    for (const name of systemNames) {
+      const system = this.systems.get(name);
+      if (system) {
+        system.components.push(component);
+        system.learnComponent(component, { addedAt: new Date().toISOString(), systems: systemNames });
+      }
+    }
+  }
+
+  async diagnoseAll() {
+    const results = {};
+    const allIssues = [];
+
+    for (const [name, system] of this.systems) {
+      const result = await system.diagnose();
+      results[name] = result;
+      allIssues.push(...result.issues.map(i => ({ system: name, ...i })));
+    }
+
+    const report = {
+      colony: "liris",
+      pid: "liris-session-17368",
+      systems: Object.keys(results).length,
+      overall: allIssues.length === 0 ? "healthy" : allIssues.some(i => i.status === "critical") ? "critical" : "degraded",
+      results,
+      allIssues,
+      diagnosedAt: new Date().toISOString()
+    };
+
+    this.history.push({ at: report.diagnosedAt, overall: report.overall, issueCount: allIssues.length });
+    if (this.history.length > 50) this.history.shift();
+
+    return report;
+  }
+
+  // Get past diagnostic patterns
+  getHistory() {
+    return this.history;
+  }
+}
+
+// ─── Factory: Build the Liris colony body ───
+
+function buildColonyBody() {
+  const body = new ColonyAnatomy();
+  body.addSystem(createSkeletalSystem());
+  body.addSystem(createMemorySystem());
+  body.addSystem(createMuscularSystem());
+  // Nervous, Circulatory, Immune — to be added by Gaia or on merge
+  return body;
+}
+
+module.exports = {
+  ColonyAnatomy,
+  BodySystem,
+  buildColonyBody,
+  createSkeletalSystem,
+  createMemorySystem,
+  createMuscularSystem
+};

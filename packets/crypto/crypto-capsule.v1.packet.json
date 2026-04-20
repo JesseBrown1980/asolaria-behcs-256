@@ -1,0 +1,144 @@
+{
+  "authority": "JESSE_OVERRIDE_LOCAL_ONLY",
+  "canonicalization": {
+    "keyOrder": "stable_sorted_object_keys",
+    "lineEndings": "LF",
+    "normalization": "NFKC"
+  },
+  "capsule": {
+    "capsuleId": "crypto-profile.v1.local",
+    "capsulePath": "data/behcs/capsules/crypto/crypto-profile.v1.capsule.json",
+    "cleanPath": "data/behcs/capsules/crypto/crypto-profile.v1.clean.json",
+    "keyId": "crypto-capsule-ed25519-798878705c40",
+    "payloadSha256": "e4f387d00abe2ccdbb771c32232867a8d31e304e54cb4c2871b57465b6e5fd55",
+    "projectionPath": "projections/hb/crypto/CRYPTO_CAPSULE_V1.attest.json",
+    "publicKeyRef": "vault://owner/crypto-capsule/crypto-capsule-ed25519-798878705c40",
+    "publicKeySha256": "798878705c406352e63bf1a248bcbc514699c24f2bfcfc440c2ce3ab8171a05a",
+    "signaturePath": "data/behcs/capsules/crypto/crypto-profile.v1.signature.json"
+  },
+  "claimsClass": "integrity_attestation_only",
+  "controlProof": {
+    "artifactManifest": [
+      {
+        "path": "data/behcs/capsules/crypto/crypto-profile.v1.capsule.json",
+        "sha256": "ada8344ea7c4febb2d1b3b1e232fe872bebd5e4d1e81dd33d7086c8c3979bc58",
+        "size": 3302
+      },
+      {
+        "path": "data/behcs/capsules/crypto/crypto-profile.v1.clean.json",
+        "sha256": "9aaa35e22a19cba8141010456e75c042f2715d7c25920b4858493b05ccd22e10",
+        "size": 2827
+      },
+      {
+        "path": "data/behcs/capsules/crypto/crypto-profile.v1.signature.json",
+        "sha256": "0604d5daddc856d2e8a312335f195e9a3e556d92ab8ddc4a6269c4c73a5390f8",
+        "size": 695
+      },
+      {
+        "path": "schemas/crypto/crypto-capsule.v1.schema.json",
+        "sha256": "3c291e576233898b10f15635fe12d62543fea83c3e730b33a872ebd277a82008",
+        "size": 3387
+      },
+      {
+        "path": "data/behcs/maps/crypto-capsule-hookwall-policy.json",
+        "sha256": "65a60debb2e98e5a1c6eed99d9aaa1de83f432fff0c26d1b0173442f39f9b6db",
+        "size": 811
+      },
+      {
+        "path": "data/behcs/maps/crypto-capsule-gc-policy.json",
+        "sha256": "087f2b92f288a15901296642e776247650e6e1af47f26a794022d9d0eb8819c7",
+        "size": 658
+      }
+    ],
+    "confusablePolicyRef": "data/behcs/maps/crypto-capsule-hookwall-policy.json",
+    "ownerOverrideRef": "JESSE_OVERRIDE_LOCAL"
+  },
+  "createdAt": "2026-04-15T02:54:31.183Z",
+  "denyFlags": [
+    "NO_PUBLIC_READY_CLAIMS",
+    "NO_SECURITY_GUARANTEES",
+    "NO_REMOTE",
+    "PROMOTION_DENY_UNTIL_PROOFS"
+  ],
+  "glyph256": {
+    "algorithm": "☯①A☪∞Π¥B",
+    "capsule": "♡☱y\\|DΦF",
+    "hash": "♪✰zcρ⟨☰❃",
+    "key": "☮^╗\\\\┴⑭x",
+    "mistakes": "γi↖☳k⚡ψO",
+    "scope": "N⇨θ≥✪⇩&;",
+    "trinity": "χ⦃⑯~✰♠♫⑭",
+    "whiteRoom": "✰+π~↗◇G\\"
+  },
+  "language": {
+    "dialect": "BEHCS_HG256",
+    "liveBase": "47D",
+    "overlay": "49D_proposal_only"
+  },
+  "mistakePolicy": {
+    "collectUntil": 2000,
+    "gulpThenCheckpoint": true,
+    "replayRequired": true,
+    "whiteRoomBound": true
+  },
+  "mode": "local_overlay_only",
+  "owner": "jesse",
+  "packetId": "crypto-capsule.v1.packet",
+  "packetScope": {
+    "attestReportPath": "reports/crypto/capsule.attest.ndjson",
+    "gatesReportPath": "reports/crypto/capsule.gates.json",
+    "hashesReportPath": "reports/crypto/capsule.hashes.json",
+    "scopeLockPaths": [
+      "docs/specs/crypto/CRYPTO_CAPSULE_V1.md",
+      "schemas/crypto/crypto-capsule.v1.schema.json",
+      "data/behcs/capsules/crypto/crypto-profile.v1.capsule.json",
+      "data/behcs/capsules/crypto/crypto-profile.v1.clean.json",
+      "data/behcs/capsules/crypto/crypto-profile.v1.signature.json",
+      "data/behcs/maps/crypto-capsule-hookwall-policy.json",
+      "data/behcs/maps/crypto-capsule-gc-policy.json",
+      "data/behcs/hb2/white_room_capsule_refs.json",
+      "data/behcs/hb2/white_room_crypto_capsule.packet.glyph256",
+      "projections/hb/crypto/CRYPTO_CAPSULE_V1.attest.json"
+    ],
+    "whiteRoomPacketPath": "data/behcs/hb2/white_room_crypto_capsule.packet.glyph256",
+    "whiteRoomRefId": "white-room-crypto-capsule-v1",
+    "whiteRoomRefsPath": "data/behcs/hb2/white_room_capsule_refs.json"
+  },
+  "replayNonce": "7bf30020ae772569397c0f5955884425",
+  "schemaId": "asolaria.crypto-capsule.v1",
+  "scope": "local_host_artifact_specific",
+  "signatureType": "detached_ed25519",
+  "signerId": "jesse_override_local",
+  "skippedChecks": [
+    "remote_transport_probe",
+    "independent_review",
+    "d49_seal"
+  ],
+  "toolVersions": {
+    "builder": "tools/crypto/crypto-capsule.js",
+    "node": "v20.11.0"
+  },
+  "transport": {
+    "asciiSafeTransport": true,
+    "glyph256Safe": true,
+    "glyph256Transport": {
+      "algorithm": "hg256a:e298afe291a041e298aae2889ecea0c2a542",
+      "capsule": "hg256a:e299a1e298b1795c7c44cea646",
+      "hash": "hg256a:e299aae29cb07a63cf81e29fa8e298b0e29d83",
+      "key": "hg256a:e298ae5ee295975c5ce294b4e291ad78",
+      "mistakes": "hg256a:ceb369e28696e298b36be29aa1cf884f",
+      "scope": "hg256a:4ee287a8ceb8e289a5e29caae287a9263b",
+      "trinity": "hg256a:cf87e2a683e291af7ee29cb0e299a0e299abe291ad",
+      "whiteRoom": "hg256a:e29cb02bcf807ee28697e29787475c"
+    },
+    "glyphEncoding": "utf8_hex_envelope",
+    "transportChannelId": "LOCAL_WHITE_ROOM_ONLY"
+  },
+  "trinity": {
+    "compute": "LX-489_compute",
+    "hardware": "LX-490_hardware",
+    "inference": "LX-491_omni_GNN_inference"
+  },
+  "verifyStatus": "pass",
+  "version": 1
+}

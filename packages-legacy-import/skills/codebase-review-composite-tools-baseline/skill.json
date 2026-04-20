@@ -1,0 +1,84 @@
+{
+  "id": "codebase.review_composite_tools_baseline",
+  "title": "Codebase Review Composite Tools Baseline",
+  "description": "Collect loopback-only readiness evidence for codebase review across composite local tools (health, local ops policy, skills index, and external MCP status).",
+  "version": "0.1.0",
+  "risk": "medium",
+  "permissions": ["host.read", "web.read", "web.run", "mcp.web", "integrations.read"],
+  "tags": ["codebase", "review", "composite", "tools", "mcp", "webmcp", "baseline"],
+  "steps": [
+    {
+      "action": "tools_status",
+      "note": "Capture local tool-path baseline before endpoint checks.",
+      "permissions": ["host.read"]
+    },
+    {
+      "action": "web_mcp_task",
+      "note": "Extract local ops policy summary (allowlisted roots, aliases, browser task status).",
+      "payload": {
+        "url": "http://127.0.0.1:4781/api/local/ops/status",
+        "waitMs": 300,
+        "maxChars": 28000,
+        "maxLinks": 8,
+        "allowLoopback": true,
+        "allowPrivateNetwork": false,
+        "allowedHosts": ["127.0.0.1", "localhost"],
+        "steps": [
+          { "action": "extract_text", "selector": "body", "name": "local_ops_status_json", "limit": 18000 }
+        ]
+      },
+      "permissions": ["web.run", "mcp.web"]
+    },
+    {
+      "action": "web_mcp_task",
+      "note": "Extract health status and active routing channel.",
+      "payload": {
+        "url": "http://127.0.0.1:4781/api/health",
+        "waitMs": 300,
+        "maxChars": 22000,
+        "maxLinks": 8,
+        "allowLoopback": true,
+        "allowPrivateNetwork": false,
+        "allowedHosts": ["127.0.0.1", "localhost"],
+        "steps": [
+          { "action": "extract_text", "selector": "body", "name": "health_json", "limit": 16000 }
+        ]
+      },
+      "permissions": ["web.run", "mcp.web"]
+    },
+    {
+      "action": "web_mcp_task",
+      "note": "Extract skills-tools index JSON (includes MCP provider/cache summary).",
+      "payload": {
+        "url": "http://127.0.0.1:4781/api/skills/index?force=true",
+        "waitMs": 300,
+        "maxChars": 28000,
+        "maxLinks": 8,
+        "allowLoopback": true,
+        "allowPrivateNetwork": false,
+        "allowedHosts": ["127.0.0.1", "localhost"],
+        "steps": [
+          { "action": "extract_text", "selector": "body", "name": "skills_index_json", "limit": 18000 }
+        ]
+      },
+      "permissions": ["web.run", "mcp.web"]
+    },
+    {
+      "action": "web_mcp_task",
+      "note": "Extract external provider status (MCP enabled/configured flags and policy presets).",
+      "payload": {
+        "url": "http://127.0.0.1:4781/api/integrations/external/status",
+        "waitMs": 300,
+        "maxChars": 26000,
+        "maxLinks": 8,
+        "allowLoopback": true,
+        "allowPrivateNetwork": false,
+        "allowedHosts": ["127.0.0.1", "localhost"],
+        "steps": [
+          { "action": "extract_text", "selector": "body", "name": "external_status_json", "limit": 17000 }
+        ]
+      },
+      "permissions": ["web.run", "mcp.web"]
+    }
+  ]
+}

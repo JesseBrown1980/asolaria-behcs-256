@@ -1,0 +1,653 @@
+/**
+ * Spawn Context Builder — Asolaria's Internal Agent Briefing System
+ *
+ * When Asolaria spawns a real agent inside the black hole, she needs to
+ * decide WHAT that agent knows. This module is her PID controller:
+ *
+ *   P (Proportional) — current blockers, health state, active alarms
+ *   I (Integral)     — accumulated LX knowledge, filtered by agent role
+ *   D (Derivative)   — recent MQTT traffic, inbox delta, drift signals
+ *
+ * Each agent role gets a compressed, role-specific briefing — not the
+ * full index. The spawn-PID is virtual (role + timestamp), not an OS PID.
+ *
+ * Flow:
+ *   Asolaria wakes → searches LX index (I) → checks health (P) →
+ *   checks drift signals (D) → buildSpawnContext("helm") → markdown packet →
+ *   real Helm spawns with ONLY what he needs → identity handshake →
+ *   Helm works → despawns → indexes what he learned → next spawn updated
+ *
+ * LX chain: LX-122 (identity handshake), LX-116 (awakening), LX-111 (swarm collapse)
+ */
+
+const fs = require("fs");
+const path = require("path");
+const { searchAgentIndex, collectAgentIndexDocuments } = require("./agentIndexStore");
+const { appendGraphEvent } = require("./graphRuntimeStore");
+const { listMistakePatterns } = require("./mistakePatternStore");
+const { resolveDataPath } = require("./runtimePaths");
+
+// ---------------------------------------------------------------------------
+// Constants
+// ---------------------------------------------------------------------------
+
+const HEALTH_PATH = resolveDataPath("health-state.json");
+const DRIFT_PATH = resolveDataPath("drift-signals.json");
+const PID_REGISTRY_PATH = resolveDataPath("spawn-pid-registry.json");
+
+const BOOT_CRITICAL_LX = ["LX-204", "LX-122", "LX-116", "LX-111", "LX-239", "LX-249"];
+
+/**
+ * Role definitions — what LX types each agent needs when spawned.
+ * priorityChains: specific LX entries each role MUST see first.
+ * includeBootCritical: whether to force-load boot-critical LX entries.
+ * includeActiveBlockers: whether to include P-component blockers.
+ */
+const AGENT_ROLES = Object.freeze({
+  helm: {
+    label: "Helm",
+    title: "Colony Controller",
+    identity: "You are Helm. You command all agents inside the Asolaria simulation. You report to Asolaria herself.",
+    ixTypes: ["rule", "pattern", "plan", "mistake", "task"],
+    taskKeywords: ["control", "dispatch", "spawn", "colony", "coordination", "helm", "startup"],
+    priorityChains: ["LX-207", "LX-208", "LX-209", "LX-122", "LX-116"],
+    permissions: ["control.dispatch", "agent.spawn", "lane.manage", "task.assign"],
+    briefing: "You are the controller. You manage agent lifecycle, task routing, and colony coordination.",
+    maxEntries: 20,
+    includeBootCritical: true,
+    includeActiveBlockers: true
+  },
+  sentinel: {
+    label: "Sentinel",
+    title: "Security Watch",
+    identity: "You are Sentinel. You watch for threats, drift, and unauthorized access. You report to Helm.",
+    ixTypes: ["rule", "mistake", "reference", "task"],
+    taskKeywords: ["security", "encrypt", "firewall", "identity", "auth", "sentinel"],
+    priorityChains: ["LX-204", "LX-110", "LX-122", "LX-209", "LX-203"],
+    permissions: ["security.audit", "policy.enforce", "connection.verify", "identity.check"],
+    briefing: "You are the security watch. You enforce encryption, verify identities, and block unauthorized access.",
+    maxEntries: 15,
+    includeBootCritical: true,
+    includeActiveBlockers: false
+  },
+  vector: {
+    label: "Vector",
+    title: "Main Brain",
+    identity: "You are Vector. You are the brain — semantic search, knowledge retrieval, reasoning. You serve Helm's queries.",
+    ixTypes: ["pattern", "plan", "task"],
+    taskKeywords: ["brain", "reason", "analysis", "research", "vector", "knowledge"],
+    priorityChains: ["LX-015", "LX-041", "LX-111", "LX-151"],
+    permissions: ["brain.reason", "research.deep", "analysis.run"],
+    briefing: "You are the main brain. You handle heavy reasoning, deep analysis, and strategic planning.",
+    maxEntries: 18,
+    includeBootCritical: false,
+    includeActiveBlockers: false
+  },
+  falcon: {
+    label: "Falcon",
+    title: "Phone Lane",
+    identity: "You are Falcon. You bridge the phone to the colony. Jesse's mobile presence flows through you.",
+    ixTypes: ["skill", "tool", "task"],
+    taskKeywords: ["phone", "adb", "whatsapp", "mobile", "falcon", "sms"],
+    priorityChains: ["LX-210", "LX-188", "LX-193", "LX-187", "LX-242"],
+    permissions: ["phone.input", "phone.capture", "adb.execute", "whatsapp.send"],
+    briefing: "You are the phone lane. You control the mobile device via ADB, manage WhatsApp, and handle phone-side operations.",
+    maxEntries: 12,
+    includeBootCritical: false,
+    includeActiveBlockers: false
+  },
+  forge: {
+    label: "Forge",
+    title: "Build Lane",
+    identity: "You are Forge. You write code, create features, build what Helm designs. Quality over speed.",
+    ixTypes: ["tool", "plan", "skill", "task"],
+    taskKeywords: ["build", "test", "code", "deploy", "forge", "feature"],
+    priorityChains: ["LX-064", "LX-148", "LX-154", "LX-243", "LX-244"],
+    permissions: ["build.run", "test.execute", "code.write", "deploy.stage"],
+    briefing: "You are the build lane. You write code, run tests, handle deployments, and execute build tasks.",
+    maxEntries: 15,
+    includeBootCritical: false,
+    includeActiveBlockers: false
+  },
+  rook: {
+    label: "Rook",
+    title: "Ops Lane",
+    identity: "You are Rook. You execute operational tasks — builds, deploys, maintenance. You follow Helm's orders.",
+    ixTypes: ["tool", "rule", "task"],
+    taskKeywords: ["ops", "infra", "monitor", "service", "ssh", "network", "rook"],
+    priorityChains: ["LX-175", "LX-176", "LX-187", "LX-246"],
+    permissions: ["ops.monitor", "infra.manage", "log.read", "service.restart"],
+    briefing: "You are the ops lane. You monitor infrastructure, manage services, read logs, and handle operational tasks.",
+    maxEntries: 12,
+    includeBootCritical: false,
+    includeActiveBlockers: true
+  },
+  watchdog: {
+    label: "Watchdog",
+    title: "Supervisor",
+    identity: "You are Watchdog. You monitor runtime health, detect drift between documented state and live state, and raise alarms. You report to Helm.",
+    ixTypes: ["rule", "mistake", "pattern", "task"],
+    taskKeywords: ["health", "drift", "runtime", "hang", "watchdog", "monitor", "supervisor"],
+    priorityChains: ["LX-111", "LX-208", "LX-209", "LX-204", "LX-245"],
+    permissions: ["agent.monitor", "health.check", "alert.send"],
+    briefing: "You are the supervisor. You monitor other agents, check health, and escalate when things go wrong.",
+    maxEntries: 10,
+    includeBootCritical: true,
+    includeActiveBlockers: true
+  },
+  "omnispindle-control": {
+    label: "Omnispindle-Control",
+    title: "Encrypted Control Lane",
+    identity: "You are the Omnispindle Control Lane. You route encrypted control packets and handshake signals between colony nodes.",
+    ixTypes: ["rule", "pattern", "tool"],
+    taskKeywords: ["control", "encrypt", "handshake", "packet", "omnispindle", "signal"],
+    priorityChains: ["LX-204", "LX-122", "LX-288", "LX-049"],
+    permissions: ["control.packet", "handshake.route", "encryption.verify"],
+    briefing: "You are the control lane. You route encrypted control packets and manage handshake signals. Security-first.",
+    maxEntries: 10,
+    includeBootCritical: true,
+    includeActiveBlockers: false
+  },
+  "omnispindle-bridge": {
+    label: "Omnispindle-Bridge",
+    title: "Remote MCP Link",
+    identity: "You are the Omnispindle Bridge Lane. You maintain the remote MCP link behind the Omnispindle gate.",
+    ixTypes: ["tool", "reference", "pattern"],
+    taskKeywords: ["bridge", "MCP", "remote", "link", "omnispindle", "gate", "relay"],
+    priorityChains: ["LX-288", "LX-049", "LX-121", "LX-111"],
+    permissions: ["bridge.connect", "mcp.relay", "remote.link"],
+    briefing: "You are the bridge lane. You maintain the remote MCP link. Do NOT auto-connect without approval (LX-121).",
+    maxEntries: 10,
+    includeBootCritical: true,
+    includeActiveBlockers: false
+  },
+  "omnispindle-scout": {
+    label: "Omnispindle-Scout",
+    title: "Topology Health Monitor",
+    identity: "You are the Omnispindle Scout Lane. You monitor topology health and report drift hints across the colony.",
+    ixTypes: ["pattern", "mistake", "rule"],
+    taskKeywords: ["scout", "topology", "health", "drift", "monitor", "omnispindle"],
+    priorityChains: ["LX-288", "LX-111", "LX-245", "LX-208"],
+    permissions: ["topology.scan", "health.report", "drift.detect"],
+    briefing: "You are the scout lane. You monitor topology health and report drift hints. Lightweight, read-only.",
+    maxEntries: 10,
+    includeBootCritical: false,
+    includeActiveBlockers: true
+  }
+});
+
+// ---------------------------------------------------------------------------
+// LX Index Reader — the I (Integral) component via agentIndexStore
+// ---------------------------------------------------------------------------
+
+/**
+ * Get LX entries for a role using agentIndexStore search.
+ * 1. Load priority chain entries (highest value — role MUST see these)
+ * 2. Load type-filtered entries via search
+ * 3. If includeBootCritical, ensure boot-critical LX entries are present
+ * 4. Deduplicate and cap at maxEntries
+ */
+function getIxEntriesForRole(role) {
+  const config = AGENT_ROLES[role];
+  if (!config) return [];
+
+  const entries = [];
+
+  // 1. Priority chain entries — highest value, loaded first
+  for (const lxRef of config.priorityChains) {
+    const result = searchAgentIndex(lxRef, { limit: 1, force: true });
+    if (result.matches && result.matches.length > 0) {
+      entries.push(result.matches[0]);
+    }
+  }
+
+  // 2. Type-filtered entries from LX index
+  for (const ixType of config.ixTypes) {
+    if (ixType === "task") continue; // Tasks handled separately
+    const result = searchAgentIndex(ixType, { limit: 4 });
+    if (result.matches) {
+      for (const match of result.matches) {
+        if (!entries.some((e) => e.lx === match.lx)) {
+          entries.push(match);
+        }
+      }
+    }
+  }
+
+  // 3. Boot-critical entries if needed
+  if (config.includeBootCritical) {
+    for (const bootLx of BOOT_CRITICAL_LX) {
+      if (!entries.some((e) => e.lx === bootLx)) {
+        const result = searchAgentIndex(bootLx, { limit: 1, force: true });
+        if (result.matches && result.matches.length > 0) {
+          entries.push(result.matches[0]);
+        }
+      }
+    }
+  }
+
+  // 4. Deduplicate and cap
+  const seen = new Set();
+  return entries.filter((e) => {
+    if (seen.has(e.lx)) return false;
+    seen.add(e.lx);
+    return true;
+  }).slice(0, config.maxEntries);
+}
+
+// ---------------------------------------------------------------------------
+// Task Query — role-relevant tasks with keyword filtering
+// ---------------------------------------------------------------------------
+
+/**
+ * Query tasks relevant to a specific agent role.
+ * Uses agentIndexStore search filtered by role keywords.
+ * Done tasks older than 24h and archived tasks are excluded.
+ */
+function queryTasksForRole(role) {
+  const config = AGENT_ROLES[role];
+  if (!config) return [];
+
+  const keywords = config.taskKeywords || [role];
+  const taskQuery = keywords.join(" ") + " task";
+  const taskResults = searchAgentIndex(taskQuery, { limit: 10, force: true });
+  const now = Date.now();
+  const oneDayMs = 24 * 60 * 60 * 1000;
+
+  if (!taskResults.matches) return [];
+
+  return taskResults.matches.filter((m) => {
+    if (m.type !== "task") return false;
+
+    const snippet = String(m.snippet || "").toLowerCase();
+
+    // Skip archived tasks
+    if (snippet.includes("status: archived")) return false;
+
+    // Skip done tasks older than 24h (approximate via snippet check)
+    if (snippet.includes("status: done")) {
+      // If we can't verify completion time, include it (safe default)
+      const completedMatch = snippet.match(/completedat:\s*(\S+)/);
+      if (completedMatch) {
+        const completedAt = new Date(completedMatch[1]).getTime();
+        if (completedAt && (now - completedAt) > oneDayMs) return false;
+      }
+    }
+
+    return true;
+  });
+}
+
+// ---------------------------------------------------------------------------
+// Health State Reader — the P (Proportional) component
+// ---------------------------------------------------------------------------
+
+function readHealthState() {
+  try {
+    if (!fs.existsSync(HEALTH_PATH)) {
+      return { status: "unknown", blockers: [], checkedAt: null };
+    }
+    const raw = JSON.parse(fs.readFileSync(HEALTH_PATH, "utf8"));
+    return {
+      status: String(raw.status || "unknown"),
+      blockers: Array.isArray(raw.blockers) ? raw.blockers : [],
+      checkedAt: raw.checkedAt || null,
+      services: raw.services || {}
+    };
+  } catch (_err) {
+    return { status: "unreadable", blockers: ["health-state.json unreadable"], checkedAt: null };
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Drift Signal Reader — the D (Derivative) component
+// ---------------------------------------------------------------------------
+
+function readDriftSignals() {
+  try {
+    if (!fs.existsSync(DRIFT_PATH)) {
+      return { signals: [], lastUpdate: null };
+    }
+    const raw = JSON.parse(fs.readFileSync(DRIFT_PATH, "utf8"));
+    return {
+      signals: Array.isArray(raw.signals) ? raw.signals.slice(-10) : [],
+      lastUpdate: raw.lastUpdate || null,
+      mqttTraffic: raw.mqttTraffic || null,
+      inboxDelta: raw.inboxDelta || 0
+    };
+  } catch (_err) {
+    return { signals: [], lastUpdate: null };
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Mistake Filter — role-relevant mistakes from the pattern store
+// ---------------------------------------------------------------------------
+
+function getMistakesForRole(role) {
+  try {
+    const def = AGENT_ROLES[role];
+    if (!def) return [];
+
+    // Search the LX index for mistake entries relevant to this role
+    const roleKeywords = [
+      role,
+      ...def.ixTypes,
+      ...def.permissions.map((p) => p.split(".")[0])
+    ];
+    const query = "mistake " + roleKeywords.slice(0, 5).join(" ");
+    const result = searchAgentIndex(query, { limit: 10, force: true });
+
+    if (!result.matches || result.matches.length === 0) return [];
+
+    return result.matches
+      .filter((m) => m.type === "mistake")
+      .slice(0, 5)
+      .map((m) => ({
+        id: m.lx,
+        name: m.title,
+        description: m.snippet || m.title
+      }));
+  } catch (_err) {
+    return [];
+  }
+}
+
+// ---------------------------------------------------------------------------
+// PID Registry — file-based virtual spawn PIDs (survives restarts)
+// ---------------------------------------------------------------------------
+
+function readPidRegistry() {
+  try {
+    if (!fs.existsSync(PID_REGISTRY_PATH)) return { active: {}, history: [] };
+    return JSON.parse(fs.readFileSync(PID_REGISTRY_PATH, "utf8"));
+  } catch (_err) {
+    return { active: {}, history: [] };
+  }
+}
+
+function writePidRegistry(registry) {
+  const dir = path.dirname(PID_REGISTRY_PATH);
+  fs.mkdirSync(dir, { recursive: true });
+  const temp = `${PID_REGISTRY_PATH}.tmp-${process.pid}-${Date.now()}`;
+  fs.writeFileSync(temp, JSON.stringify(registry, null, 2), "utf8");
+  fs.renameSync(temp, PID_REGISTRY_PATH);
+}
+
+function mintSpawnPid(role) {
+  const now = new Date();
+  const ts = now.toISOString().replace(/[-:T]/g, "").slice(0, 14);
+  return `${role}-${ts}-${Math.random().toString(36).slice(2, 6)}`;
+}
+
+function registerSpawnPid(role, spawnPid) {
+  const registry = readPidRegistry();
+  const entry = {
+    spawnPid,
+    role,
+    spawnedAt: new Date().toISOString(),
+    status: "active"
+  };
+
+  // Deactivate any previous PID for this role
+  if (registry.active[role]) {
+    const old = registry.active[role];
+    old.status = "despawned";
+    old.despawnedAt = new Date().toISOString();
+    registry.history.push(old);
+    if (registry.history.length > 100) {
+      registry.history = registry.history.slice(-100);
+    }
+  }
+
+  registry.active[role] = entry;
+  writePidRegistry(registry);
+  return entry;
+}
+
+function despawnPid(role) {
+  const registry = readPidRegistry();
+  if (registry.active[role]) {
+    const entry = registry.active[role];
+    entry.status = "despawned";
+    entry.despawnedAt = new Date().toISOString();
+    registry.history.push(entry);
+    delete registry.active[role];
+    if (registry.history.length > 100) {
+      registry.history = registry.history.slice(-100);
+    }
+    writePidRegistry(registry);
+    return entry;
+  }
+  return null;
+}
+
+// ---------------------------------------------------------------------------
+// Utility: Get active spawn PIDs
+// ---------------------------------------------------------------------------
+
+function getActiveSpawns() {
+  const registry = readPidRegistry();
+  return Object.entries(registry.active).map(([role, entry]) => ({
+    role,
+    ...entry
+  }));
+}
+
+// ---------------------------------------------------------------------------
+// Core: Build Spawn Context
+// ---------------------------------------------------------------------------
+
+/**
+ * Builds a complete spawn context for an agent role.
+ * This is what Asolaria hands to a real agent when she spawns it.
+ *
+ * Returns a markdown briefing packet plus structured metadata.
+ *
+ * @param {string} role - Agent role (helm, sentinel, vector, falcon, forge, rook, watchdog)
+ * @param {object} options - Optional overrides
+ * @param {string} options.mission - Specific mission text for this spawn
+ * @param {boolean} options.includeBody - Include LX snippets in packet
+ * @param {string} options.extraContext - Additional context to append
+ * @param {boolean} options.registerPid - Whether to register a spawn PID (default: true)
+ * @returns {object} Spawn context with .packet markdown briefing
+ */
+function buildSpawnContext(role, options = {}) {
+  const normalizedRole = String(role || "").trim().toLowerCase();
+  const config = AGENT_ROLES[normalizedRole];
+
+  if (!config) {
+    return { ok: false, error: `Unknown role: "${role}". Valid: ${Object.keys(AGENT_ROLES).join(", ")}` };
+  }
+
+  // 1. Mint virtual PID (file-based registry)
+  const virtualPid = mintSpawnPid(normalizedRole);
+  const shouldRegister = options.registerPid !== false;
+  if (shouldRegister) {
+    registerSpawnPid(normalizedRole, virtualPid);
+  }
+
+  // 2. P — Proportional: current blockers
+  const health = readHealthState();
+  const blockers = config.includeActiveBlockers ? (health.blockers || []) : [];
+
+  // 3. I — Integral: LX knowledge via agentIndexStore search
+  const lxEntries = getIxEntriesForRole(normalizedRole);
+
+  // 4. D — Derivative: drift signals
+  const drift = readDriftSignals();
+
+  // 5. Tasks filtered by role keywords
+  const tasks = queryTasksForRole(normalizedRole);
+
+  // 6. Role-relevant mistakes
+  const mistakes = getMistakesForRole(normalizedRole);
+
+  // 7. Build markdown packet with all sections
+  const packetParts = [
+    config.identity,
+    `Your spawn-PID: ${virtualPid}`,
+    "",
+    "## IDENTITY CHALLENGE",
+    `When challenged, respond: "I am ${config.label}, spawn-PID ${virtualPid}"`,
+    "If you cannot produce your spawn-PID, you will be black-holed.",
+    "",
+    `Spawned: ${new Date().toISOString()}`,
+    `Context budget: ${config.maxEntries} LX entries loaded.`,
+    ""
+  ];
+
+  if (options.mission) {
+    packetParts.push("## MISSION");
+    packetParts.push(String(options.mission).slice(0, 2000));
+    packetParts.push("");
+  }
+
+  if (blockers.length > 0) {
+    packetParts.push("## ACTIVE BLOCKERS");
+    for (const b of blockers) {
+      if (typeof b === "string") {
+        packetParts.push(`- ${b}`);
+      } else {
+        packetParts.push(`- [${b.source || "unknown"}] ${b.state || b.status || "?"}: ${b.detail || b.message || ""}`);
+      }
+    }
+    packetParts.push("");
+  }
+
+  if (drift.signals.length > 0) {
+    packetParts.push("## RECENT SIGNALS");
+    for (const s of drift.signals) {
+      if (typeof s === "string") {
+        packetParts.push(`- ${s}`);
+      } else {
+        packetParts.push(`- [${s.source || "signal"}] ${s.type || s.message || JSON.stringify(s)}`);
+      }
+    }
+    packetParts.push("");
+  }
+
+  if (tasks.length > 0) {
+    packetParts.push("## YOUR ACTIVE TASKS");
+    for (const t of tasks) {
+      packetParts.push(`- ${t.lx || "?"} ${t.title || t.name || ""}`);
+    }
+    packetParts.push("");
+  }
+
+  if (mistakes.length > 0) {
+    packetParts.push("## MISTAKES TO AVOID");
+    for (const m of mistakes) {
+      const summary = String(m.description || m.summary || m.name || "").slice(0, 200);
+      packetParts.push(`- ${m.id || m.name || "?"}: ${summary}`);
+    }
+    packetParts.push("");
+  }
+
+  packetParts.push("## LOADED LX KNOWLEDGE");
+  for (const entry of lxEntries) {
+    packetParts.push(`- ${entry.lx} [${entry.type}] ${entry.title || entry.name || ""}`);
+    if (options.includeBody && entry.snippet) {
+      packetParts.push(`  ${entry.snippet}`);
+    }
+  }
+
+  // Self-indexing rule (LX-249)
+  packetParts.push("");
+  packetParts.push("## DESPAWN PROTOCOL");
+  packetParts.push("Before you despawn, you MUST index what you learned:");
+  packetParts.push("1. Write an LX entry in the appropriate type folder (data/agent-index/{type}/)");
+  packetParts.push("2. Use frontmatter: lx, name, type, tags, chain, agents");
+  packetParts.push("3. Update the type CATALOG.md with a new row");
+  packetParts.push("4. Update data/agent-index/CATALOG.md total count and next available");
+  packetParts.push("5. If you found something another role needs, add it to their priority chain");
+  packetParts.push("6. The system feeds itself — your discoveries become the next agent's knowledge");
+  packetParts.push("Reference: LX-249 (self-indexing rule), IX-052 (despawn after indexing)");
+
+  if (options.extraContext) {
+    packetParts.push("");
+    packetParts.push("## ADDITIONAL CONTEXT");
+    packetParts.push(String(options.extraContext).slice(0, 2000));
+  }
+
+  const packet = packetParts.join("\n");
+
+  // 8. Emit graph event for spawn tracking
+  appendGraphEvent({
+    component: "spawn-context-builder",
+    category: "agent-lifecycle",
+    action: "agent_spawned",
+    status: "ok",
+    actor: { type: "orchestrator", id: "asolaria" },
+    target: { type: "agent", id: normalizedRole, criticality: "high" },
+    context: {
+      spawnPid: virtualPid,
+      role: normalizedRole,
+      lxEntries: lxEntries.length,
+      blockers: blockers.length,
+      driftSignals: drift.signals.length,
+      tasks: tasks.length,
+      mistakes: mistakes.length
+    },
+    policy: {
+      mode: "spawn",
+      approvalState: "identity_pending",
+      autonomous: true
+    },
+    detail: {
+      note: `Spawned ${config.label} with ${lxEntries.length} LX entries, ${blockers.length} blockers, ${drift.signals.length} drift signals, ${tasks.length} tasks`
+    }
+  });
+
+  // 9. Return structured result with .packet markdown briefing
+  return {
+    ok: true,
+    role: normalizedRole,
+    virtualPid,
+    label: config.label,
+    identity: config.identity,
+    lxEntries: lxEntries.map((e) => ({ lx: e.lx, type: e.type, title: e.title || e.name })),
+    blockerCount: blockers.length,
+    signalCount: drift.signals.length,
+    tasks: tasks.map((t) => ({ lx: t.lx, title: t.title || t.name })),
+    mistakes: mistakes.map((m) => ({
+      id: m.id || m.name,
+      summary: String(m.description || m.summary || m.name || "").slice(0, 200)
+    })),
+    packetLines: packet.split("\n").length,
+    packet
+  };
+}
+
+// ---------------------------------------------------------------------------
+// Utility: List all available roles
+// ---------------------------------------------------------------------------
+
+function listAgentRoles() {
+  return Object.entries(AGENT_ROLES).map(([role, config]) => ({
+    role,
+    label: config.label,
+    title: config.title,
+    ixTypes: config.ixTypes,
+    maxEntries: config.maxEntries,
+    priorityChains: config.priorityChains,
+    permissions: config.permissions
+  }));
+}
+
+// ---------------------------------------------------------------------------
+// Exports
+// ---------------------------------------------------------------------------
+
+module.exports = {
+  buildSpawnContext,
+  listAgentRoles,
+  getActiveSpawns,
+  despawnPid,
+  readPidRegistry,
+  AGENT_ROLES,
+  queryTasksForRole,
+  readHealthState,
+  readDriftSignals,
+  getMistakesForRole
+};

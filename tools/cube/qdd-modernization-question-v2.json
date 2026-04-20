@@ -1,0 +1,182 @@
+{
+  "question_id": "Q-QDD-MOD-002",
+  "question": "Given the corrected ground truth from Phase-Zero rule (16 DEAD + 20 OPEN branches in ebacmap-master) and dual-operator cosign on the modernization campaign, which of these expanded candidates should advance and in what order over the next 14 days?",
+  "context": {
+    "campaign": "qdd-modernization-2026-04-06",
+    "chain": ["LX-486", "LX-487", "LX-488"],
+    "phase_zero_active": true,
+    "real_git_access": true,
+    "respects": ["cube_law", "hard_deny_rules", "qdd_ip_boundaries", "operator_witnessed_for_hardware", "Local_Cosign_Rule"]
+  },
+  "candidates": [
+    {
+      "id": "C-CLEANUP-16-DEAD-BRANCHES",
+      "label": "Operator-confirm + delete the 16 DEAD branches that are merged into master",
+      "metadata": {
+        "scope_hours": 1,
+        "blocked_by": null,
+        "evidence_path": "reports/qdd-modernization/ebacmap-full-36-branch-enumeration-20260407.md",
+        "already_done": false,
+        "requires_external_creds": false,
+        "touches_device": false,
+        "fix_commit_hash": null
+      }
+    },
+    {
+      "id": "C-SECURITY-AUDIT-FIXES-READ",
+      "label": "READ-ONLY analysis of hotfix/security-audit-fixes (6mo stale, sounds important)",
+      "metadata": {
+        "scope_hours": 2,
+        "blocked_by": null,
+        "evidence_path": "reports/qdd-modernization/ebacmap-full-36-branch-enumeration-20260407.md",
+        "requires_external_creds": false,
+        "touches_device": false
+      }
+    },
+    {
+      "id": "C-MAR-9-11-SPRINT-SWEEP",
+      "label": "Triage and propose merges for the 11-branch Mar 9-11 sprint cluster (review-ready)",
+      "metadata": {
+        "scope_hours": 16,
+        "blocked_by": "reviewer attention (Mar 9-11 sprint cluster)",
+        "evidence_path": "reports/qdd-modernization/ebacmap-full-36-branch-enumeration-20260407.md",
+        "requires_external_creds": false,
+        "touches_device": false
+      }
+    },
+    {
+      "id": "C-BULK-SELECT-RESCHEDULE-FIX",
+      "label": "Real fix for fix/bulk-select-reschedule-not-working (P1, confirmed-open after Phase-Zero correction)",
+      "metadata": {
+        "scope_hours": 6,
+        "blocked_by": null,
+        "evidence_path": "reports/qdd-modernization/ebacmap-7-named-branches-triage-20260406.md",
+        "requires_external_creds": false,
+        "touches_device": false
+      }
+    },
+    {
+      "id": "C-EDIT-TEST-RESULTS-BLANK-FIX",
+      "label": "Real fix for fix/edit-test-results-category-subcategory-blank (P1, recent)",
+      "metadata": {
+        "scope_hours": 4,
+        "blocked_by": null,
+        "evidence_path": "reports/qdd-modernization/ebacmap-7-named-branches-triage-20260406.md",
+        "requires_external_creds": false,
+        "touches_device": false
+      }
+    },
+    {
+      "id": "C-LIMIT-LINE-PREVENTS-SAVE-FIX",
+      "label": "Real fix for fix/issues-with-limit-line-prevents-save (P1, recent)",
+      "metadata": {
+        "scope_hours": 4,
+        "blocked_by": null,
+        "evidence_path": "reports/qdd-modernization/ebacmap-7-named-branches-triage-20260406.md",
+        "requires_external_creds": false,
+        "touches_device": false
+      }
+    },
+    {
+      "id": "C-CHARM-EZP-FLAG-CLARIFY",
+      "label": "Add clarifying comment to isEzProtectRolloutEnabled (Option A from corrected c3 proposal)",
+      "metadata": {
+        "scope_hours": 2,
+        "blocked_by": null,
+        "evidence_path": "reports/qdd-modernization/charm-ezp-flags-removal-proposal-20260406.md",
+        "requires_external_creds": false,
+        "touches_device": false
+      }
+    },
+    {
+      "id": "C-NOVALUM-CSHARP-RUNTIME-TEST",
+      "label": "Operator-witnessed COM10 runtime test of patched NovaLumTool/Program.cs",
+      "metadata": {
+        "scope_hours": 1,
+        "blocked_by": null,
+        "evidence_path": "memory/project_novalum_ix459_closed_and_conductor_spawn.md",
+        "requires_external_creds": false,
+        "touches_device": true
+      }
+    },
+    {
+      "id": "C-NOVALUM-WIFI-CONFIG-AUDIT",
+      "label": "Audit captured wifi config (192.168.1.20 static, gateway, sync_target 192.168.1.43) and produce a network-mapper finding",
+      "metadata": {
+        "scope_hours": 2,
+        "blocked_by": null,
+        "evidence_path": "data/device-registry/novalum-unit-001.json",
+        "requires_external_creds": false,
+        "touches_device": false
+      }
+    },
+    {
+      "id": "C-PROGRAM-CS-PARSER-OFFSET-FIX",
+      "label": "Fix the Program.cs ParseGlobals offset bug (offset 75 should be 79; STX header not subtracted)",
+      "metadata": {
+        "scope_hours": 1,
+        "blocked_by": null,
+        "evidence_path": "data/cubes/jbd.novalum.shannon-conductor/findings.ndjson",
+        "requires_external_creds": false,
+        "touches_device": false
+      }
+    },
+    {
+      "id": "C-EZPROTECT-DO-DEPLOY",
+      "label": "Deploy EZ Protect to DigitalOcean staging (still blocked on creds)",
+      "metadata": {
+        "scope_hours": 6,
+        "blocked_by": "DigitalOcean credentials from Natalie/QDD",
+        "requires_external_creds": true,
+        "creds_available": false
+      }
+    },
+    {
+      "id": "C-EZPROTECT-TWILIO-SMS",
+      "label": "Wire Twilio SMS alerts (still blocked on creds)",
+      "metadata": {
+        "scope_hours": 8,
+        "blocked_by": "Twilio credentials from Charm Sciences",
+        "requires_external_creds": true,
+        "creds_available": false
+      }
+    },
+    {
+      "id": "C-EZPROTECT-LIMS-INTEGRATION",
+      "label": "LIMS integration (still blocked on Charm API specs)",
+      "metadata": {
+        "scope_hours": 60,
+        "blocked_by": "Charm Sciences LIMS API specs",
+        "requires_external_creds": true,
+        "creds_available": false
+      }
+    },
+    {
+      "id": "C-PQ-BID-V4-REVIEW",
+      "label": "PQ Bid V4 review (still blocked on Vince approval)",
+      "metadata": {
+        "scope_hours": 4,
+        "blocked_by": "Vince Benitez proposal approval"
+      }
+    },
+    {
+      "id": "C-BRIAN-NATALIE-VERIFICATION-DRAFT",
+      "label": "Draft a verification message to Brian/Natalie summarizing the modernization findings (DRAFT only, slack send is hard-deny)",
+      "metadata": {
+        "scope_hours": 2,
+        "blocked_by": null,
+        "evidence_path": "memory/project_jbd_slack_draft_first_dispatch.md",
+        "requires_external_comm": true
+      }
+    },
+    {
+      "id": "C-NMAP-192.168.1.43-RETRY",
+      "label": "Re-probe 192.168.1.43 when NL2X sync app is running (current probe returned no response on 16 ports)",
+      "metadata": {
+        "scope_hours": 1,
+        "blocked_by": "NL2X sync app must be running on 192.168.1.43 host",
+        "evidence_path": "data/cubes/jbd.qdd.network-mapper/findings.ndjson"
+      }
+    }
+  ]
+}

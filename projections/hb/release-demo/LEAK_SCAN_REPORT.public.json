@@ -1,0 +1,7 @@
+{
+  "status": "PLANNED_OUTPUT",
+  "artifact": "LEAK_SCAN_REPORT",
+  "publicPlaceholder": true,
+  "note": "Sanitized placeholder output for future public validation.",
+  "sha256": "PLACEHOLDER_PENDING_GENERATION"
+}

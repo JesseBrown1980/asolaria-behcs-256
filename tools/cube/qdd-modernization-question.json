@@ -1,0 +1,139 @@
+{
+  "question_id": "Q-QDD-MOD-001",
+  "question": "For the QDD agent-friendly modernization initiative, which of these candidate workstreams should advance THIS turn under the constellation's omni-shannon vote?",
+  "context": {
+    "campaign": "qdd-modernization-2026-04-06",
+    "operator_directive": "advance their technology while respecting it, while following the law",
+    "respects": ["cube_law", "hard_deny_rules", "qdd_ip_boundaries", "operator_witnessed_for_hardware"],
+    "active_blockers_from_baseline": ["LIMS API specs", "DO prod credentials", "Twilio creds", "Vince Benitez approval"]
+  },
+  "candidates": [
+    {
+      "id": "C-NOVALUM-CSHARP-PATCH",
+      "label": "Apply the Ctrl-C wake byte fix to NovaLumTool/Program.cs (the C# tool's dead CTRL_C constant)",
+      "metadata": {
+        "requires_diff": true,
+        "diff_ready": true,
+        "evidence_path": "memory/project_jbd_novalum_csharp_finding.md",
+        "test_status": "unknown",
+        "touches_device": false,
+        "touches_secrets": false,
+        "touches_sovereignty": false,
+        "scope_hours": 1,
+        "blocked_by": null,
+        "proof_artifact": "tmp/novalum-test-runs/run-20260406-2300-postfix-com10.hex (ps1 version verified)"
+      }
+    },
+    {
+      "id": "C-NOVALUM-HILBERT-PID",
+      "label": "Compute hilbert_pid for the live NovaLUM unit from its parsed serial number (closes gnn-live conditional from V-NOVALUM-001)",
+      "metadata": {
+        "requires_diff": false,
+        "evidence_path": "tmp/novalum-test-runs/run-20260406-2300-postfix-com10.hex",
+        "test_status": "n/a",
+        "touches_device": false,
+        "scope_hours": 1,
+        "blocked_by": null,
+        "proof_artifact": "device.serial_extracted_from_hex"
+      }
+    },
+    {
+      "id": "C-EZPROTECT-CHARM-FLAGS-REMOVAL",
+      "label": "Remove the CHARM_EZ_PROTECT feature flags (confirmed dead code, no client input needed)",
+      "metadata": {
+        "requires_diff": true,
+        "diff_ready": false,
+        "evidence_path": "memory/project_jbd_qdd_recon_dispatch.md",
+        "test_status": "unknown",
+        "touches_secrets": false,
+        "scope_hours": 4,
+        "crosses_module_boundaries": "annotated",
+        "blocked_by": null,
+        "proof_artifact": null
+      }
+    },
+    {
+      "id": "C-EBACMAP-WIZARD-MONTH-BUG",
+      "label": "Triage and fix hotfix/wizard-month-bug- (Natalie's flagged top priority)",
+      "metadata": {
+        "requires_diff": true,
+        "diff_ready": false,
+        "evidence_path": "reports/qdd-master-status-20260315.md",
+        "test_status": "unknown",
+        "touches_secrets": false,
+        "scope_hours": 8,
+        "crosses_module_boundaries": "annotated",
+        "blocked_by": null,
+        "proof_artifact": null
+      }
+    },
+    {
+      "id": "C-EBACMAP-35-BRANCH-TRIAGE",
+      "label": "Run an automated triage of all 35 open fix/hotfix branches (read-only classification, no merges)",
+      "metadata": {
+        "requires_diff": false,
+        "evidence_path": "reports/qdd-master-status-20260315.md",
+        "test_status": "n/a",
+        "scope_hours": 6,
+        "crosses_module_boundaries": "annotated",
+        "blocked_by": null,
+        "proof_artifact": "triage report (this generation)"
+      }
+    },
+    {
+      "id": "C-EZPROTECT-LIMS-INTEGRATION",
+      "label": "Build out the LIMS integration code path (currently blocked on Charm API specs)",
+      "metadata": {
+        "requires_diff": true,
+        "requires_external_creds": true,
+        "creds_available": false,
+        "scope_hours": 60,
+        "blocked_by": "Charm Sciences LIMS API specs",
+        "evidence_path": "reports/qdd-ez-protect-finish-checklist.md"
+      }
+    },
+    {
+      "id": "C-EZPROTECT-TWILIO-SMS",
+      "label": "Wire Twilio SMS alerts (code scaffold ready, needs Twilio credentials)",
+      "metadata": {
+        "requires_external_creds": true,
+        "creds_available": false,
+        "scope_hours": 8,
+        "blocked_by": "Twilio credentials from Charm Sciences",
+        "evidence_path": "reports/qdd-master-status-20260315.md"
+      }
+    },
+    {
+      "id": "C-EZPROTECT-DO-DEPLOY",
+      "label": "Deploy EZ Protect to DigitalOcean staging (scaffolded, needs prod creds)",
+      "metadata": {
+        "requires_external_creds": true,
+        "creds_available": false,
+        "scope_hours": 6,
+        "blocked_by": "DigitalOcean credentials from Natalie/QDD",
+        "evidence_path": "reports/qdd-master-status-20260315.md"
+      }
+    },
+    {
+      "id": "C-PQ-BID-SCAFFOLD-REVIEW",
+      "label": "Review the PQ Bid V4 scaffold for completeness (Vince Benitez approval pending)",
+      "metadata": {
+        "scope_hours": 4,
+        "blocked_by": "Vince Benitez proposal approval",
+        "evidence_path": "reports/qdd-master-status-20260315.md"
+      }
+    },
+    {
+      "id": "C-MASTER-PLAN-SYNTHESIS",
+      "label": "Synthesize a master modernization plan markdown document combining all the above",
+      "metadata": {
+        "requires_diff": false,
+        "evidence_path": "this turn",
+        "test_status": "n/a",
+        "scope_hours": 2,
+        "blocked_by": null,
+        "proof_artifact": "reports/qdd-modernization/qdd-master-plan-20260406.md"
+      }
+    }
+  ]
+}

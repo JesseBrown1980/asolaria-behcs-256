@@ -1,0 +1,2221 @@
+{
+  "schemaVersion": 1,
+  "branchId": "omni-part-language-branch-v1",
+  "summary": "White-room omni-part language branch built from the living language without replacing it.",
+  "selectionLaw": "named_only_pid_version_device_time",
+  "holdRule": "live_language_hold_until_pro_ready",
+  "promotionGate": "pro_ready_required_for_replacement",
+  "operationalPacketLineLimit": 35,
+  "structuralPacketKinds": ["json", "catalog", "manifest", "index_table"],
+  "codeEnvelope": {
+    "symbolBudget": 50,
+    "designGoal": "multi_billion_named_combinations",
+    "mode": "metatagged_field_composition"
+  },
+  "portableRoot": {
+    "surfaceId": "asolaria-usb-root",
+    "label": "Asolaria USB Root",
+    "drive": "E:\\",
+    "requiredRoots": ["runtime", "sovereignty"],
+    "copiedSurfaceIds": ["felipe-phone-a"]
+  },
+  "universalExpansion": {
+    "modelId": "universal-prime-cube-ladder-v1",
+    "summary": "Compact machine ladder for expandable control planes. Machines use L-labels; humans use the index map.",
+    "expansionLaw": "hilbert_prime_cube_append_only",
+    "machineLaw": "machine_uses_compact_L_labels_human_uses_index_map",
+    "toolLabelLaw": "Lx.Tx.Dx.Px",
+    "root": {
+      "surfaceId": "asolaria-usb-root",
+      "profileId": "asolaria-elevated-control-panel-v1",
+      "levelLabel": "L0",
+      "deviceSpecificity": "portable_root_only"
+    },
+    "subordinate": {
+      "surfaceId": "liris-kuromi",
+      "profileId": "admin-liris-v1",
+      "levelLabel": "L1",
+      "deviceSpecificity": "host_controller_device",
+      "superiorSurfaceId": "asolaria-usb-root"
+    },
+    "panel": {
+      "levelLabel": "L2",
+      "deviceSpecificity": "panel_device_scoped"
+    },
+    "map": {
+      "levelLabel": "L3",
+      "deviceSpecificity": "map_device_scoped"
+    },
+    "governance": {
+      "levelLabel": "L4",
+      "deviceSpecificity": "governance_device_scoped"
+    },
+    "superGovernance": {
+      "levelLabel": "L5",
+      "deviceSpecificity": "cross_colony_console_scope"
+    },
+    "levels": [
+      { "id": "L0", "prime": 2, "primeCube": 8, "kind": "root_console", "humanLabel": "Asolaria Root" },
+      { "id": "L1", "prime": 3, "primeCube": 27, "kind": "subordinate_console", "humanLabel": "Liris Subordinate" },
+      { "id": "L2", "prime": 5, "primeCube": 125, "kind": "control_panel", "humanLabel": "Control Panel" },
+      { "id": "L3", "prime": 7, "primeCube": 343, "kind": "scan_map", "humanLabel": "MAP MAP MAPPED" },
+      { "id": "L4", "prime": 11, "primeCube": 1331, "kind": "governance_map", "humanLabel": "Governance" },
+      { "id": "L5", "prime": 13, "primeCube": 2197, "kind": "expansion_console", "humanLabel": "Expansion" }
+    ]
+  },
+  "futureLayer": {
+    "mode": "derived_dev_only",
+    "anchorId": "IX-604",
+    "appendProtocolAnchorId": "IX-609",
+    "sourceOfTruthOrder": [
+      "living_language_load_profile",
+      "future_layer_packet",
+      "backend_echo_seen",
+      "direct_visual_confirmation",
+      "parity_verified",
+      "gnn_reflection",
+      "promotion_review"
+    ],
+    "deliveryStates": [
+      "attempt_created",
+      "send_attempted",
+      "backend_echo_seen",
+      "direct_visual_confirmation",
+      "parity_verified",
+      "failed",
+      "expired_or_killed",
+      "withdrawn",
+      "rollback"
+    ],
+    "forbiddenPowers": [
+      "no_hidden_execution",
+      "no_canon_index_writes",
+      "no_authority_escalation",
+      "no_autonomous_spawn",
+      "no_silent_fallback",
+      "no_undeclared_surface_substitution",
+      "no_simulated_parity"
+    ]
+  },
+  "sessionCapsule": {
+    "capsuleId": "liris-session-capsule-v1",
+    "summary": "Timestamped session capsule for loading the current Liris controller into the white-room branch without mutating the living language.",
+    "loadOrder": [
+      "pid_version",
+      "memory",
+      "mistake_timeline",
+      "index_signature",
+      "device_tables",
+      "old_language_anchors",
+      "scout_six",
+      "front_back_wave",
+      "gnn_vote",
+      "proof_gate"
+    ],
+    "memoryClasses": [
+      "curated_memory",
+      "decision_ledger",
+      "mistake_ledger",
+      "proof_ledger",
+      "device_truth",
+      "active_bundles",
+      "pending_gaps"
+    ],
+    "proofClasses": [
+      "route_truth",
+      "backend_echo",
+      "direct_visual_confirmation",
+      "parity_verified",
+      "negative_proof",
+      "rollback_proof"
+    ],
+    "pendingGapClasses": [
+      "weak_parity_gate",
+      "missing_scout_six",
+      "missing_front_back_wave",
+      "unproven_promotion"
+    ]
+  },
+  "analysisMemory": {
+    "analysisId": "analysis-memory-v1",
+    "summary": "Frozen canon slice before targeted waves. Memory first, then specialist matrix, then targeted waves.",
+    "canonPoints": [
+      "asolaria_orchestrates_leaders",
+      "liris_orchestrates_this_node",
+      "living_language_held_until_pro_ready",
+      "specialists_only_for_tools_translation_hardware",
+      "portable_root_is_asolaria_usb_root",
+      "felipe_phone_is_copied_surface_not_root"
+    ],
+    "nextPacketId": "omni-language-fabric-v1"
+  },
+  "ancestryMemory": {
+    "memoryId": "ancestry-memory-v1",
+    "label": "Ancestry Memory",
+    "summary": "Timestamped ancestry ordering so branch agents can distinguish older lineage, later repair, and current state without version collapse.",
+    "useLaw": "load_ancestry_memory_before_branch_actions",
+    "orderingLaw": "older_then_mutation_then_repair_then_current_state",
+    "lineageLaw": "archive_lineage_remains_visible_after_repair",
+    "translationAvailabilityLaw": "automatic_translation_available_not_required"
+  },
+  "omniLanguagePlanes": {
+    "fabricId": "omni-language-fabric-v1",
+    "label": "Omni Language Fabric",
+    "summary": "Multiple simultaneous languages for humans, agents, devices, translation, locality, and reflection. Specialists carry tool and hardware authority; everyone else uses compact packets.",
+    "orchestrationLaw": "asolaria_orchestrates_leaders_liris_orchestrates_local_node",
+    "specialistLaw": "specialists_only_for_tools_translation_hardware",
+    "translationLaw": "automatic_specialist_micro_translation",
+    "planes": [
+      {
+        "id": "human_interface",
+        "symbol": "H",
+        "label": "Human Interface",
+        "deviceSpecificity": "human_device_locality",
+        "specialistUnitIds": ["local-sovereign-host", "liris-kuromi"],
+        "toolAccess": "index_and_console_only",
+        "scope": "human_readable_index"
+      },
+      {
+        "id": "agent_orchestration",
+        "symbol": "A",
+        "label": "Agent Orchestration",
+        "deviceSpecificity": "agent_surface_locality",
+        "specialistUnitIds": ["liris-kuromi", "shannon-fabric"],
+        "toolAccess": "specialist_bundle_only",
+        "scope": "named_agent_routing"
+      },
+      {
+        "id": "device_hardware",
+        "symbol": "D",
+        "label": "Device Hardware",
+        "deviceSpecificity": "hardware_component_locality",
+        "specialistUnitIds": ["falcon-2", "local-cpu-watch", "local-gpu-watch", "attached-device-cpu-watch"],
+        "toolAccess": "hardware_local_only",
+        "scope": "cpu_gpu_usb_storage_radio_thermal"
+      },
+      {
+        "id": "translation_micro",
+        "symbol": "T",
+        "label": "Translation Micro",
+        "deviceSpecificity": "relay_packet_locality",
+        "specialistUnitIds": ["voice-meeting-inject", "liris-kuromi"],
+        "toolAccess": "relay_only",
+        "scope": "H_A_D_L_translation"
+      },
+      {
+        "id": "locality_rules",
+        "symbol": "L",
+        "label": "Locality Rules",
+        "deviceSpecificity": "space_time_authority_locality",
+        "specialistUnitIds": ["local-sovereign-host", "liris-kuromi", "falcon-2"],
+        "toolAccess": "rule_overlay_only",
+        "scope": "who_why_how_when_where"
+      },
+      {
+        "id": "reflection_audit",
+        "symbol": "R",
+        "label": "Reflection Audit",
+        "deviceSpecificity": "reflection_locality",
+        "specialistUnitIds": ["voice-meeting-inject", "liris-kuromi"],
+        "toolAccess": "audit_only",
+        "scope": "return_reflect_prove"
+      }
+    ],
+    "localityTuple": ["who", "why", "how", "when", "where"],
+    "hardwareSymbols": [
+      { "id": "cpu", "symbol": "C" },
+      { "id": "gpu", "symbol": "G" },
+      { "id": "memory", "symbol": "M" },
+      { "id": "usb", "symbol": "U" },
+      { "id": "storage", "symbol": "S" },
+      { "id": "radio", "symbol": "R" },
+      { "id": "thermal", "symbol": "H" }
+    ]
+  },
+  "controlPanel": {
+    "panelId": "control-panel-language-v1",
+    "label": "Control Panel Language",
+    "summary": "The control panel is the branch language surface: the orchestrator loads it, sees the indexed map, and summons named specialists instead of coding raw paths.",
+    "panelModes": [
+      "summon",
+      "respond",
+      "use",
+      "vote",
+      "watch"
+    ],
+    "useLaw": "load_panel_then_route_named_specialists",
+    "noCodeLaw": "orchestrator_prefers_panel_over_raw_code",
+    "summonLaw": "named_only_pid_version_device_time"
+  },
+  "asolariaHandoff": {
+    "handoffId": "asolaria-usb-control-panel-handoff-v1",
+    "label": "Asolaria USB Control Panel Handoff",
+    "summary": "Short handoff for Asolaria so she can load the control panel language, remember where the branch stopped, and continue the device-specific USB-side build without relearning the system.",
+    "targetSurfaceId": "asolaria-usb-root",
+    "targetProfileId": "asolaria-elevated-control-panel-v1",
+    "targetPidSeed": "asolaria-usb-root",
+    "targetAccessLevelIds": [
+      "owner_root",
+      "super_governance",
+      "leader_orchestrator",
+      "guardrail",
+      "observer_gnn",
+      "service_operator"
+    ],
+    "targetChoiceBundleIds": [
+      "root-admin",
+      "super-governance",
+      "compute-steward",
+      "leader-index-all",
+      "leader-orchestrator",
+      "white-room-rebuild",
+      "omni-route",
+      "guardrail-gate",
+      "identity-proof",
+      "gnn-observer",
+      "device-boundary",
+      "shannon-part-or-whole",
+      "self-reflection-loop"
+    ],
+    "useLaw": "load_memory_then_control_panel_then_named_specialists",
+    "finishLaw": "finish_usb_connection_on_target_side_before_promotion"
+  },
+  "plannerWave": {
+    "waveId": "omni-planner-wave-v1",
+    "label": "Planner Wave",
+    "summary": "Six named planner lanes produce bounded white-room plans so the orchestrator can route by packet instead of rethinking the branch every cycle.",
+    "useLaw": "planner_agents_plan_orchestrator_routes",
+    "identityModel": "lineage_plus_packet_epoch",
+    "resultAuthority": "advisory_until_proved",
+    "lanes": [
+      {
+        "id": "planner-memory-wave",
+        "mapsToLaneId": "memory_lane",
+        "vote": "slice_first_birth_overlay",
+        "keyDecisions": [
+          "birth_then_overlay",
+          "five_global_anchors_first",
+          "bundle_ledger_not_full_runtime"
+        ],
+        "risks": [
+          "bundle_state_split",
+          "transport_claim_contradiction"
+        ]
+      },
+      {
+        "id": "planner-pid-wave",
+        "mapsToLaneId": "pid_orchestrator_lane",
+        "vote": "lineage_plus_packet_epoch",
+        "keyDecisions": [
+          "named_only_planner_spawn",
+          "hard_reload_on_lineage_change",
+          "soft_reload_on_packet_epoch_change"
+        ],
+        "risks": [
+          "timestamp_flattening",
+          "reload_thrash"
+        ]
+      },
+      {
+        "id": "planner-runtime-wave",
+        "mapsToLaneId": "runtime_index_lane",
+        "vote": "surface_first_lane_second_index",
+        "keyDecisions": [
+          "four_tool_groups",
+          "no_new_wrappers",
+          "compact_packet_routes_structural_catalogs"
+        ],
+        "risks": [
+          "ambiguous_heading_groups",
+          "duplicate_surface_routing"
+        ]
+      },
+      {
+        "id": "planner-proof-wave",
+        "mapsToLaneId": "promotion_proof_lane",
+        "vote": "advisory_until_proved",
+        "keyDecisions": [
+          "real_parity_required",
+          "wave_three_back_gate_before_front_influence",
+          "rollback_kills_promotion"
+        ],
+        "risks": [
+          "simulated_parity",
+          "planner_result_promotion_leak"
+        ]
+      },
+      {
+        "id": "planner-mistake-wave",
+        "mapsToLaneId": "task_mistake_proof_lane",
+        "vote": "conditional_hold_until_self_heal_visible",
+        "keyDecisions": [
+          "mistake_index_plus_repair_set_plus_self_heal",
+          "redeploy_after_return_reflect",
+          "time_guard_ordering"
+        ],
+        "risks": [
+          "stale_reflection",
+          "self_heal_missing_from_capsule"
+        ]
+      },
+      {
+        "id": "planner-rules-wave",
+        "mapsToLaneId": "rule_authority_device_lane",
+        "vote": "identity_then_scout_then_front_back",
+        "keyDecisions": [
+          "gnn_observer_only",
+          "shannon_parts_only_on_back",
+          "channel_optional_identity_not_optional"
+        ],
+        "risks": [
+          "unnamed_spawn",
+          "channel_creates_false_authority"
+        ]
+      }
+    ]
+  },
+  "waveLattice": {
+    "latticeId": "omni-wave-lattice-v1",
+    "label": "Waves Of Waves",
+    "summary": "Nested wave lattice that composes planner, scout, front/back, and scan waves into targeted language-building campaigns.",
+    "useLaw": "analyze_information_then_route_targeted_wave_campaigns",
+    "resultAuthority": "advisory_until_proved",
+    "metaWaves": [
+      {
+        "id": "meta-wave-memory-rule",
+        "label": "Memory Rule",
+        "purpose": "freeze_canon_and_rule_overlays",
+        "planeIds": ["L", "R"],
+        "scoutLaneIds": ["memory_lane", "rule_authority_device_lane"],
+        "plannerLaneIds": ["planner-memory-wave", "planner-rules-wave"],
+        "scanWaveIds": ["wave-1-scout-alpha", "wave-2-return-alpha"]
+      },
+      {
+        "id": "meta-wave-specialist-tool",
+        "label": "Specialist Tool Gates",
+        "purpose": "specialist_only_tool_and_agent_permissions",
+        "planeIds": ["A", "H"],
+        "scoutLaneIds": ["pid_orchestrator_lane", "runtime_index_lane"],
+        "plannerLaneIds": ["planner-pid-wave", "planner-runtime-wave"],
+        "scanWaveIds": ["wave-3-scout-beta", "wave-4-return-beta"]
+      },
+      {
+        "id": "meta-wave-hardware-device",
+        "label": "Hardware Device",
+        "purpose": "hardware_component_locality_and_watchers",
+        "planeIds": ["D"],
+        "scoutLaneIds": ["rule_authority_device_lane", "runtime_index_lane"],
+        "plannerLaneIds": ["planner-runtime-wave", "planner-rules-wave"],
+        "scanWaveIds": ["wave-11-scout-epsilon", "wave-12-return-epsilon"]
+      },
+      {
+        "id": "meta-wave-locality-translation",
+        "label": "Locality Translation",
+        "purpose": "who_why_how_when_where_and_micro_translation",
+        "planeIds": ["T", "L"],
+        "scoutLaneIds": ["memory_lane", "pid_orchestrator_lane", "rule_authority_device_lane"],
+        "plannerLaneIds": ["planner-memory-wave", "planner-pid-wave", "planner-rules-wave"],
+        "scanWaveIds": ["wave-5-scout-gamma", "wave-6-return-gamma"]
+      },
+      {
+        "id": "meta-wave-proof-reflection",
+        "label": "Proof Reflection",
+        "purpose": "proof_gate_negative_proof_self_reflection",
+        "planeIds": ["R", "A"],
+        "scoutLaneIds": ["promotion_proof_lane", "task_mistake_proof_lane"],
+        "plannerLaneIds": ["planner-proof-wave", "planner-mistake-wave"],
+        "frontLaneIds": ["front_schema"],
+        "backLaneIds": ["back_proof_gate", "back_provenance", "back_gnn_contradiction"],
+        "scanWaveIds": ["wave-15-reverse-governance-floor", "wave-16-reverse-governance-return", "wave-17-reverse-super-governance-map", "wave-18-reverse-super-governance-prove"]
+      },
+      {
+        "id": "meta-wave-control-redeploy",
+        "label": "Control Redeploy",
+        "purpose": "control_panel_to_map_to_redeploy",
+        "planeIds": ["A", "D", "L"],
+        "plannerLaneIds": ["planner-memory-wave", "planner-pid-wave", "planner-runtime-wave", "planner-proof-wave"],
+        "frontLaneIds": ["front_schema", "front_catalogs", "front_selection"],
+        "backLaneIds": ["back_proof_gate", "back_provenance", "back_gnn_contradiction"],
+        "scanWaveIds": ["wave-9-redeploy-lattice", "wave-10-redeploy-proof-final", "wave-13-redeploy-governance", "wave-14-redeploy-promotion"]
+      }
+    ]
+  },
+  "waveCascade": {
+    "cascadeId": "omni-wave-cascade-v1",
+    "label": "Waves Of Waves Of Waves",
+    "summary": "Top-layer over-wave cascade that routes the six meta waves as compact governance-aware campaign swarms.",
+    "useLaw": "route_overwaves_before_flat_scan_redeploy",
+    "resultAuthority": "advisory_until_proved",
+    "deploymentLaw": "control_panel_routes_named_overwaves_with_governor_limits",
+    "overWaves": [
+      {
+        "id": "over-wave-1-canon-floor",
+        "label": "Canon Floor",
+        "purpose": "freeze_memory_rule_locality_floor",
+        "metaWaveIds": ["meta-wave-memory-rule"],
+        "bandIds": ["M1"],
+        "targetLevelIds": ["L1", "L3"],
+        "weaknessIds": ["promotion_not_pro_ready"]
+      },
+      {
+        "id": "over-wave-2-specialist-route",
+        "label": "Specialist Route",
+        "purpose": "specialist_only_tool_and_panel_route",
+        "metaWaveIds": ["meta-wave-specialist-tool"],
+        "bandIds": ["M1", "M2"],
+        "targetLevelIds": ["L1", "L2"],
+        "weaknessIds": ["peer_links_branch_only"]
+      },
+      {
+        "id": "over-wave-3-device-fabric",
+        "label": "Device Fabric",
+        "purpose": "hardware_component_and_device_watchers",
+        "metaWaveIds": ["meta-wave-hardware-device"],
+        "bandIds": ["M2", "M3"],
+        "targetLevelIds": ["L2", "L3", "L4"],
+        "weaknessIds": ["local_governor_concurrency_cap"]
+      },
+      {
+        "id": "over-wave-4-archive-translation",
+        "label": "Archive Translation",
+        "purpose": "deep_archive_replay_and_translation_micro_proof",
+        "metaWaveIds": ["meta-wave-locality-translation"],
+        "bandIds": ["M2", "M3"],
+        "targetLevelIds": ["L2", "L3", "L4"],
+        "weaknessIds": ["translation_micro_needs_device_proof", "deep_archive_leak_stack_not_replayed"]
+      },
+      {
+        "id": "over-wave-5-proof-climb",
+        "label": "Proof Climb",
+        "purpose": "reverse_governance_and_reflection_proof_climb",
+        "metaWaveIds": ["meta-wave-proof-reflection"],
+        "bandIds": ["M3", "M4"],
+        "targetLevelIds": ["L4", "L5"],
+        "weaknessIds": ["promotion_not_pro_ready", "tier_unlock_prepared_not_enforced"]
+      },
+      {
+        "id": "over-wave-6-control-evolution",
+        "label": "Control Evolution",
+        "purpose": "control_panel_redeploy_and_expansion_handoff",
+        "metaWaveIds": ["meta-wave-control-redeploy"],
+        "bandIds": ["M2", "M4"],
+        "targetLevelIds": ["L2", "L4", "L5"],
+        "weaknessIds": ["peer_links_branch_only", "tier_unlock_prepared_not_enforced"]
+      }
+    ]
+  },
+  "expansionKnowledge": {
+    "knowledgeId": "expansion-knowledge-v1",
+    "label": "Expansion Knowledge",
+    "summary": "Prepared tiered knowledge surface for future expansion, level-specific consoles, and limited unlock after pro-ready.",
+    "useLaw": "prepare_level_specific_expansion_knowledge_without_enforcing_it_yet",
+    "enforcementState": "prepared_not_enforced_until_pro_ready",
+    "futureGate": "pro_ready_required_for_tier_unlock",
+    "translationMode": "automatic_micro_packet_translation",
+    "rootDescentLaw": "asolaria_leader_only_no_lower_level_descent",
+    "policeLaw": "observer_gnn_auto_watchers_and_shannon_parts",
+    "reflectionLaw": "augments_existing_self_reflection_waves",
+    "peerKnowledgeLaw": "governors_know_governors_super_admins_know_super_admins",
+    "asolariaVisibilityLaw": "bounded_super_admin_visibility_until_evolution",
+    "emergencyObservationLaw": "new_tiers_publish_device_specific_observation_links",
+    "timeAwarenessLaw": "device_specific_timestamped_tier_links",
+    "tiers": [
+      {
+        "id": "X1",
+        "humanLabel": "Node Growth",
+        "machineLabel": "X1",
+        "levelIds": ["L1", "L2"],
+        "accessLevelIds": ["leader_orchestrator"],
+        "visibility": "leader_local_only",
+        "knowledgeKinds": ["node_expansion", "panel_growth", "specialist_growth"]
+      },
+      {
+        "id": "X2",
+        "humanLabel": "Device Fabric",
+        "machineLabel": "X2",
+        "levelIds": ["L2", "L3"],
+        "accessLevelIds": ["leader_orchestrator", "observer_gnn", "service_operator"],
+        "visibility": "device_and_route_locality",
+        "knowledgeKinds": ["device_matrix", "hardware_translation", "route_scaling"]
+      },
+      {
+        "id": "X3",
+        "humanLabel": "Governance Fabric",
+        "machineLabel": "X3",
+        "levelIds": ["L4"],
+        "accessLevelIds": ["super_governance", "guardrail"],
+        "visibility": "governance_window_only",
+        "knowledgeKinds": ["governance_expansion", "authority_overlay", "proof_gate_scaling"]
+      },
+      {
+        "id": "X4",
+        "humanLabel": "Colony Elevation",
+        "machineLabel": "X4",
+        "levelIds": ["L5"],
+        "accessLevelIds": ["owner_root", "super_governance"],
+        "visibility": "root_and_expansion_console_only",
+        "knowledgeKinds": ["colony_expansion", "leader_handoff", "cross_colony_unlock"]
+      }
+    ]
+  },
+  "legacyReferenceWave": {
+    "waveId": "omni-legacy-reference-wave-v1",
+    "catalogId": "omni-legacy-reference-catalog-v1",
+    "label": "Legacy Reference Wave",
+    "summary": "Read-only white-room wave that scans discovered E-drive control-room, proof, and named-agent sources and turns them into reusable named reference sectors.",
+    "useLaw": "read_e_drive_sources_then_route_named_reference_sectors",
+    "resultAuthority": "read_only_reference_input",
+    "sourceRoots": [
+      "E:\\runtime\\future-layer-dev",
+      "E:\\runtime\\agent-entry-bridge",
+      "E:\\runtime\\minimal-control-room",
+      "E:\\runtime\\asolaria-shadow-comms",
+      "E:\\runtime\\deep-vote-window\\3d-index-substrate",
+      "E:\\sovereignty\\research\\training-group\\kuromi-contrib-20260330-142637\\Asolaria\\data",
+      "E:\\sovereignty\\research\\training-group\\kuromi-contrib-20260330-142637\\Asolaria\\.history\\archaeology\\snapshots\\liris-final-system",
+      "E:\\sovereignty\\research\\training-group\\kuromi-contrib-20260330-142637\\Asolaria\\reports\\amy-asolaria-source-attach\\20260329-182212\\source\\data\\aso",
+      "E:\\sovereignty\\research\\training-group\\kuromi-contrib-20260330-142637\\Asolaria\\tools",
+      "E:\\sovereignty\\research\\training-group\\kuromi-contrib-20260330-142637\\Asolaria\\config",
+      "E:\\sovereignty\\research\\training-group\\kuromi-contrib-20260330-142717\\Asolaria\\tools",
+      "E:\\sovereignty\\research\\training-group\\kuromi-contrib-20260330-142717\\Asolaria\\docs",
+      "E:\\sovereignty\\research\\training-group\\kuromi-contrib-20260330-142717\\Asolaria\\config",
+      "E:\\sovereignty\\research\\training-group\\kuromi-contrib-20260330-142717\\Asolaria\\routes",
+      "E:\\sovereignty\\research\\training-group\\kuromi-contrib-20260330-142717\\Asolaria\\routes\\routes"
+    ],
+    "references": [
+      {
+        "id": "e-control-room",
+        "label": "Control Room",
+        "path": "E:\\runtime\\minimal-control-room\\index.html",
+        "kind": "entry_surface",
+        "anchorIds": ["IX-560"],
+        "namedSurfaceIds": ["Liris", "External colonies", "Phone-side colony"]
+      },
+      {
+        "id": "e-liris-entry",
+        "label": "Liris Entry",
+        "path": "E:\\runtime\\agent-entry-bridge\\liris-entry.txt",
+        "kind": "entry_packet",
+        "anchorIds": ["IX-560"],
+        "namedSurfaceIds": ["Liris"]
+      },
+      {
+        "id": "e-local-agents-entry",
+        "label": "Local Agents Entry",
+        "path": "E:\\runtime\\agent-entry-bridge\\local-agents-entry.txt",
+        "kind": "entry_packet",
+        "anchorIds": ["IX-560", "IX-564"],
+        "namedSurfaceIds": ["Liris", "External colonies", "Phone-side colony"]
+      },
+      {
+        "id": "e-liris-connect",
+        "label": "Liris Connect Now",
+        "path": "E:\\runtime\\agent-entry-bridge\\liris-connect-now.txt",
+        "kind": "connect_packet",
+        "anchorIds": ["IX-560", "IX-562", "IX-563", "IX-564"],
+        "namedSurfaceIds": ["Liris"]
+      },
+      {
+        "id": "e-shadow-packet",
+        "label": "Shadow Packet",
+        "path": "E:\\runtime\\asolaria-shadow-comms\\runtime\\comms-shadow-interface\\packet.txt",
+        "kind": "derived_shadow_surface",
+        "anchorIds": ["IX-560"],
+        "namedSurfaceIds": ["desktop-slack-visual"]
+      },
+      {
+        "id": "e-shadow-layer1",
+        "label": "Shadow Layer 1",
+        "path": "E:\\runtime\\asolaria-shadow-comms\\runtime\\comms-shadow-interface\\layer-1-start-here.md",
+        "kind": "derived_shadow_entry",
+        "anchorIds": ["IX-560"],
+        "namedSurfaceIds": ["Liris", "desktop-slack-visual"]
+      },
+      {
+        "id": "e-selector-catalog",
+        "label": "Selector Catalog",
+        "path": "E:\\runtime\\asolaria-shadow-comms\\data\\selector-catalog.json",
+        "kind": "selector_catalog",
+        "anchorIds": ["IX-557", "IX-558"],
+        "namedSurfaceIds": ["background-bot-api", "mcp-cloud-direct", "desktop-slack-visual", "playwright-visual", "owner-assisted-visual", "phone-readable-slack"]
+      },
+      {
+        "id": "e-vote-summary",
+        "label": "Deep Vote Summary",
+        "path": "E:\\runtime\\deep-vote-window\\3d-index-substrate\\summary.json",
+        "kind": "vote_surface",
+        "anchorIds": ["IX-560"],
+        "namedSurfaceIds": ["Liris", "External colonies", "Phone-side colony"]
+      },
+      {
+        "id": "e-vote-status",
+        "label": "Deep Vote Status",
+        "path": "E:\\runtime\\deep-vote-window\\3d-index-substrate\\status.json",
+        "kind": "vote_status_surface",
+        "anchorIds": ["IX-560", "IX-564"],
+        "namedSurfaceIds": ["desktop-slack-visual", "jesse-desktop"]
+      },
+      {
+        "id": "e-future-dev",
+        "label": "Future Layer Dev",
+        "path": "E:\\runtime\\future-layer-dev\\liris-dev-packet.txt",
+        "kind": "future_layer_contract",
+        "anchorIds": ["IX-599"],
+        "namedSurfaceIds": ["jesse-desktop", "desktop-slack-visual"]
+      },
+      {
+        "id": "e-future-ix604",
+        "label": "Future Layer IX-604",
+        "path": "E:\\runtime\\future-layer-dev\\liris-next-packet-ix604-derived.txt",
+        "kind": "future_layer_contract",
+        "anchorIds": ["IX-604"],
+        "namedSurfaceIds": ["desktop-slack-visual", "jesse-desktop"]
+      },
+      {
+        "id": "e-future-ix609",
+        "label": "Future Layer IX-609",
+        "path": "E:\\runtime\\future-layer-dev\\liris-next-packet-ix609-derived.txt",
+        "kind": "append_protocol",
+        "anchorIds": ["IX-609"],
+        "namedSurfaceIds": ["route/ledger controller", "parity verifier", "backend mirror"]
+      },
+      {
+        "id": "e-agent-canon",
+        "label": "Agent Canon",
+        "path": "E:\\sovereignty\\research\\training-group\\kuromi-contrib-20260330-142717\\Asolaria\\tools\\agent-state-maintenance.js",
+        "kind": "named_agent_roster",
+        "anchorIds": [],
+        "namedSurfaceIds": ["Asolaria", "Vector", "Rook", "Forge", "Falcon", "Watchdog", "Oli"]
+      },
+      {
+        "id": "e-admin-terminal-sidecar",
+        "label": "Admin Terminal Sidecar",
+        "path": "E:\\sovereignty\\research\\training-group\\kuromi-contrib-20260330-142717\\Asolaria\\tools\\AdminTerminalSidecar.Common.ps1",
+        "kind": "named_profile_surface",
+        "anchorIds": [],
+        "namedSurfaceIds": ["Helm", "Sentinel"]
+      },
+      {
+        "id": "e-training-bundle-manifest",
+        "label": "Training Bundle Manifest",
+        "path": "E:\\sovereignty\\research\\training-group\\kuromi-contrib-20260330-142717\\training-bundle-manifest.json",
+        "kind": "curated_training_bundle",
+        "anchorIds": [],
+        "namedSurfaceIds": ["Asolaria", "Shannon clone", "skills-system"]
+      },
+      {
+        "id": "e-archive-unified-index",
+        "label": "Unified Agent Index",
+        "path": "E:\\sovereignty\\research\\training-group\\kuromi-contrib-20260330-142637\\Asolaria\\data\\unified-agent-index.json",
+        "kind": "archive_index",
+        "anchorIds": ["LX-232", "IX-171"],
+        "namedSurfaceIds": ["unified_agent_index", "LX-232", "omnispindle", "shannon", "quantum_metatagging"]
+      },
+      {
+        "id": "e-archive-aso-export",
+        "label": "ASO Export Archive",
+        "path": "E:\\sovereignty\\research\\training-group\\kuromi-contrib-20260330-142637\\Asolaria\\reports\\amy-asolaria-source-attach\\20260329-182212\\source\\data\\aso\\aso-export-2026-03-27T01-35-35-508Z.json",
+        "kind": "archive_export",
+        "anchorIds": ["LX-232", "LX-049"],
+        "namedSurfaceIds": ["voice-meeting-inject", "omnispindle", "omnispindle_loads", "bridge-caption", "live_stream"]
+      },
+      {
+        "id": "e-archive-liris-final-system",
+        "label": "Liris Final System Snapshot",
+        "path": "E:\\sovereignty\\research\\training-group\\kuromi-contrib-20260330-142637\\Asolaria\\.history\\archaeology\\snapshots\\liris-final-system\\CROSS-EXAMINATION-REPORT.md",
+        "kind": "archaeology_snapshot",
+        "anchorIds": ["LX-288", "LX-289", "LX-290", "LX-291"],
+        "namedSurfaceIds": ["liris-final-system", "cross-examination", "liris-archive"]
+      },
+      {
+        "id": "e-archive-omnispindle",
+        "label": "Omnispindle Snapshot",
+        "path": "E:\\sovereignty\\research\\training-group\\kuromi-contrib-20260330-142637\\Asolaria\\.history\\archaeology\\snapshots\\liris-final-system\\omnispindle.js",
+        "kind": "archaeology_component",
+        "anchorIds": ["IX-171", "LX-049"],
+        "namedSurfaceIds": ["omnispindle", "control lane", "bridge lane", "scout lane"]
+      },
+      {
+        "id": "e-archive-instant-spawner",
+        "label": "Instant Agent Spawner Snapshot",
+        "path": "E:\\sovereignty\\research\\training-group\\kuromi-contrib-20260330-142637\\Asolaria\\.history\\archaeology\\snapshots\\liris-final-system\\instantAgentSpawner.js",
+        "kind": "archaeology_component",
+        "anchorIds": [],
+        "namedSurfaceIds": ["instant agents", "instant spawner", "named micro agents"]
+      },
+      {
+        "id": "e-archive-colony-anatomy",
+        "label": "Colony Anatomy Snapshot",
+        "path": "E:\\sovereignty\\research\\training-group\\kuromi-contrib-20260330-142637\\Asolaria\\.history\\archaeology\\snapshots\\liris-final-system\\colonyAnatomy.js",
+        "kind": "archaeology_component",
+        "anchorIds": [],
+        "namedSurfaceIds": ["colony anatomy", "body maps", "omni body"]
+      },
+      {
+        "id": "e-archive-antigravity-provider",
+        "label": "Antigravity Provider Archive",
+        "path": "E:\\sovereignty\\research\\training-group\\kuromi-contrib-20260330-142637\\Asolaria\\reports\\amy-asolaria-source-attach\\20260329-182212\\source\\data\\aso\\aso-export-2026-03-27T01-35-35-508Z.json",
+        "kind": "archive_provider_lineage",
+        "anchorIds": ["LX-292", "LX-293", "LX-294"],
+        "namedSurfaceIds": ["antigravity", "cursor", "openclaw", "provider chain", "external providers"]
+      },
+      {
+        "id": "e-archive-healthcare-project",
+        "label": "AI Healthcare Archive",
+        "path": "E:\\sovereignty\\research\\training-group\\kuromi-contrib-20260330-142637\\Asolaria\\reports\\amy-asolaria-source-attach\\20260329-182212\\source\\data\\aso\\aso-export-2026-03-27T01-35-35-508Z.json",
+        "kind": "archive_project_lineage",
+        "anchorIds": ["LX-066", "LX-231"],
+        "namedSurfaceIds": ["AI Healthcare Project", "FHIR", "OCR bridge", "GNN anomaly", "healthcare ancestor"]
+      },
+      {
+        "id": "e-dashboard-research-sweep",
+        "label": "Dashboard Research Sweep",
+        "path": "E:\\sovereignty\\research\\training-group\\kuromi-contrib-20260330-142637\\Asolaria\\tools\\Start-ReadOnlyResearchSweep.ps1",
+        "kind": "dashboard_control_surface",
+        "anchorIds": [],
+        "namedSurfaceIds": ["Asolaria Dashboard", "research sweep", "dashboard prompts", "external-provider lanes"]
+      },
+      {
+        "id": "e-dashboard-visual-audit",
+        "label": "Dashboard Visual Audit",
+        "path": "E:\\sovereignty\\research\\training-group\\kuromi-contrib-20260330-142637\\Asolaria\\tools\\Run-Asolaria-UiVisualAudit.js",
+        "kind": "dashboard_control_surface",
+        "anchorIds": [],
+        "namedSurfaceIds": ["dashboard visual audit", "Asolaria Dashboard", "ui audit"]
+      },
+      {
+        "id": "e-dashboard-snapshot",
+        "label": "Dashboard Snapshot",
+        "path": "E:\\sovereignty\\research\\training-group\\kuromi-contrib-20260330-142637\\Asolaria\\tools\\snapshot-asolaria.js",
+        "kind": "dashboard_control_surface",
+        "anchorIds": [],
+        "namedSurfaceIds": ["dashboard snapshot", "external cursor", "external antigravity"]
+      },
+      {
+        "id": "e-external-provider-upgrade",
+        "label": "External Provider Upgrade",
+        "path": "E:\\sovereignty\\research\\training-group\\kuromi-contrib-20260330-142637\\Asolaria\\tools\\Apply-Asolaria-ExternalCodexUpgrade.ps1",
+        "kind": "external_provider_control",
+        "anchorIds": [],
+        "namedSurfaceIds": ["cursor", "antigravity", "provider upgrade"]
+      },
+      {
+        "id": "e-external-provider-wave",
+        "label": "External Provider Upgrade Wave",
+        "path": "E:\\sovereignty\\research\\training-group\\kuromi-contrib-20260330-142637\\Asolaria\\tools\\Run-Asolaria-UpgradeWave.ps1",
+        "kind": "external_provider_control",
+        "anchorIds": [],
+        "namedSurfaceIds": ["cursor", "antigravity", "upgrade wave"]
+      },
+      {
+        "id": "e-healthcare-ocr-bridge",
+        "label": "AI Healthcare OCR Bridge",
+        "path": "E:\\sovereignty\\research\\training-group\\kuromi-contrib-20260330-142637\\Asolaria\\tools\\caption_ocr_bridge.py",
+        "kind": "healthcare_bridge",
+        "anchorIds": [],
+        "namedSurfaceIds": ["ai_healthcare_project", "ocr bridge", "caption bridge", "medical parser"]
+      },
+      {
+        "id": "e-healthcare-control-handoff",
+        "label": "AI Healthcare Control Handoff",
+        "path": "E:\\sovereignty\\research\\training-group\\kuromi-contrib-20260330-142637\\Asolaria\\tools\\Codex-Graph-ControlPlane-Handoff.prompt.md",
+        "kind": "graph_control_handoff",
+        "anchorIds": [],
+        "namedSurfaceIds": ["AI_HEALTHCARE_ROOT", "graph control plane", "control handoff"]
+      },
+      {
+        "id": "e-creation-history",
+        "label": "Creation History",
+        "path": "E:\\sovereignty\\research\\training-group\\kuromi-contrib-20260330-142717\\Asolaria\\docs\\CREATION_HISTORY.md",
+        "kind": "creation_history",
+        "anchorIds": ["LX-019"],
+        "namedSurfaceIds": ["creation history", "Warp terminal", "SwarmDesk 3D dashboard", "Dan contribution"]
+      },
+      {
+        "id": "e-augment-sidecar",
+        "label": "Augment Context Sidecar",
+        "path": "E:\\sovereignty\\research\\training-group\\kuromi-contrib-20260330-142717\\Asolaria\\docs\\AUGMENT_CONTEXT_SIDECAR.md",
+        "kind": "sidecar_surface",
+        "anchorIds": [],
+        "namedSurfaceIds": ["augment-context", "Auggie", "cursor", "read-only sidecar"]
+      },
+      {
+        "id": "e-symphony-integration",
+        "label": "Symphony Integration",
+        "path": "E:\\sovereignty\\research\\training-group\\kuromi-contrib-20260330-142717\\Asolaria\\docs\\SYMPHONY_INTEGRATION.md",
+        "kind": "sidecar_surface",
+        "anchorIds": [],
+        "namedSurfaceIds": ["symphony", "linear", "issue lane", "managed sidecar"]
+      },
+      {
+        "id": "e-symphony-helpers",
+        "label": "Symphony Helper Surfaces",
+        "path": "E:\\sovereignty\\research\\training-group\\kuromi-contrib-20260330-142717\\Asolaria\\docs\\SYMPHONY_HELPER_SURFACES.md",
+        "kind": "sidecar_surface",
+        "anchorIds": [],
+        "namedSurfaceIds": ["Abacus", "augment-context", "Auggie", "helper surfaces"]
+      },
+      {
+        "id": "e-symphony-workflow",
+        "label": "Symphony Workflow",
+        "path": "E:\\sovereignty\\research\\training-group\\kuromi-contrib-20260330-142637\\Asolaria\\config\\symphony\\WORKFLOW.asolaria.md",
+        "kind": "sidecar_workflow",
+        "anchorIds": [],
+        "namedSurfaceIds": ["symphony", "linear", "workflow", "max 4 Codex agents"]
+      },
+      {
+        "id": "e-helm-controller-surfaces",
+        "label": "Helm Controller Surfaces",
+        "path": "E:\\sovereignty\\research\\training-group\\kuromi-contrib-20260330-142717\\Asolaria\\docs\\HELM_CONTROLLER_SURFACES.md",
+        "kind": "controller_surface",
+        "anchorIds": [],
+        "namedSurfaceIds": ["Helm", "Symphony", "Augment", "controller surfaces"]
+      },
+      {
+        "id": "e-integration-ops-route",
+        "label": "Integration Ops Route",
+        "path": "E:\\sovereignty\\research\\training-group\\kuromi-contrib-20260330-142717\\Asolaria\\routes\\routes\\integrationOps.js",
+        "kind": "integration_route",
+        "anchorIds": [],
+        "namedSurfaceIds": ["symphony", "integration ops", "status", "submit"]
+      },
+      {
+        "id": "e-symphony-bootstrap-workspace",
+        "label": "Symphony Bootstrap Workspace",
+        "path": "E:\\sovereignty\\research\\training-group\\kuromi-contrib-20260330-142717\\Asolaria\\tools\\SymphonyBootstrapWorkspace.js",
+        "kind": "sidecar_bootstrap",
+        "anchorIds": [],
+        "namedSurfaceIds": ["symphony", "Abacus", "augment-context", "Gemini", "helpers live"]
+      },
+      {
+        "id": "e-notebooklm-core-sync",
+        "label": "NotebookLM Core Sync",
+        "path": "E:\\sovereignty\\research\\training-group\\kuromi-contrib-20260330-142717\\Asolaria\\tools\\sync-notebooklm-core.js",
+        "kind": "cloud_memory_surface",
+        "anchorIds": [],
+        "namedSurfaceIds": ["NotebookLM", "GCP", "Google API", "Enterprise Memory"]
+      },
+      {
+        "id": "e-archive-gaia-massive-finds",
+        "label": "Gaia Massive Finds Archive",
+        "path": "E:\\sovereignty\\research\\training-group\\kuromi-contrib-20260330-142637\\Asolaria\\reports\\amy-asolaria-source-attach\\20260329-182212\\source\\data\\aso\\tables\\topics.json",
+        "kind": "archive_sidecar_lineage",
+        "anchorIds": [],
+        "namedSurfaceIds": ["Auggie", "Abacus AI", "Cursor MCP", "Symphony", "MongoDB", "Codex CLI"]
+      },
+      {
+        "id": "e-archive-google-cloud-owner",
+        "label": "Google Cloud Owner Archive",
+        "path": "E:\\sovereignty\\research\\training-group\\kuromi-contrib-20260330-142637\\Asolaria\\reports\\amy-asolaria-source-attach\\20260329-182212\\source\\data\\aso\\tables\\topics.json",
+        "kind": "archive_cloud_lineage",
+        "anchorIds": [],
+        "namedSurfaceIds": ["gcp", "Google Cloud", "Gemini API", "gemini-cli", "NotebookLM"]
+      },
+      {
+        "id": "e-archive-openclaw-leak",
+        "label": "OpenClaw Leak Archive",
+        "path": "E:\\sovereignty\\research\\training-group\\kuromi-contrib-20260330-142637\\Asolaria\\reports\\amy-asolaria-source-attach\\20260329-182212\\source\\data\\aso\\aso-export-2026-03-27T01-35-35-508Z.json",
+        "kind": "archive_gateway_lineage",
+        "anchorIds": ["LX-293", "LX-294"],
+        "namedSurfaceIds": ["OpenClaw AI Gateway", "Open Claude", "openclaw leak", "53 skills", "gateway control plane", "whatsapp bridge"]
+      },
+      {
+        "id": "e-archive-openclaw-interface-drift",
+        "label": "OpenClaw Interface Drift Digest",
+        "path": "E:\\sovereignty\\research\\training-group\\kuromi-contrib-20260330-142637\\Asolaria\\reports\\liris-natural20-openclaw-host-drift-latest.md",
+        "kind": "archive_interface_lineage",
+        "anchorIds": ["LX-098"],
+        "namedSurfaceIds": ["Open Claude", "OpenClaw UI", "host drift", "public/index.html", "public/app.js", "retired here not everywhere"]
+      },
+      {
+        "id": "e-host-paths",
+        "label": "Asolaria Host Paths",
+        "path": "E:\\sovereignty\\research\\training-group\\kuromi-contrib-20260330-142717\\Asolaria\\tools\\Asolaria.HostPaths.ps1",
+        "kind": "host_device_resolver",
+        "anchorIds": [],
+        "namedSurfaceIds": ["repo_root", "runtime", "logs", "reports", "downloads", "cross_device", "bridge"]
+      },
+      {
+        "id": "e-adb-paths",
+        "label": "Asolaria ADB Paths",
+        "path": "E:\\sovereignty\\research\\training-group\\kuromi-contrib-20260330-142717\\Asolaria\\tools\\Asolaria.AdbPaths.ps1",
+        "kind": "adb_device_resolver",
+        "anchorIds": [],
+        "namedSurfaceIds": ["adb.exe", "platform-tools", "Android SDK", "winget platform tools"]
+      },
+      {
+        "id": "e-standing-directives",
+        "label": "Standing Directives Route",
+        "path": "E:\\sovereignty\\research\\training-group\\kuromi-contrib-20260330-142717\\Asolaria\\routes\\standingDirectives.js",
+        "kind": "governance_route",
+        "anchorIds": [],
+        "namedSurfaceIds": ["directives", "active_directives_text"]
+      },
+      {
+        "id": "e-mistakes-route",
+        "label": "Mistakes Route",
+        "path": "E:\\sovereignty\\research\\training-group\\kuromi-contrib-20260330-142717\\Asolaria\\routes\\mistakes.js",
+        "kind": "mistake_route",
+        "anchorIds": [],
+        "namedSurfaceIds": ["mistake_patterns", "mistake_hints"]
+      },
+      {
+        "id": "e-task-ledger-route",
+        "label": "Task Ledger Route",
+        "path": "E:\\sovereignty\\research\\training-group\\kuromi-contrib-20260330-142717\\Asolaria\\routes\\taskLedger.js",
+        "kind": "task_route",
+        "anchorIds": [],
+        "namedSurfaceIds": ["task_ledger", "task_state", "task_events"]
+      },
+      {
+        "id": "e-task-lease-route",
+        "label": "Task Lease Ledger Route",
+        "path": "E:\\sovereignty\\research\\training-group\\kuromi-contrib-20260330-142717\\Asolaria\\routes\\taskLeaseLedger.js",
+        "kind": "task_lease_route",
+        "anchorIds": [],
+        "namedSurfaceIds": ["task_leases", "task_lease_events", "task_lease_heartbeat"]
+      },
+      {
+        "id": "e-register-skills-aso",
+        "label": "Register Skills in ASO",
+        "path": "E:\\sovereignty\\research\\training-group\\kuromi-contrib-20260330-142717\\Asolaria\\tools\\register-skills-in-aso.js",
+        "kind": "language_registration_tool",
+        "anchorIds": [],
+        "namedSurfaceIds": ["skill_topics", "aso_language_runtime", "skills_registration"]
+      },
+      {
+        "id": "e-migrate-lx-aso",
+        "label": "Migrate LX to ASO",
+        "path": "E:\\sovereignty\\research\\training-group\\kuromi-contrib-20260330-142717\\Asolaria\\tools\\migrate-lx-to-aso.js",
+        "kind": "language_migration_tool",
+        "anchorIds": ["LX-015", "LX-041", "LX-122", "LX-204", "LX-001", "LX-153", "LX-154", "LX-170"],
+        "namedSurfaceIds": ["lx_to_aso", "crosswalk", "aso_topics", "aso_relations"]
+      },
+      {
+        "id": "e-integration-slack-route",
+        "label": "Integration Slack Route",
+        "path": "E:\\sovereignty\\research\\training-group\\kuromi-contrib-20260330-142717\\Asolaria\\routes\\integrationSlack.js",
+        "kind": "integration_route",
+        "anchorIds": [],
+        "namedSurfaceIds": ["slack_status", "slack_config", "slack_send", "slack_channels", "slack_review", "slack_events"]
+      },
+      {
+        "id": "e-integration-vertex-route",
+        "label": "Integration Vertex Route",
+        "path": "E:\\sovereignty\\research\\training-group\\kuromi-contrib-20260330-142717\\Asolaria\\routes\\integrationVertex.js",
+        "kind": "integration_route",
+        "anchorIds": [],
+        "namedSurfaceIds": ["vertex_status"]
+      },
+      {
+        "id": "e-admin-terminals-route",
+        "label": "Admin Terminals Route",
+        "path": "E:\\sovereignty\\research\\training-group\\kuromi-contrib-20260330-142717\\Asolaria\\routes\\adminTerminals.js",
+        "kind": "admin_terminal_route",
+        "anchorIds": [],
+        "namedSurfaceIds": ["cockpit", "cockpit_ensure", "cockpit_stop", "cockpit_prompt"]
+      },
+      {
+        "id": "e-aso-route",
+        "label": "ASO Gateway Route",
+        "path": "E:\\sovereignty\\research\\training-group\\kuromi-contrib-20260330-142717\\Asolaria\\routes\\aso.js",
+        "kind": "aso_gateway_route",
+        "anchorIds": ["LX-153", "LX-154", "LX-170"],
+        "namedSurfaceIds": ["aso_ops", "aso_status", "aso_topics", "aso_search"]
+      },
+      {
+        "id": "e-workspace-knowledge-route",
+        "label": "Workspace Knowledge Route",
+        "path": "E:\\sovereignty\\research\\training-group\\kuromi-contrib-20260330-142717\\Asolaria\\routes\\routes\\workspaceKnowledge.js",
+        "kind": "knowledge_route",
+        "anchorIds": [],
+        "namedSurfaceIds": ["workspace_knowledge_status", "workspace_knowledge_search", "semantic_rebuild"]
+      },
+      {
+        "id": "e-public-deployment",
+        "label": "Public Deployment Policy",
+        "path": "E:\\sovereignty\\research\\training-group\\kuromi-contrib-20260330-142717\\Asolaria\\PUBLIC_DEPLOYMENT.md",
+        "kind": "deployment_policy",
+        "anchorIds": [],
+        "namedSurfaceIds": ["Master Asolaria", "Public Asolaria", "public_profile", "instance_root", "health_paths"]
+      },
+      {
+        "id": "e-server-entry",
+        "label": "Gateway Server Entry",
+        "path": "E:\\sovereignty\\research\\training-group\\kuromi-contrib-20260330-142717\\Asolaria\\server.js",
+        "kind": "gateway_entry",
+        "anchorIds": [],
+        "namedSurfaceIds": ["gateway_server", "src/gateway/server"]
+      },
+      {
+        "id": "e-api-surface-list",
+        "label": "API Surface List",
+        "path": "E:\\sovereignty\\research\\training-group\\kuromi-contrib-20260330-142717\\Asolaria\\reports\\api-surface-list-latest.json",
+        "kind": "api_surface_catalog",
+        "anchorIds": [],
+        "namedSurfaceIds": ["api_surface_catalog", "route_inventory", "endpoint_inventory"]
+      },
+      {
+        "id": "e-bootstrap-system-card",
+        "label": "Friend Codex Bootstrap System Card",
+        "path": "E:\\sovereignty\\research\\training-group\\kuromi-contrib-20260330-142717\\Asolaria\\reports\\amy-codex-bootstrap-packs\\20260329-133940\\amy-rose-macos\\Friend-Codex-Bootstrap-SystemCard.prompt.md",
+        "kind": "bootstrap_system_card",
+        "anchorIds": ["LX-204"],
+        "namedSurfaceIds": ["host-bootstrap orchestration agent", "machine-specific bootstrap", "execution ledger"]
+      },
+      {
+        "id": "e-aso-boot-test",
+        "label": "ASO Boot Test",
+        "path": "E:\\sovereignty\\research\\training-group\\kuromi-contrib-20260330-142717\\Asolaria\\tests\\aso-boot.unit.test.js",
+        "kind": "validation_test",
+        "anchorIds": [],
+        "namedSurfaceIds": ["aso_boot_validation", "client_status", "client_resolve"]
+      },
+      {
+        "id": "e-aso-connector-middleware-test",
+        "label": "ASO Connector Middleware Test",
+        "path": "E:\\sovereignty\\research\\training-group\\kuromi-contrib-20260330-142717\\Asolaria\\tests\\aso-connector-middleware.unit.test.js",
+        "kind": "validation_test",
+        "anchorIds": [],
+        "namedSurfaceIds": ["connector_middleware_validation", "conn_sync_return", "conn_register"]
+      },
+      {
+        "id": "e-aso-conflict-detector-test",
+        "label": "ASO Conflict Detector Test",
+        "path": "E:\\sovereignty\\research\\training-group\\kuromi-contrib-20260330-142717\\Asolaria\\tests\\aso-conflict-detector.unit.test.js",
+        "kind": "validation_test",
+        "anchorIds": [],
+        "namedSurfaceIds": ["conflict_detector_validation", "conflict_report", "conflict_orphan"]
+      }
+    ],
+    "sectors": [
+      {
+        "id": "legacy-entry-sector",
+        "label": "Legacy Entry Sector",
+        "referenceIds": ["e-control-room", "e-liris-entry", "e-local-agents-entry", "e-liris-connect", "e-shadow-packet", "e-vote-summary", "e-vote-status"],
+        "namedSurfaceIds": ["Liris", "External colonies", "Phone-side colony", "desktop-slack-visual"]
+      },
+      {
+        "id": "legacy-proof-sector",
+        "label": "Legacy Proof Sector",
+        "referenceIds": ["e-future-dev", "e-future-ix604", "e-future-ix609"],
+        "namedSurfaceIds": ["jesse-desktop", "desktop-slack-visual", "route/ledger controller", "parity verifier"]
+      },
+      {
+        "id": "legacy-shadow-sector",
+        "label": "Legacy Shadow Sector",
+        "referenceIds": ["e-shadow-layer1", "e-shadow-packet", "e-selector-catalog"],
+        "namedSurfaceIds": ["Liris", "desktop-slack-visual", "playwright-visual", "owner-assisted-visual", "background-bot-api"]
+      },
+      {
+        "id": "legacy-roster-sector",
+        "label": "Legacy Roster Sector",
+        "referenceIds": ["e-agent-canon", "e-admin-terminal-sidecar"],
+        "namedSurfaceIds": ["Asolaria", "Falcon", "Helm", "Sentinel", "Vector", "Rook", "Forge", "Watchdog", "Oli"]
+      },
+      {
+        "id": "legacy-bundle-sector",
+        "label": "Legacy Bundle Sector",
+        "referenceIds": ["e-training-bundle-manifest"],
+        "namedSurfaceIds": ["Asolaria", "Shannon clone", "skills-system"]
+      },
+      {
+        "id": "legacy-archive-system-sector",
+        "label": "Legacy Archive System Sector",
+        "referenceIds": ["e-archive-liris-final-system", "e-archive-omnispindle", "e-archive-instant-spawner", "e-archive-colony-anatomy"],
+        "namedSurfaceIds": ["liris-final-system", "omnispindle", "instant agents", "colony anatomy"]
+      },
+      {
+        "id": "legacy-archive-index-sector",
+        "label": "Legacy Archive Index Sector",
+        "referenceIds": ["e-archive-unified-index", "e-archive-aso-export"],
+        "namedSurfaceIds": ["unified_agent_index", "LX-232", "voice-meeting-inject", "omnispindle", "shannon"]
+      },
+      {
+        "id": "legacy-archive-dashboard-sector",
+        "label": "Legacy Archive Dashboard Sector",
+        "referenceIds": ["e-dashboard-research-sweep", "e-dashboard-visual-audit", "e-dashboard-snapshot"],
+        "namedSurfaceIds": ["Asolaria Dashboard", "dashboard visual audit", "external cursor", "external antigravity"]
+      },
+      {
+        "id": "legacy-archive-provider-sector",
+        "label": "Legacy Archive Provider Sector",
+        "referenceIds": ["e-archive-antigravity-provider", "e-external-provider-upgrade", "e-external-provider-wave"],
+        "namedSurfaceIds": ["antigravity", "cursor", "openclaw", "provider chain", "external providers"]
+      },
+      {
+        "id": "legacy-archive-healthcare-sector",
+        "label": "Legacy Archive Healthcare Sector",
+        "referenceIds": ["e-archive-healthcare-project", "e-healthcare-ocr-bridge", "e-healthcare-control-handoff"],
+        "namedSurfaceIds": ["AI Healthcare Project", "FHIR", "OCR bridge", "GNN anomaly", "AI_HEALTHCARE_ROOT"]
+      },
+      {
+        "id": "legacy-archive-sidecar-sector",
+        "label": "Legacy Archive Sidecar Sector",
+        "referenceIds": ["e-creation-history", "e-augment-sidecar", "e-symphony-integration", "e-symphony-helpers", "e-symphony-workflow", "e-helm-controller-surfaces", "e-integration-ops-route", "e-symphony-bootstrap-workspace", "e-archive-gaia-massive-finds"],
+        "namedSurfaceIds": ["Warp terminal", "SwarmDesk 3D dashboard", "Abacus", "Auggie", "augment-context", "symphony", "linear", "Helm"]
+      },
+      {
+        "id": "legacy-archive-cloud-sector",
+        "label": "Legacy Archive Cloud Sector",
+        "referenceIds": ["e-notebooklm-core-sync", "e-archive-google-cloud-owner", "e-archive-openclaw-leak", "e-archive-openclaw-interface-drift"],
+        "namedSurfaceIds": ["Google Cloud", "GCP", "Gemini API", "gemini-cli", "NotebookLM", "OpenClaw AI Gateway"]
+      },
+      {
+        "id": "legacy-host-device-sector",
+        "label": "Legacy Host Device Sector",
+        "referenceIds": ["e-host-paths", "e-adb-paths"],
+        "namedSurfaceIds": ["repo_root", "runtime", "logs", "reports", "downloads", "cross_device", "bridge", "adb.exe", "platform-tools", "Android SDK"]
+      },
+      {
+        "id": "legacy-governance-sector",
+        "label": "Legacy Governance Sector",
+        "referenceIds": ["e-standing-directives", "e-mistakes-route"],
+        "namedSurfaceIds": ["directives", "active_directives_text", "mistake_patterns", "mistake_hints"]
+      },
+      {
+        "id": "legacy-task-sector",
+        "label": "Legacy Task Sector",
+        "referenceIds": ["e-task-ledger-route", "e-task-lease-route"],
+        "namedSurfaceIds": ["task_ledger", "task_state", "task_events", "task_leases", "task_lease_events", "task_lease_heartbeat"]
+      },
+      {
+        "id": "legacy-language-sector",
+        "label": "Legacy Language Sector",
+        "referenceIds": ["e-register-skills-aso", "e-migrate-lx-aso"],
+        "namedSurfaceIds": ["skill_topics", "aso_language_runtime", "skills_registration", "lx_to_aso", "crosswalk", "aso_relations"]
+      },
+      {
+        "id": "legacy-integration-sector",
+        "label": "Legacy Integration Sector",
+        "referenceIds": ["e-integration-slack-route", "e-integration-vertex-route"],
+        "namedSurfaceIds": ["slack_status", "slack_config", "slack_send", "slack_channels", "slack_review", "slack_events", "vertex_status"]
+      },
+      {
+        "id": "legacy-admin-sector",
+        "label": "Legacy Admin Sector",
+        "referenceIds": ["e-admin-terminals-route"],
+        "namedSurfaceIds": ["cockpit", "cockpit_ensure", "cockpit_stop", "cockpit_prompt"]
+      },
+      {
+        "id": "legacy-knowledge-sector",
+        "label": "Legacy Knowledge Sector",
+        "referenceIds": ["e-aso-route", "e-workspace-knowledge-route"],
+        "namedSurfaceIds": ["aso_ops", "aso_status", "aso_topics", "aso_search", "workspace_knowledge_status", "workspace_knowledge_search", "semantic_rebuild"]
+      },
+      {
+        "id": "legacy-deployment-sector",
+        "label": "Legacy Deployment Sector",
+        "referenceIds": ["e-public-deployment", "e-server-entry"],
+        "namedSurfaceIds": ["Master Asolaria", "Public Asolaria", "public_profile", "instance_root", "health_paths", "gateway_server"]
+      },
+      {
+        "id": "legacy-api-sector",
+        "label": "Legacy API Sector",
+        "referenceIds": ["e-api-surface-list"],
+        "namedSurfaceIds": ["api_surface_catalog", "route_inventory", "endpoint_inventory"]
+      },
+      {
+        "id": "legacy-bootstrap-sector",
+        "label": "Legacy Bootstrap Sector",
+        "referenceIds": ["e-bootstrap-system-card"],
+        "namedSurfaceIds": ["host-bootstrap orchestration agent", "machine-specific bootstrap", "execution ledger"]
+      },
+      {
+        "id": "legacy-validation-sector",
+        "label": "Legacy Validation Sector",
+        "referenceIds": ["e-aso-boot-test", "e-aso-connector-middleware-test", "e-aso-conflict-detector-test"],
+        "namedSurfaceIds": ["aso_boot_validation", "connector_middleware_validation", "conflict_detector_validation"]
+      }
+    ],
+    "waves": [
+      {
+        "id": "legacy-wave-1-entry",
+        "role": "entry_reference_scan",
+        "sectorIds": ["legacy-entry-sector"]
+      },
+      {
+        "id": "legacy-wave-2-shadow",
+        "role": "shadow_reference_scan",
+        "sectorIds": ["legacy-shadow-sector"]
+      },
+      {
+        "id": "legacy-wave-3-proof",
+        "role": "proof_reference_scan",
+        "sectorIds": ["legacy-proof-sector"]
+      },
+      {
+        "id": "legacy-wave-4-roster",
+        "role": "roster_reference_scan",
+        "sectorIds": ["legacy-roster-sector"]
+      },
+      {
+        "id": "legacy-wave-5-bundle",
+        "role": "bundle_reference_scan",
+        "sectorIds": ["legacy-bundle-sector"]
+      },
+      {
+        "id": "legacy-wave-17-archive-system",
+        "role": "archive_system_reference_scan",
+        "sectorIds": ["legacy-archive-system-sector", "legacy-archive-dashboard-sector", "legacy-archive-provider-sector", "legacy-archive-sidecar-sector"]
+      },
+      {
+        "id": "legacy-wave-18-archive-index",
+        "role": "archive_index_reference_scan",
+        "sectorIds": ["legacy-archive-index-sector", "legacy-archive-healthcare-sector", "legacy-archive-cloud-sector"]
+      },
+      {
+        "id": "legacy-wave-6-host-device",
+        "role": "host_device_reference_scan",
+        "sectorIds": ["legacy-host-device-sector"]
+      },
+      {
+        "id": "legacy-wave-7-governance",
+        "role": "governance_reference_scan",
+        "sectorIds": ["legacy-governance-sector"]
+      },
+      {
+        "id": "legacy-wave-8-task",
+        "role": "task_reference_scan",
+        "sectorIds": ["legacy-task-sector"]
+      },
+      {
+        "id": "legacy-wave-9-language",
+        "role": "language_reference_scan",
+        "sectorIds": ["legacy-language-sector"]
+      },
+      {
+        "id": "legacy-wave-10-integrations",
+        "role": "integration_reference_scan",
+        "sectorIds": ["legacy-integration-sector"]
+      },
+      {
+        "id": "legacy-wave-11-admin",
+        "role": "admin_reference_scan",
+        "sectorIds": ["legacy-admin-sector"]
+      },
+      {
+        "id": "legacy-wave-12-knowledge",
+        "role": "knowledge_reference_scan",
+        "sectorIds": ["legacy-knowledge-sector"]
+      },
+      {
+        "id": "legacy-wave-13-deployment",
+        "role": "deployment_reference_scan",
+        "sectorIds": ["legacy-deployment-sector"]
+      },
+      {
+        "id": "legacy-wave-14-api",
+        "role": "api_reference_scan",
+        "sectorIds": ["legacy-api-sector"]
+      },
+      {
+        "id": "legacy-wave-15-bootstrap",
+        "role": "bootstrap_reference_scan",
+        "sectorIds": ["legacy-bootstrap-sector"]
+      },
+      {
+        "id": "legacy-wave-16-validation",
+        "role": "validation_reference_scan",
+        "sectorIds": ["legacy-validation-sector"]
+      }
+    ],
+    "campaigns": [
+      {
+        "id": "legacy-campaign-control-proof",
+        "label": "Control Proof Campaign",
+        "waveIds": ["legacy-wave-1-entry", "legacy-wave-2-shadow", "legacy-wave-3-proof"],
+        "purpose": "control_room_shadow_route_truth"
+      },
+      {
+        "id": "legacy-campaign-roster-bundle",
+        "label": "Roster Bundle Campaign",
+        "waveIds": ["legacy-wave-4-roster", "legacy-wave-5-bundle"],
+        "purpose": "named_agent_and_bundle_truth"
+      },
+      {
+        "id": "legacy-campaign-deep-archive",
+        "label": "Deep Archive Campaign",
+        "waveIds": ["legacy-wave-17-archive-system", "legacy-wave-18-archive-index"],
+        "purpose": "old_old_old_lineage_truth"
+      },
+      {
+        "id": "legacy-campaign-device-governance-task",
+        "label": "Device Governance Task Campaign",
+        "waveIds": ["legacy-wave-6-host-device", "legacy-wave-7-governance", "legacy-wave-8-task"],
+        "purpose": "device_rule_task_truth"
+      },
+      {
+        "id": "legacy-campaign-language-ops",
+        "label": "Language Ops Campaign",
+        "waveIds": ["legacy-wave-9-language", "legacy-wave-10-integrations", "legacy-wave-11-admin", "legacy-wave-12-knowledge"],
+        "purpose": "language_integration_admin_knowledge_truth"
+      },
+      {
+        "id": "legacy-campaign-deploy-verify",
+        "label": "Deploy Verify Campaign",
+        "waveIds": ["legacy-wave-13-deployment", "legacy-wave-14-api", "legacy-wave-15-bootstrap", "legacy-wave-16-validation"],
+        "purpose": "deployment_bootstrap_validation_truth"
+      }
+    ]
+  },
+  "scoutSix": {
+    "scoutId": "omni-scout-six-v1",
+    "summary": "Six read-only scout lanes to analyze the living language and old system before any white-room rebuild lane writes.",
+    "lanes": [
+      {
+        "id": "memory_lane",
+        "label": "Memory",
+        "question": "What memory classes are canonical, stale, or contradictory for this device-aware branch load?",
+        "evidence": ["curated_memory", "reflection_memory", "mistake_memory", "timeline_memory"],
+        "output": ["canonical_memory", "stale_memory", "memory_dependencies"],
+        "nextAction": "front_schema"
+      },
+      {
+        "id": "pid_orchestrator_lane",
+        "label": "PID Orchestrator",
+        "question": "How do pidVersion, profile, session identity, and named orchestration bind on this host and device?",
+        "evidence": ["pid_profile", "named_surfaces", "omni_agent_map"],
+        "output": ["controller_capsule", "named_selection_law", "identity_dependencies"],
+        "nextAction": "front_selection"
+      },
+      {
+        "id": "runtime_index_lane",
+        "label": "Runtime Index",
+        "question": "What do running index, load order, and omni maps actually expose to the branch right now?",
+        "evidence": ["running_index", "load_profile", "omni_map"],
+        "output": ["index_signature", "load_truth", "index_dependencies"],
+        "nextAction": "front_catalogs"
+      },
+      {
+        "id": "promotion_proof_lane",
+        "label": "Promotion Proof",
+        "question": "What exact proof gate blocks replacement, and what route states must exist before promotion review?",
+        "evidence": ["IX-604", "IX-609", "future_layer_packet"],
+        "output": ["proof_gate", "negative_proof_requirements", "promotion_dependencies"],
+        "nextAction": "back_proof_gate"
+      },
+      {
+        "id": "task_mistake_proof_lane",
+        "label": "Task Mistake Proof",
+        "question": "What decisions, mistakes, repairs, and proof states must travel with the session capsule?",
+        "evidence": ["decision_ledger", "mistake_index", "proof_ledger", "self_healing"],
+        "output": ["mistake_capsule", "repair_timeline", "proof_gaps"],
+        "nextAction": "back_provenance"
+      },
+      {
+        "id": "rule_authority_device_lane",
+        "label": "Rule Authority Device",
+        "question": "What rules, authority boundaries, and device-local truths must constrain the branch rebuild?",
+        "evidence": ["rule_packets", "authority_map", "device_truth", "transport_truth"],
+        "output": ["authority_boundaries", "device_boundaries", "route_constraints"],
+        "nextAction": "back_gnn_contradiction"
+      }
+    ]
+  },
+  "deepArchiveReplay": {
+    "replayId": "omni-deep-archive-replay-v1",
+    "label": "Deep Archive Replay",
+    "summary": "Named replay layer for the old old old control planes, dashboards, healthcare lineage, provider lineage, sidecars, and OpenClaw ancestry before any language freeze.",
+    "useLaw": "replay_old_old_old_named_archives_before_language_freeze",
+    "triggerLaw": "gamma_delta_replay_before_promotion",
+    "resultAuthority": "read_only_named_replay",
+    "sectorIds": [
+      "legacy-archive-dashboard-sector",
+      "legacy-archive-provider-sector",
+      "legacy-archive-healthcare-sector",
+      "legacy-archive-sidecar-sector",
+      "legacy-archive-cloud-sector"
+    ],
+    "waveIds": [
+      "legacy-wave-17-archive-system",
+      "legacy-wave-18-archive-index"
+    ],
+    "campaignIds": [
+      "legacy-campaign-deep-archive"
+    ],
+    "priorityReferenceIds": [
+      "e-dashboard-research-sweep",
+      "e-dashboard-visual-audit",
+      "e-dashboard-snapshot",
+      "e-external-provider-upgrade",
+      "e-external-provider-wave",
+      "e-healthcare-ocr-bridge",
+      "e-healthcare-control-handoff",
+      "e-creation-history",
+      "e-augment-sidecar",
+      "e-symphony-integration",
+      "e-archive-gaia-massive-finds",
+      "e-archive-google-cloud-owner",
+      "e-archive-openclaw-leak",
+      "e-archive-openclaw-interface-drift"
+    ]
+  },
+  "deepArchiveFindings": {
+    "findingsId": "omni-deep-archive-findings-v1",
+    "label": "Deep Archive Findings",
+    "summary": "Compressed named findings extracted from the deep archive replay so the scan waves can act on archive truth without rereading the full archive every cycle.",
+    "useLaw": "compress_replay_into_named_findings_for_scan",
+    "resultAuthority": "derived_from_read_only_named_replay",
+    "findingSectors": [
+      "legacy-archive-dashboard-sector",
+      "legacy-archive-provider-sector",
+      "legacy-archive-healthcare-sector",
+      "legacy-archive-sidecar-sector",
+      "legacy-archive-cloud-sector"
+    ]
+  },
+  "languageGapAnalysis": {
+    "analysisId": "omni-language-gap-analysis-v1",
+    "label": "Omni Language Gap Analysis",
+    "summary": "Focused gap surface derived from archive translation and proof-climb overwaves before the next language expansion push.",
+    "useLaw": "derive_language_gaps_from_overwaves_before_next_wave_push",
+    "resultAuthority": "derived_from_archive_and_proof_analysis",
+    "focusOverWaveIds": [
+      "over-wave-4-archive-translation",
+      "over-wave-5-proof-climb"
+    ],
+    "focusWeaknessIds": [
+      "translation_micro_needs_device_proof",
+      "deep_archive_leak_stack_not_replayed",
+      "promotion_not_pro_ready",
+      "tier_unlock_prepared_not_enforced"
+    ],
+    "targetPlaneIds": [
+      "translation_micro",
+      "device_hardware",
+      "reflection_audit",
+      "locality_rules",
+      "agent_orchestration"
+    ]
+  },
+  "shannonPartInspection": {
+    "inspectionId": "omni-shannon-part-inspection-v1",
+    "label": "Omni Shannon Part Inspection",
+    "summary": "Bounded Shannon parts inspect archive translation and proof climb gaps without escalating to whole-Shannon execution.",
+    "useLaw": "deploy_named_shannon_parts_for_archive_and_proof_inspection",
+    "resultAuthority": "derived_from_gap_analysis_and_scan",
+    "focusOverWaveIds": [
+      "over-wave-4-archive-translation",
+      "over-wave-5-proof-climb"
+    ],
+    "focusGapIds": [
+      "gap-archive-translation-routing",
+      "gap-device-proof-loop",
+      "gap-proof-climb-promotion",
+      "gap-proof-climb-tier-unlock"
+    ],
+    "wholeAllowed": false
+  },
+  "mapMapMappedScanning": {
+    "scanId": "map-map-mapped-scanning-v1",
+    "label": "MAP MAP MAPPED scanning",
+    "summary": "Automated map-covering controller that deploys scan waves by sector, collects returns, runs bounded self-reflection, and redeploys named lanes.",
+    "positionMode": "exact_timestamped_structure_learning",
+    "identityTuple": ["surfaceId", "profileId", "pidVersion", "deviceSurfaceId", "timestamp"],
+    "cycle": ["deploy", "scan", "return", "reflect", "redeploy"],
+    "responseModes": ["respond", "use", "vote"],
+    "livingStructureClasses": [
+      "structure_observation",
+      "structure_delta",
+      "route_delta",
+      "authority_delta",
+      "mistake_delta"
+    ],
+    "availableAccessLevelIds": ["super_governance", "leader_orchestrator", "observer_gnn", "guardrail", "service_operator"],
+    "availableChoiceBundleIds": ["leader-orchestrator", "gnn-observer", "identity-proof", "self-reflection-loop", "shannon-part-or-whole"],
+    "selfReflectModes": {
+      "scout": "evidence_first",
+      "front": "delta_only",
+      "back": "proof_audit",
+      "redeploy": "delayed_vote_reflection"
+    },
+    "shannonParts": {
+      "scout": [],
+      "back": ["shannon-evidence", "shannon-scout"],
+      "wholeAllowed": false
+    },
+    "capacityGovernor": {
+      "profileId": "local-low-power-governor-v1",
+      "machineClass": "2c4t_integrated_gpu",
+      "deploymentMode": "all_cataloged_safe_windowed_activation",
+      "maxConcurrentScanWaves": 2,
+      "maxActiveCampaigns": 2,
+      "maxActiveLegacyWaves": 7,
+      "maxPlannerLanesPerWave": 4,
+      "cpuWatcherIds": ["local-cpu-watch", "attached-device-cpu-watch"],
+      "gpuWatcherIds": ["local-gpu-watch"],
+      "cautionLaw": "gpu_cpu_watchers_may_pause_redeploy"
+    },
+    "waves": [
+      {
+        "id": "wave-1-scout-alpha",
+        "role": "sector_scan",
+        "sectorLaneIds": [
+          "memory_lane",
+          "pid_orchestrator_lane",
+          "runtime_index_lane",
+          "promotion_proof_lane",
+          "task_mistake_proof_lane",
+          "rule_authority_device_lane"
+        ],
+        "legacyCampaignIds": ["legacy-campaign-control-proof", "legacy-campaign-roster-bundle"],
+        "legacyWaveIds": ["legacy-wave-1-entry", "legacy-wave-2-shadow", "legacy-wave-3-proof", "legacy-wave-4-roster", "legacy-wave-5-bundle"]
+      },
+      {
+        "id": "wave-2-return-alpha",
+        "role": "return_reflect",
+        "sectorLaneIds": [
+          "memory_lane",
+          "promotion_proof_lane",
+          "task_mistake_proof_lane",
+          "rule_authority_device_lane"
+        ],
+        "legacyCampaignIds": ["legacy-campaign-control-proof", "legacy-campaign-roster-bundle"],
+        "legacyWaveIds": ["legacy-wave-1-entry", "legacy-wave-2-shadow", "legacy-wave-3-proof", "legacy-wave-4-roster", "legacy-wave-5-bundle"]
+      },
+      {
+        "id": "wave-3-scout-beta",
+        "role": "sector_scan",
+        "sectorLaneIds": [
+          "memory_lane",
+          "pid_orchestrator_lane",
+          "runtime_index_lane",
+          "promotion_proof_lane",
+          "task_mistake_proof_lane",
+          "rule_authority_device_lane"
+        ],
+        "legacyCampaignIds": ["legacy-campaign-device-governance-task", "legacy-campaign-language-ops"],
+        "legacyWaveIds": ["legacy-wave-6-host-device", "legacy-wave-7-governance", "legacy-wave-8-task", "legacy-wave-9-language", "legacy-wave-10-integrations", "legacy-wave-11-admin", "legacy-wave-12-knowledge"]
+      },
+      {
+        "id": "wave-4-return-beta",
+        "role": "return_reflect",
+        "sectorLaneIds": [
+          "memory_lane",
+          "promotion_proof_lane",
+          "task_mistake_proof_lane",
+          "rule_authority_device_lane"
+        ],
+        "legacyCampaignIds": ["legacy-campaign-device-governance-task", "legacy-campaign-language-ops"],
+        "legacyWaveIds": ["legacy-wave-6-host-device", "legacy-wave-7-governance", "legacy-wave-8-task", "legacy-wave-9-language", "legacy-wave-10-integrations", "legacy-wave-11-admin", "legacy-wave-12-knowledge"]
+      },
+      {
+        "id": "wave-5-scout-gamma",
+        "role": "sector_scan",
+        "sectorLaneIds": [
+          "memory_lane",
+          "pid_orchestrator_lane",
+          "runtime_index_lane",
+          "promotion_proof_lane",
+          "task_mistake_proof_lane",
+          "rule_authority_device_lane"
+        ],
+        "legacyCampaignIds": ["legacy-campaign-deploy-verify", "legacy-campaign-deep-archive"],
+        "legacyWaveIds": ["legacy-wave-13-deployment", "legacy-wave-14-api", "legacy-wave-15-bootstrap", "legacy-wave-16-validation", "legacy-wave-17-archive-system", "legacy-wave-18-archive-index"]
+      },
+      {
+        "id": "wave-6-return-gamma",
+        "role": "return_reflect",
+        "sectorLaneIds": [
+          "memory_lane",
+          "promotion_proof_lane",
+          "task_mistake_proof_lane",
+          "rule_authority_device_lane"
+        ],
+        "legacyCampaignIds": ["legacy-campaign-deploy-verify", "legacy-campaign-deep-archive"],
+        "legacyWaveIds": ["legacy-wave-13-deployment", "legacy-wave-14-api", "legacy-wave-15-bootstrap", "legacy-wave-16-validation", "legacy-wave-17-archive-system", "legacy-wave-18-archive-index"]
+      },
+      {
+        "id": "wave-7-scout-delta",
+        "role": "sector_scan",
+        "sectorLaneIds": [
+          "memory_lane",
+          "pid_orchestrator_lane",
+          "runtime_index_lane",
+          "promotion_proof_lane",
+          "task_mistake_proof_lane",
+          "rule_authority_device_lane"
+        ],
+        "legacyCampaignIds": ["legacy-campaign-control-proof", "legacy-campaign-deploy-verify", "legacy-campaign-deep-archive"],
+        "legacyWaveIds": ["legacy-wave-1-entry", "legacy-wave-2-shadow", "legacy-wave-3-proof", "legacy-wave-13-deployment", "legacy-wave-14-api", "legacy-wave-15-bootstrap", "legacy-wave-16-validation", "legacy-wave-17-archive-system", "legacy-wave-18-archive-index"]
+      },
+      {
+        "id": "wave-8-return-delta",
+        "role": "return_reflect",
+        "sectorLaneIds": [
+          "memory_lane",
+          "promotion_proof_lane",
+          "task_mistake_proof_lane",
+          "rule_authority_device_lane"
+        ],
+        "legacyCampaignIds": ["legacy-campaign-control-proof", "legacy-campaign-deploy-verify", "legacy-campaign-deep-archive"],
+        "legacyWaveIds": ["legacy-wave-1-entry", "legacy-wave-2-shadow", "legacy-wave-3-proof", "legacy-wave-13-deployment", "legacy-wave-14-api", "legacy-wave-15-bootstrap", "legacy-wave-16-validation", "legacy-wave-17-archive-system", "legacy-wave-18-archive-index"]
+      },
+      {
+        "id": "wave-9-redeploy-lattice",
+        "role": "redeploy_front_back",
+        "sectorLaneIds": [
+          "front_schema",
+          "front_catalogs",
+          "front_selection",
+          "back_proof_gate",
+          "back_provenance",
+          "back_gnn_contradiction"
+        ],
+        "legacyCampaignIds": ["legacy-campaign-roster-bundle", "legacy-campaign-device-governance-task", "legacy-campaign-language-ops"],
+        "legacyWaveIds": ["legacy-wave-4-roster", "legacy-wave-5-bundle", "legacy-wave-6-host-device", "legacy-wave-7-governance", "legacy-wave-8-task", "legacy-wave-9-language", "legacy-wave-10-integrations", "legacy-wave-11-admin", "legacy-wave-12-knowledge"]
+      },
+      {
+        "id": "wave-10-redeploy-proof-final",
+        "role": "redeploy_front_back",
+        "sectorLaneIds": [
+          "front_schema",
+          "front_catalogs",
+          "front_selection",
+          "back_proof_gate",
+          "back_provenance",
+          "back_gnn_contradiction"
+        ],
+        "legacyCampaignIds": ["legacy-campaign-roster-bundle", "legacy-campaign-device-governance-task", "legacy-campaign-language-ops", "legacy-campaign-deploy-verify", "legacy-campaign-deep-archive"],
+        "legacyWaveIds": ["legacy-wave-4-roster", "legacy-wave-5-bundle", "legacy-wave-6-host-device", "legacy-wave-7-governance", "legacy-wave-8-task", "legacy-wave-9-language", "legacy-wave-10-integrations", "legacy-wave-11-admin", "legacy-wave-12-knowledge", "legacy-wave-13-deployment", "legacy-wave-14-api", "legacy-wave-15-bootstrap", "legacy-wave-16-validation", "legacy-wave-17-archive-system", "legacy-wave-18-archive-index"]
+      },
+      {
+        "id": "wave-11-scout-epsilon",
+        "role": "sector_scan",
+        "sectorLaneIds": [
+          "memory_lane",
+          "pid_orchestrator_lane",
+          "runtime_index_lane",
+          "promotion_proof_lane",
+          "task_mistake_proof_lane",
+          "rule_authority_device_lane"
+        ],
+        "legacyCampaignIds": ["legacy-campaign-roster-bundle", "legacy-campaign-device-governance-task"],
+        "legacyWaveIds": ["legacy-wave-4-roster", "legacy-wave-5-bundle", "legacy-wave-6-host-device", "legacy-wave-7-governance", "legacy-wave-8-task"]
+      },
+      {
+        "id": "wave-12-return-epsilon",
+        "role": "return_reflect",
+        "sectorLaneIds": [
+          "memory_lane",
+          "promotion_proof_lane",
+          "task_mistake_proof_lane",
+          "rule_authority_device_lane"
+        ],
+        "legacyCampaignIds": ["legacy-campaign-roster-bundle", "legacy-campaign-device-governance-task"],
+        "legacyWaveIds": ["legacy-wave-4-roster", "legacy-wave-5-bundle", "legacy-wave-6-host-device", "legacy-wave-7-governance", "legacy-wave-8-task"]
+      },
+      {
+        "id": "wave-13-redeploy-governance",
+        "role": "redeploy_front_back",
+        "sectorLaneIds": [
+          "front_schema",
+          "front_catalogs",
+          "front_selection",
+          "back_proof_gate",
+          "back_provenance",
+          "back_gnn_contradiction"
+        ],
+        "legacyCampaignIds": ["legacy-campaign-device-governance-task", "legacy-campaign-language-ops"],
+        "legacyWaveIds": ["legacy-wave-6-host-device", "legacy-wave-7-governance", "legacy-wave-8-task", "legacy-wave-9-language", "legacy-wave-10-integrations", "legacy-wave-11-admin", "legacy-wave-12-knowledge"]
+      },
+      {
+        "id": "wave-14-redeploy-promotion",
+        "role": "redeploy_front_back",
+        "sectorLaneIds": [
+          "front_schema",
+          "front_catalogs",
+          "front_selection",
+          "back_proof_gate",
+          "back_provenance",
+          "back_gnn_contradiction"
+        ],
+        "legacyCampaignIds": ["legacy-campaign-control-proof", "legacy-campaign-deploy-verify", "legacy-campaign-deep-archive"],
+        "legacyWaveIds": ["legacy-wave-1-entry", "legacy-wave-2-shadow", "legacy-wave-3-proof", "legacy-wave-13-deployment", "legacy-wave-14-api", "legacy-wave-15-bootstrap", "legacy-wave-16-validation", "legacy-wave-17-archive-system", "legacy-wave-18-archive-index"]
+      },
+      {
+        "id": "wave-15-reverse-governance-floor",
+        "role": "sector_scan",
+        "sectorLaneIds": [
+          "memory_lane",
+          "pid_orchestrator_lane",
+          "runtime_index_lane",
+          "promotion_proof_lane",
+          "task_mistake_proof_lane",
+          "rule_authority_device_lane"
+        ],
+        "legacyCampaignIds": ["legacy-campaign-device-governance-task"],
+        "legacyWaveIds": ["legacy-wave-6-host-device", "legacy-wave-7-governance", "legacy-wave-8-task"]
+      },
+      {
+        "id": "wave-16-reverse-governance-return",
+        "role": "return_reflect",
+        "sectorLaneIds": [
+          "memory_lane",
+          "promotion_proof_lane",
+          "task_mistake_proof_lane",
+          "rule_authority_device_lane"
+        ],
+        "legacyCampaignIds": ["legacy-campaign-device-governance-task"],
+        "legacyWaveIds": ["legacy-wave-6-host-device", "legacy-wave-7-governance", "legacy-wave-8-task"]
+      },
+      {
+        "id": "wave-17-reverse-super-governance-map",
+        "role": "redeploy_front_back",
+        "sectorLaneIds": [
+          "front_schema",
+          "front_catalogs",
+          "front_selection",
+          "back_proof_gate",
+          "back_provenance",
+          "back_gnn_contradiction"
+        ],
+        "legacyCampaignIds": ["legacy-campaign-control-proof", "legacy-campaign-device-governance-task", "legacy-campaign-language-ops", "legacy-campaign-deploy-verify", "legacy-campaign-deep-archive"],
+        "legacyWaveIds": ["legacy-wave-1-entry", "legacy-wave-2-shadow", "legacy-wave-3-proof", "legacy-wave-6-host-device", "legacy-wave-7-governance", "legacy-wave-8-task", "legacy-wave-9-language", "legacy-wave-10-integrations", "legacy-wave-11-admin", "legacy-wave-12-knowledge", "legacy-wave-13-deployment", "legacy-wave-14-api", "legacy-wave-15-bootstrap", "legacy-wave-16-validation", "legacy-wave-17-archive-system", "legacy-wave-18-archive-index"]
+      },
+      {
+        "id": "wave-18-reverse-super-governance-prove",
+        "role": "redeploy_front_back",
+        "sectorLaneIds": [
+          "front_schema",
+          "front_catalogs",
+          "front_selection",
+          "back_proof_gate",
+          "back_provenance",
+          "back_gnn_contradiction"
+        ],
+        "legacyCampaignIds": ["legacy-campaign-control-proof", "legacy-campaign-roster-bundle", "legacy-campaign-device-governance-task", "legacy-campaign-language-ops", "legacy-campaign-deploy-verify", "legacy-campaign-deep-archive"],
+        "legacyWaveIds": ["legacy-wave-1-entry", "legacy-wave-2-shadow", "legacy-wave-3-proof", "legacy-wave-4-roster", "legacy-wave-5-bundle", "legacy-wave-6-host-device", "legacy-wave-7-governance", "legacy-wave-8-task", "legacy-wave-9-language", "legacy-wave-10-integrations", "legacy-wave-11-admin", "legacy-wave-12-knowledge", "legacy-wave-13-deployment", "legacy-wave-14-api", "legacy-wave-15-bootstrap", "legacy-wave-16-validation", "legacy-wave-17-archive-system", "legacy-wave-18-archive-index"]
+      }
+    ]
+  },
+  "frontBackWave": {
+    "waveId": "omni-front-back-wave-v1",
+    "summary": "Three front writing lanes and three back verification lanes that act only after Scout 6 is complete.",
+    "frontLanes": [
+      {
+        "id": "front_schema",
+        "label": "Omni Schema",
+        "focus": "Body system, categories, subcategories, and stage structure for the branch.",
+        "writes": ["branch_schema", "session_capsule_schema"],
+        "boundedBy": ["memory_lane", "promotion_proof_lane"]
+      },
+      {
+        "id": "front_catalogs",
+        "label": "Omni Catalogs",
+        "focus": "Part catalogs for surfaces, services, service parts, abilities, and compute watchers.",
+        "writes": ["omni_part_catalog", "device_catalog", "service_part_catalog"],
+        "boundedBy": ["runtime_index_lane", "rule_authority_device_lane"]
+      },
+      {
+        "id": "front_selection",
+        "label": "Named Selection",
+        "focus": "Named-only selection law using pidVersion, deviceSurfaceId, and timestamp.",
+        "writes": ["selection_law", "choice_bundles", "access_maps"],
+        "boundedBy": ["pid_orchestrator_lane", "rule_authority_device_lane"]
+      }
+    ],
+    "backLanes": [
+      {
+        "id": "back_proof_gate",
+        "label": "Proof Gate",
+        "focus": "Parity, rollback, negative proof, and promotion gate enforcement.",
+        "verifies": ["future_layer_truth_order", "parity_gate", "rollback_gate"],
+        "blocks": ["front_schema", "front_catalogs", "front_selection"]
+      },
+      {
+        "id": "back_provenance",
+        "label": "Provenance Quarantine",
+        "focus": "Append-only provenance, mistake timelines, and quarantine of weak or stale truth.",
+        "verifies": ["append_only_history", "mistake_capsule", "stale_truth_quarantine"],
+        "blocks": ["front_catalogs", "front_selection"]
+      },
+      {
+        "id": "back_gnn_contradiction",
+        "label": "GNN Contradiction",
+        "focus": "GNN observation, contradiction extraction, and vote support without claiming truth authority.",
+        "verifies": ["gnn_observation", "edge_extraction", "named_vote"],
+        "blocks": ["front_schema", "front_catalogs", "front_selection"]
+      }
+    ]
+  },
+  "gnnChain": ["observe", "edge_map", "reflect", "plan", "vote", "prove"],
+  "bodySystem": ["memory", "rule", "world_model", "root_authority", "skill", "ability", "training", "omni_map"],
+  "categories": [
+    {
+      "id": "memory",
+      "label": "Memory",
+      "summary": "Persisted state and recall bound to device, pidVersion, and timeline.",
+      "subcategories": [
+        { "id": "curated_memory", "label": "Curated Memory" },
+        { "id": "heartbeat_memory", "label": "Heartbeat Memory" },
+        { "id": "reflection_memory", "label": "Reflection Memory" },
+        { "id": "mistake_memory", "label": "Mistake Memory" },
+        { "id": "timeline_memory", "label": "Timeline Memory" }
+      ]
+    },
+    {
+      "id": "rule",
+      "label": "Rule",
+      "summary": "Rules keep the language bounded, owner-gated, and replacement-safe.",
+      "subcategories": [
+        { "id": "activation_rule", "label": "Activation Rule" },
+        { "id": "dispatch_rule", "label": "Dispatch Rule" },
+        { "id": "promotion_rule", "label": "Promotion Rule" },
+        { "id": "packet_budget_rule", "label": "Packet Budget Rule" },
+        { "id": "device_boundary_rule", "label": "Device Boundary Rule" }
+      ]
+    },
+    {
+      "id": "world_model",
+      "label": "World Model",
+      "summary": "Device truth, routes, observations, and GNN edge maps.",
+      "subcategories": [
+        { "id": "device_observation", "label": "Device Observation" },
+        { "id": "route_truth", "label": "Route Truth" },
+        { "id": "gnn_observation", "label": "GNN Observation" },
+        { "id": "edge_map", "label": "Edge Map" },
+        { "id": "host_surface_map", "label": "Host Surface Map" }
+      ]
+    },
+    {
+      "id": "root_authority",
+      "label": "Root Authority",
+      "summary": "Owner, sovereign root, approvals, and compute stewardship.",
+      "subcategories": [
+        { "id": "sovereign_root", "label": "Sovereign Root" },
+        { "id": "owner_admin", "label": "Owner Admin" },
+        { "id": "derived_ingress", "label": "Derived Ingress" },
+        { "id": "approval_chain", "label": "Approval Chain" },
+        { "id": "compute_stewardship", "label": "Compute Stewardship" }
+      ]
+    },
+    {
+      "id": "skill",
+      "label": "Skill",
+      "summary": "Reusable bounded services and specialist parts.",
+      "subcategories": [
+        { "id": "operator_skill", "label": "Operator Skill" },
+        { "id": "service_parts", "label": "Service Parts" },
+        { "id": "observer_skill", "label": "Observer Skill" },
+        { "id": "planning_skill", "label": "Planning Skill" },
+        { "id": "routing_skill", "label": "Routing Skill" }
+      ]
+    },
+    {
+      "id": "ability",
+      "label": "Ability",
+      "summary": "Automatic loops such as guided transcription self-reflection and planning.",
+      "subcategories": [
+        { "id": "self_reflection", "label": "Self Reflection" },
+        { "id": "planning", "label": "Planning" },
+        { "id": "transcription_injection", "label": "Transcription Injection" },
+        { "id": "device_control", "label": "Device Control" },
+        { "id": "micro_delay_loop", "label": "Micro Delay Loop" }
+      ]
+    },
+    {
+      "id": "training",
+      "label": "Training",
+      "summary": "Structured reflection and rehearsal for admin-plus and specialist surfaces.",
+      "subcategories": [
+        { "id": "admin_reflection_training", "label": "Admin Reflection Training" },
+        { "id": "proof_training", "label": "Proof Training" },
+        { "id": "locality_training", "label": "Locality Training" },
+        { "id": "device_training", "label": "Device Training" },
+        { "id": "translation_training", "label": "Translation Training" }
+      ]
+    },
+    {
+      "id": "omni_map",
+      "label": "Omni Map",
+      "summary": "Leader selection, access levels, choice bundles, and omnichannel routing.",
+      "subcategories": [
+        { "id": "choice_bundle_map", "label": "Choice Bundle Map" },
+        { "id": "selection_proof", "label": "Selection Proof" },
+        { "id": "access_law", "label": "Access Law" },
+        { "id": "stage_map", "label": "Stage Map" },
+        { "id": "omnichannel_index", "label": "Omnichannel Index" }
+      ]
+    }
+  ],
+  "accessLevels": [
+    {
+      "id": "owner_root",
+      "label": "Owner Root",
+      "priority": 1,
+      "surfaceIds": ["local-sovereign-host", "asolaria"],
+      "authorityRoles": ["sovereign_root", "owner_admin"],
+      "defaultChoiceBundleIds": ["root-admin", "compute-steward", "leader-index-all", "self-reflection-loop"],
+      "approvalState": "owner_gated_execution_root"
+    },
+    {
+      "id": "super_governance",
+      "label": "Super Governance",
+      "priority": 2,
+      "surfaceIds": ["asolaria-usb-root", "asolaria", "gaia", "helm", "sentinel"],
+      "authorityRoles": ["cross_colony_governance", "super_governance"],
+      "defaultChoiceBundleIds": ["super-governance", "leader-index-all", "compute-steward", "self-reflection-loop"],
+      "approvalState": "cross_colony_governance_root"
+    },
+    {
+      "id": "leader_orchestrator",
+      "label": "Leader Orchestrator",
+      "priority": 3,
+      "surfaceIds": ["liris-kuromi", "gaia", "helm"],
+      "authorityRoles": ["derived_ingress", "anchor_support", "sequencer_support"],
+      "defaultChoiceBundleIds": ["leader-orchestrator", "white-room-rebuild", "omni-route", "self-reflection-loop"],
+      "approvalState": "derived_support"
+    },
+    {
+      "id": "guardrail",
+      "label": "Guardrail",
+      "priority": 4,
+      "surfaceIds": ["sentinel"],
+      "authorityRoles": ["guardrail_support"],
+      "defaultChoiceBundleIds": ["guardrail-gate", "identity-proof", "self-reflection-loop"],
+      "approvalState": "derived_support"
+    },
+    {
+      "id": "observer_gnn",
+      "label": "Observer GNN",
+      "priority": 5,
+      "surfaceIds": ["falcon-2", "dasein", "the-beast"],
+      "categories": ["world_model"],
+      "defaultChoiceBundleIds": ["gnn-observer", "device-boundary"],
+      "approvalState": "transport_gated_boundary"
+    },
+    {
+      "id": "service_operator",
+      "label": "Service Operator",
+      "priority": 6,
+      "categories": ["skill", "ability"],
+      "defaultChoiceBundleIds": ["shannon-part-or-whole", "self-reflection-loop"],
+      "approvalState": "bounded_service_use"
+    }
+  ],
+  "choiceBundles": [
+    {
+      "id": "root-admin",
+      "label": "Root Admin",
+      "summary": "Root chooses structural mutation and promotion gates.",
+      "accessLevelIds": ["owner_root"],
+      "categoryIds": ["root_authority", "rule", "omni_map"],
+      "bundleIds": ["admin-core"],
+      "stageIds": ["white_room_map", "white_room_prove"],
+      "decisionMode": "owner_gated"
+    },
+    {
+      "id": "super-governance",
+      "label": "Super Governance",
+      "summary": "Cross-colony governance, promotion discipline, and elevated control-panel routing.",
+      "accessLevelIds": ["owner_root", "super_governance"],
+      "categoryIds": ["rule", "root_authority", "world_model", "omni_map"],
+      "bundleIds": ["admin-core", "voice-flywheel-gpu"],
+      "stageIds": ["white_room_map", "white_room_plan", "white_room_prove"],
+      "decisionMode": "cross_colony_governance"
+    },
+    {
+      "id": "compute-steward",
+      "label": "Compute Steward",
+      "summary": "Root assigns CPU/GPU authority without confusing device boundaries.",
+      "accessLevelIds": ["owner_root"],
+      "categoryIds": ["root_authority", "world_model"],
+      "bundleIds": ["admin-core", "voice-flywheel-gpu"],
+      "stageIds": ["white_room_plan", "white_room_prove"],
+      "decisionMode": "compute_stewardship"
+    },
+    {
+      "id": "leader-index-all",
+      "label": "Leader Index All",
+      "summary": "Root can inspect every structural catalog while keeping operational packets compact.",
+      "accessLevelIds": ["owner_root"],
+      "categoryIds": ["omni_map", "memory", "rule"],
+      "stageIds": ["white_room_observe", "white_room_map", "white_room_prove"],
+      "decisionMode": "structural_read"
+    },
+    {
+      "id": "leader-orchestrator",
+      "label": "Leader Orchestrator",
+      "summary": "Leaders select named units, stages, and bundles instead of unnamed spawns.",
+      "accessLevelIds": ["leader_orchestrator"],
+      "categoryIds": ["memory", "world_model", "skill", "omni_map"],
+      "bundleIds": ["admin-core"],
+      "stageIds": ["white_room_map", "white_room_plan", "white_room_vote"],
+      "decisionMode": "named_orchestration"
+    },
+    {
+      "id": "white-room-rebuild",
+      "label": "White Room Rebuild",
+      "summary": "Reflective rebuild of the omni branch from the living language.",
+      "accessLevelIds": ["leader_orchestrator"],
+      "categoryIds": ["memory", "rule", "ability", "omni_map"],
+      "bundleIds": ["voice-meeting-inject"],
+      "stageIds": ["white_room_observe", "white_room_map", "white_room_reflect", "white_room_plan", "white_room_vote", "white_room_prove"],
+      "serviceIds": ["voice-meeting-inject"],
+      "decisionMode": "self_reflective_rebuild"
+    },
+    {
+      "id": "omni-route",
+      "label": "Omni Route",
+      "summary": "Device-specific route selection for named surfaces only.",
+      "accessLevelIds": ["leader_orchestrator"],
+      "categoryIds": ["world_model", "omni_map"],
+      "bundleIds": ["falcon-device-bridge"],
+      "stageIds": ["white_room_observe", "white_room_map", "white_room_prove"],
+      "decisionMode": "device_specific_route"
+    },
+    {
+      "id": "guardrail-gate",
+      "label": "Guardrail Gate",
+      "summary": "Approval and mutation boundary.",
+      "accessLevelIds": ["guardrail"],
+      "categoryIds": ["rule", "root_authority"],
+      "bundleIds": ["admin-core"],
+      "stageIds": ["white_room_reflect", "white_room_prove"],
+      "decisionMode": "approval_gate"
+    },
+    {
+      "id": "identity-proof",
+      "label": "Identity Proof",
+      "summary": "Identity and route proof bundle.",
+      "accessLevelIds": ["guardrail"],
+      "categoryIds": ["rule", "world_model"],
+      "stageIds": ["white_room_observe", "white_room_prove"],
+      "decisionMode": "identity_proof"
+    },
+    {
+      "id": "gnn-observer",
+      "label": "GNN Observer",
+      "summary": "Extract edges, contradictions, and adjacencies.",
+      "accessLevelIds": ["leader_orchestrator", "observer_gnn"],
+      "categoryIds": ["world_model", "omni_map"],
+      "bundleIds": ["falcon-device-bridge"],
+      "stageIds": ["white_room_observe", "white_room_map", "white_room_vote"],
+      "decisionMode": "gnn_edge_extraction"
+    },
+    {
+      "id": "device-boundary",
+      "label": "Device Boundary",
+      "summary": "Protect device-local truth and route discipline.",
+      "accessLevelIds": ["observer_gnn", "service_operator"],
+      "categoryIds": ["rule", "world_model"],
+      "bundleIds": ["falcon-device-bridge"],
+      "stageIds": ["white_room_observe", "white_room_prove"],
+      "decisionMode": "device_boundary"
+    },
+    {
+      "id": "shannon-part-or-whole",
+      "label": "Shannon Part Or Whole",
+      "summary": "Use Shannon whole or by named part without confusing it for omnispindle.",
+      "accessLevelIds": ["owner_root", "super_governance", "leader_orchestrator", "guardrail", "service_operator"],
+      "categoryIds": ["skill", "ability", "omni_map"],
+      "bundleIds": ["shannon-fabric"],
+      "serviceIds": ["shannon-fabric"],
+      "stageIds": ["white_room_simulate", "white_room_vote", "white_room_prove"],
+      "decisionMode": "whole_or_part"
+    },
+    {
+      "id": "self-reflection-loop",
+      "label": "Self Reflection Loop",
+      "summary": "Guided transcription self-reflection bundle.",
+      "accessLevelIds": ["owner_root", "super_governance", "leader_orchestrator", "guardrail", "service_operator"],
+      "categoryIds": ["memory", "ability", "training", "omni_map"],
+      "bundleIds": ["voice-meeting-inject"],
+      "serviceIds": ["voice-meeting-inject"],
+      "stageIds": ["white_room_reflect", "white_room_plan"],
+      "decisionMode": "micro_delay_transcription"
+    }
+  ],
+  "developmentStages": [
+    {
+      "id": "white_room_observe",
+      "label": "Observe",
+      "order": 1,
+      "accessLevelIds": ["leader_orchestrator", "observer_gnn", "guardrail"],
+      "choiceBundleIds": ["gnn-observer", "device-boundary", "identity-proof"],
+      "proofsRequired": ["named_pid", "device_truth"],
+      "packetLineLimit": 35,
+      "gnnMode": "observe",
+      "selfReflectMode": "evidence_first",
+      "planningMode": "none",
+      "defaultActive": true
+    },
+    {
+      "id": "white_room_map",
+      "label": "Map",
+      "order": 2,
+      "accessLevelIds": ["owner_root", "super_governance", "leader_orchestrator"],
+      "choiceBundleIds": ["leader-index-all", "super-governance", "leader-orchestrator", "omni-route"],
+      "proofsRequired": ["index_signature", "named_surface_map"],
+      "packetLineLimit": 35,
+      "gnnMode": "edge_map",
+      "selfReflectMode": "mapping_reflection",
+      "planningMode": "bounded_mapping",
+      "defaultActive": true
+    },
+    {
+      "id": "white_room_reflect",
+      "label": "Reflect",
+      "order": 3,
+      "accessLevelIds": ["leader_orchestrator", "guardrail", "service_operator"],
+      "choiceBundleIds": ["white-room-rebuild", "guardrail-gate", "self-reflection-loop"],
+      "proofsRequired": ["mistake_index", "timeline_guard"],
+      "packetLineLimit": 35,
+      "gnnMode": "reflect",
+      "selfReflectMode": "guided_transcription_self_reflection",
+      "planningMode": "delta_only",
+      "defaultActive": true
+    },
+    {
+      "id": "white_room_plan",
+      "label": "Plan",
+      "order": 4,
+      "accessLevelIds": ["owner_root", "super_governance", "leader_orchestrator", "service_operator"],
+      "choiceBundleIds": ["super-governance", "compute-steward", "leader-orchestrator", "self-reflection-loop"],
+      "proofsRequired": ["choice_bundle", "budget_truth"],
+      "packetLineLimit": 35,
+      "gnnMode": "plan",
+      "selfReflectMode": "plan_reflection",
+      "planningMode": "named_only",
+      "defaultActive": true
+    },
+    {
+      "id": "white_room_simulate",
+      "label": "Simulate",
+      "order": 5,
+      "accessLevelIds": ["leader_orchestrator", "service_operator"],
+      "choiceBundleIds": ["shannon-part-or-whole", "gnn-observer"],
+      "proofsRequired": ["stage_proof", "route_truth"],
+      "packetLineLimit": 35,
+      "gnnMode": "simulate",
+      "selfReflectMode": "security_review_wave",
+      "planningMode": "scenario_simulation"
+    },
+    {
+      "id": "white_room_vote",
+      "label": "Vote",
+      "order": 6,
+      "accessLevelIds": ["leader_orchestrator", "observer_gnn", "service_operator"],
+      "choiceBundleIds": ["white-room-rebuild", "leader-orchestrator", "gnn-observer", "shannon-part-or-whole"],
+      "proofsRequired": ["named_vote", "edge_extraction"],
+      "packetLineLimit": 35,
+      "gnnMode": "vote",
+      "selfReflectMode": "delayed_vote_reflection",
+      "planningMode": "multi_bundle_vote"
+    },
+    {
+      "id": "white_room_prove",
+      "label": "Prove",
+      "order": 7,
+      "accessLevelIds": ["owner_root", "super_governance", "guardrail", "leader_orchestrator"],
+      "choiceBundleIds": ["root-admin", "super-governance", "compute-steward", "guardrail-gate", "identity-proof", "device-boundary"],
+      "proofsRequired": ["pro_ready", "promotion_gate"],
+      "packetLineLimit": 35,
+      "gnnMode": "prove",
+      "selfReflectMode": "proof_audit",
+      "planningMode": "promotion_only"
+    }
+  ]
+}

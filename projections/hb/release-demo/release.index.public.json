@@ -1,0 +1,8 @@
+{
+  "status": "PLANNED_OUTPUT",
+  "artifact": "release.index",
+  "publicPlaceholder": true,
+  "note": "Sanitized placeholder output for future public validation.",
+  "version": "v1",
+  "sha256": "PLACEHOLDER_PENDING_GENERATION"
+}

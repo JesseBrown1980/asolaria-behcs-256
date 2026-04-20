@@ -1,0 +1,22 @@
+{
+  "id": "ui.visual_audit",
+  "title": "UI Visual Audit (On-Demand)",
+  "description": "On-demand responsive audit skill for web/mobile surfaces: one-finger swipe behavior, two-finger pinch attempt checks, and local Asolaria window state checks (focus/restore/maximize + captures).",
+  "version": "0.3.0",
+  "risk": "medium",
+  "permissions": ["desktop.read", "desktop.window.focus", "desktop.capture"],
+  "tags": ["ui", "visual", "audit", "responsive", "phone", "desktop", "on-demand"],
+  "steps": [
+    {
+      "action": "ui_visual_audit",
+      "note": "Run full UI visual audit with pinch zoom and local window checks.",
+      "payload": {
+        "baseUrl": "http://127.0.0.1:4781",
+        "includePinchZoom": true,
+        "includeLocalWindows": true,
+        "timeoutMs": 900000
+      },
+      "permissions": ["desktop.read", "desktop.window.focus", "desktop.capture"]
+    }
+  ]
+}

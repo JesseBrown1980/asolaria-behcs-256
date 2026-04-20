@@ -1,0 +1,45 @@
+﻿$ErrorActionPreference='Stop'
+Set-Location C:\Users\acer
+$report='C:\Users\acer\Asolaria\reports\commerce-connectors-bootstrap-shutdown-continuation-20260308-exec.md'
+$lines = @(
+  '# Commerce Connectors Bootstrap (Shutdown Continuation)',
+  '',
+  ('Generated: ' + (Get-Date -Format 'yyyy-MM-dd HH:mm:ss zzz')),
+  '',
+  '## MVP Connector Order',
+  '1. Shopify Admin API (read-first, guarded writes).',
+  '2. Meta Commerce APIs (catalog/order read-first).',
+  '3. TikTok Shop APIs (catalog/order read-first).',
+  '4. Amazon SP-API (catalog/order read-first).',
+  '',
+  '## Minimal Connector Contract',
+  '- auth: OAuth/token reference only; secrets live in approved vault path.',
+  '- account_discovery: list stores/accounts with immutable external IDs.',
+  '- read_models: products, inventory, orders, fulfillment status.',
+  '- write_gates: explicit allow-list + dry-run default + human approval hook.',
+  '- audit: request_id, actor, connector, resource_id, delta summary, timestamp.',
+  '- risk_controls: rate limits, idempotency keys, circuit breaker, rollback note.',
+  '',
+  '## Suggested Module Skeleton',
+  '- src/connectors/core/{types,registry,audit,errors}.ts',
+  '- src/connectors/shopify/{auth,client,products,orders,writes}.ts',
+  '- src/connectors/meta/{auth,client,catalog,orders}.ts',
+  '- src/connectors/tiktok/{auth,client,products,orders}.ts',
+  '- src/connectors/amazon/{auth,client,listings,orders}.ts',
+  '- tests/connectors/{contract,shopify,meta,tiktok,amazon}.test.ts',
+  '',
+  '## Test Matrix',
+  '- Unit: schemas, mappers, auth parsing, error normalization.',
+  '- Integration: sandbox reads, pagination, webhook signature validation.',
+  '- Safety: write-gate deny-by-default, approval required, idempotent retries.',
+  '- Resilience: timeout/retry/backoff and partial outage handling.',
+  '',
+  '## 2-Week Execution Plan',
+  '- Days 1-3: contract + core audit + Shopify read paths.',
+  '- Days 4-6: Shopify guarded writes + tests + smoke.',
+  '- Days 7-9: Meta + TikTok read adapters + normalization.',
+  '- Days 10-12: Amazon read adapter + contract tests.',
+  '- Days 13-14: hardening, runbook, operator handoff.'
+)
+$lines | Set-Content -Path $report -Encoding UTF8
+Write-Output ('wrote=' + $report)

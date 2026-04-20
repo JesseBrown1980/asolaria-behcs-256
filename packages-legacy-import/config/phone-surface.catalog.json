@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "capturedAt": "2026-03-30T20:00:00.000Z",
+  "label": "Jesse's S24 FE recovered tool surface",
+  "device": {
+    "label": "Jesse's S24 FE",
+    "model": "SM-S721U1",
+    "platform": "Android 16"
+  },
+  "bridge": {
+    "gatewayPort": 4781,
+    "websocketPort": 8765,
+    "heartbeatIntervalSeconds": 8,
+    "termuxSshPort": 8022,
+    "gatewayBaseUrl": "http://127.0.0.1:4781",
+    "websocketPath": "ws://127.0.0.1:8765/ws/phone",
+    "channelOrder": ["usb", "vpn", "private_internet", "public_internet"]
+  },
+  "packages": [
+    "com.jessebrown.asolaria",
+    "com.termux",
+    "com.termux.api",
+    "org.fdroid.fdroid",
+    "com.machiav3lli.fdroid",
+    "com.anthropic.claude",
+    "com.openai.chatgpt",
+    "com.Slack",
+    "com.whatsapp",
+    "com.whatsapp.w4b",
+    "org.telegram.messenger",
+    "com.android.chrome",
+    "com.samsung.android.app.notes"
+  ],
+  "recoveredArtifacts": [
+    "data/phone-ui-run/2026-03-30-dashboard",
+    "data/phone-ui-run/2026-03-30-telegram",
+    "tools/Start-Asolaria-Phone.ps1",
+    "tools/Start-Asolaria-PhoneBackgroundKeeper.ps1",
+    "tools/Start-Asolaria-PhoneTunnelMonitor.ps1",
+    "tools/Test-Asolaria-PhoneTunnelPath.ps1",
+    "tools/Test-Startup-HealthSnapshot.ps1"
+  ]
+}

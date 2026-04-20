@@ -1,0 +1,69 @@
+{
+  "schemaVersion": 1,
+  "catalogId": "leader-connector-machine-catalog",
+  "summary": "Leader map surface only. This connector catalog is readable by leaders first, but it does not grant authority.",
+  "runtimeRoot": "E:/runtime/leader-connector-catalog",
+  "primaryFiles": [
+    { "id": "leader-connector-catalog.csv", "path": "E:/runtime/leader-connector-catalog/leader-connector-catalog.csv" },
+    { "id": "leader-connector-catalog.json", "path": "E:/runtime/leader-connector-catalog/leader-connector-catalog.json" },
+    { "id": "leader-connector-files.csv", "path": "E:/runtime/leader-connector-catalog/leader-connector-files.csv" },
+    { "id": "manifest.json", "path": "E:/runtime/leader-connector-catalog/manifest.json" },
+    { "id": "packet.txt", "path": "E:/runtime/leader-connector-catalog/packet.txt" }
+  ],
+  "coverage": {
+    "normalizedConnectorRows": 160,
+    "physicalConnectorSourceRows": 88,
+    "liveLocalizedRuntimeIndexRows": 46,
+    "deviceLatticeRows": 26,
+    "localSourceConnectorRows": 1,
+    "historicalExtractedConnectorSourceRows": 87
+  },
+  "sourceSurfaces": [
+    "E:/runtime/connector-four-file-index/entries.csv",
+    "E:/runtime/phone-lattice/samsung-beast/connectors.csv",
+    "E:/runtime/phone-lattice/jesse-s22-ultra/connectors.csv",
+    "E:/sovereignty/src/connectors",
+    "E:/sovereignty/data/falcon-dump/home-extracted/liris-test/Asolaria/src/connectors"
+  ],
+  "leaderSurfaceIds": ["asolaria", "liris-kuromi", "gaia", "helm", "sentinel"],
+  "readerSurfaceIds": ["asolaria", "liris-kuromi", "gaia", "helm", "sentinel", "dasein", "falcon-2", "the-beast"],
+  "omniShannonIdentities": [
+    {
+      "name": "omnihannon-jesse-desktop",
+      "pid": "asolaria",
+      "profile": "asolaria",
+      "host": "jesse-desktop",
+      "lane": "local-execution",
+      "surface": "security/shannon/*",
+      "deviceId": "local-host",
+      "authorityClass": "derived_gate",
+      "approvalState": "owner_gated_via_host_root",
+      "capturedAt": "2026-04-02T23:37:43.123Z",
+      "verifiedAt": "2026-04-02T23:37:43.123Z",
+      "sourcePath": [
+        "E:/sovereignty/ix/verbs/shannon.js",
+        "E:/sovereignty/ix/gates/shannon.js"
+      ],
+      "freshness": "configured_not_live",
+      "runtimeState": "configured_not_live"
+    },
+    {
+      "name": "omnihannon-kuromi",
+      "pid": "<exact Rayssa-local pid>",
+      "profile": "<exact Rayssa-local profile>",
+      "host": "kuromi",
+      "lane": "<exact Rayssa-local lane>",
+      "surface": "security/shannon/*",
+      "deviceId": "<exact Rayssa-local device id>",
+      "authorityClass": "derived_gate",
+      "approvalState": "pending_until_mapped_admission_completes",
+      "capturedAt": "<exact Rayssa-local ISO-8601 timestamp>",
+      "verifiedAt": "<exact Rayssa-local ISO-8601 timestamp>",
+      "sourcePath": [
+        "<exact Rayssa-local shannon source/packet>"
+      ],
+      "freshness": "<live|mirrored|stale>",
+      "runtimeState": "<listener state on Rayssa host>"
+    }
+  ]
+}

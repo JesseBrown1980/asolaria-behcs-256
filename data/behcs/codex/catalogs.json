@@ -1,0 +1,840 @@
+{
+  "name": "Brown Hilbert 47-catalog registry",
+  "spec": "IX-700",
+  "supersedes": "~/beast-deploy/hilbert-omni-24D.json",
+  "note": "Extends the 24-dimension OMNI-LANGUAGE-V3 to 47 catalogs per Jesse's target. D1-D24 remain the OMNI-V3 base. D26, D31, D34, D35, D38, and D44 were ratified on 2026-04-13 against tools/hilbert-omni-47D.json for the IX-769/IX-770 Falcon glyph-language bootstrap. Other D25-D47 entries remain draft until separately ratified.",
+  "status": "partial-ratification 2026-04-13 — D26, D31, D34, D35, D38, and D44 ratified for IX-769/IX-770 glyph-language bootstrap",
+  "category_max_per_catalog": 42,
+  "catalogs": [
+    {
+      "D": 1,
+      "name": "ACTOR",
+      "prime": 2,
+      "cube": 8,
+      "source": "OMNI-V3",
+      "values": [
+        "jesse",
+        "asolaria",
+        "gaia",
+        "liris",
+        "helm",
+        "sentinel",
+        "vector",
+        "dasein",
+        "shannon",
+        "falcon",
+        "beast",
+        "felipe-a06",
+        "codex",
+        "claude",
+        "external"
+      ],
+      "expandable": true
+    },
+    {
+      "D": 2,
+      "name": "VERB",
+      "prime": 3,
+      "cube": 27,
+      "source": "OMNI-V3",
+      "values": "114 verbs across 17 categories",
+      "expandable": true
+    },
+    {
+      "D": 3,
+      "name": "TARGET",
+      "prime": 5,
+      "cube": 125,
+      "source": "OMNI-V3",
+      "values": [
+        "local",
+        "lan",
+        "cloud",
+        "device",
+        "index",
+        "human"
+      ],
+      "expandable": true
+    },
+    {
+      "D": 4,
+      "name": "RISK",
+      "prime": 7,
+      "cube": 343,
+      "source": "OMNI-V3",
+      "values": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "expandable": false,
+      "fixed": true
+    },
+    {
+      "D": 5,
+      "name": "LAYER",
+      "prime": 11,
+      "cube": 1331,
+      "source": "OMNI-V3",
+      "values": [
+        "chip",
+        "os",
+        "runtime",
+        "app",
+        "agent",
+        "colony",
+        "civilization",
+        "cloud"
+      ],
+      "expandable": true
+    },
+    {
+      "D": 6,
+      "name": "GATE",
+      "prime": 13,
+      "cube": 2197,
+      "source": "OMNI-V3",
+      "values": [
+        "hookwall",
+        "gnn",
+        "shannon",
+        "sovereignty",
+        "omni"
+      ],
+      "expandable": true
+    },
+    {
+      "D": 7,
+      "name": "STATE",
+      "prime": 17,
+      "cube": 4913,
+      "source": "OMNI-V3",
+      "values": [
+        "proposed",
+        "queued",
+        "gated",
+        "executing",
+        "completed",
+        "failed",
+        "blocked",
+        "cancelled"
+      ],
+      "expandable": true
+    },
+    {
+      "D": 8,
+      "name": "CHAIN",
+      "prime": 19,
+      "cube": 6859,
+      "source": "OMNI-V3",
+      "values": [
+        "depends_on",
+        "corrects",
+        "supersedes",
+        "proves",
+        "observed_on",
+        "part_of",
+        "same_as",
+        "runs_on",
+        "blocks",
+        "caused",
+        "contradicts",
+        "triggers",
+        "feeds",
+        "mirrors"
+      ],
+      "expandable": true
+    },
+    {
+      "D": 9,
+      "name": "WAVE",
+      "prime": 23,
+      "cube": 12167,
+      "source": "OMNI-V3",
+      "values": [
+        "single",
+        "broadcast",
+        "scatter",
+        "gather",
+        "relay",
+        "wave_6",
+        "omni_6x6x6x12",
+        "pulse",
+        "flood"
+      ],
+      "expandable": true
+    },
+    {
+      "D": 10,
+      "name": "DIALECT",
+      "prime": 29,
+      "cube": 24389,
+      "source": "OMNI-V3",
+      "values": [
+        "IX",
+        "LX",
+        "FA",
+        "ASO",
+        "RO",
+        "AM",
+        "TX"
+      ],
+      "expandable": true
+    },
+    {
+      "D": 11,
+      "name": "PROOF",
+      "prime": 31,
+      "cube": 29791,
+      "source": "OMNI-V3",
+      "values": [
+        "none",
+        "log",
+        "screenshot",
+        "hash",
+        "test",
+        "witness",
+        "code",
+        "live_probe",
+        "chain"
+      ],
+      "expandable": true
+    },
+    {
+      "D": 12,
+      "name": "SCOPE",
+      "prime": 37,
+      "cube": 50653,
+      "source": "OMNI-V3",
+      "values": [
+        "instant",
+        "session",
+        "persistent",
+        "permanent",
+        "boot",
+        "operational",
+        "foundational",
+        "ephemeral"
+      ],
+      "expandable": true
+    },
+    {
+      "D": 13,
+      "name": "SURFACE",
+      "prime": 41,
+      "cube": 68921,
+      "source": "OMNI-V3",
+      "values": [
+        "falcon-gw",
+        "liris-gw",
+        "s24-relay",
+        "beast-orbital",
+        "a06-orbital",
+        "wsl",
+        "usb-sovereignty",
+        "hookwall",
+        "gnn",
+        "shannon"
+      ],
+      "expandable": true
+    },
+    {
+      "D": 14,
+      "name": "ENERGY",
+      "prime": 43,
+      "cube": 79507,
+      "source": "OMNI-V3",
+      "values": [
+        "free",
+        "light",
+        "medium",
+        "heavy",
+        "massive"
+      ],
+      "expandable": true
+    },
+    {
+      "D": 15,
+      "name": "DEVICE",
+      "prime": 47,
+      "cube": 103823,
+      "source": "OMNI-V3",
+      "fields": [
+        "serial",
+        "model",
+        "firmware",
+        "hw_class",
+        "gpu",
+        "form"
+      ],
+      "expandable": true
+    },
+    {
+      "D": 16,
+      "name": "PID",
+      "prime": 53,
+      "cube": 148877,
+      "source": "OMNI-V3",
+      "fields": [
+        "surfaceId",
+        "profileId",
+        "pidVersion",
+        "spawnedBy",
+        "spawnChain"
+      ],
+      "expandable": true
+    },
+    {
+      "D": 17,
+      "name": "PROFILE",
+      "prime": 59,
+      "cube": 205379,
+      "source": "OMNI-V3",
+      "values": [
+        "gaia-v1",
+        "liris-admin-v1",
+        "mobile-falcon-v1",
+        "shannon-pentest-v1",
+        "omnishannon-wave-v1",
+        "shadow-builder-v1"
+      ],
+      "expandable": true
+    },
+    {
+      "D": 18,
+      "name": "AI_MODEL",
+      "prime": 61,
+      "cube": 226981,
+      "source": "OMNI-V3",
+      "values": [
+        "claude-opus-4-6",
+        "claude-sonnet-4-6",
+        "codex-o4-mini",
+        "gpt-5.4-xhigh",
+        "gemini-2.5-pro",
+        "gslgnn-v1",
+        "local-llm",
+        "human"
+      ],
+      "expandable": true
+    },
+    {
+      "D": 19,
+      "name": "LOCATION",
+      "prime": 67,
+      "cube": 300763,
+      "source": "OMNI-V3",
+      "fields": [
+        "ip",
+        "subnet",
+        "geo",
+        "room",
+        "network",
+        "hilbert_level"
+      ],
+      "expandable": true
+    },
+    {
+      "D": 20,
+      "name": "TIME",
+      "prime": 71,
+      "cube": 357911,
+      "source": "OMNI-V3",
+      "fields": [
+        "timestamp",
+        "duration",
+        "sequence",
+        "epoch",
+        "ttl",
+        "cron"
+      ],
+      "expandable": true
+    },
+    {
+      "D": 21,
+      "name": "HARDWARE",
+      "prime": 73,
+      "cube": 389017,
+      "source": "OMNI-V3",
+      "fields": [
+        "chip",
+        "bus",
+        "port",
+        "driver",
+        "protocol",
+        "firmware_region"
+      ],
+      "expandable": true
+    },
+    {
+      "D": 22,
+      "name": "TRANSLATION",
+      "prime": 79,
+      "cube": 493039,
+      "source": "OMNI-V3",
+      "values": [
+        "tuple_to_english",
+        "english_to_tuple",
+        "ix_to_tuple",
+        "hilbert_to_human",
+        "crlt_merge"
+      ],
+      "expandable": true
+    },
+    {
+      "D": 23,
+      "name": "FEDERATION",
+      "prime": 83,
+      "cube": 571787,
+      "source": "OMNI-V3",
+      "fields": [
+        "origin_node",
+        "merged_from",
+        "merge_count",
+        "last_sync",
+        "conflict_state"
+      ],
+      "expandable": true
+    },
+    {
+      "D": 24,
+      "name": "INTENT",
+      "prime": 89,
+      "cube": 704969,
+      "source": "OMNI-V3",
+      "values": [
+        "command",
+        "autonomous",
+        "reactive",
+        "scheduled",
+        "cascade",
+        "exploratory",
+        "defensive",
+        "creative"
+      ],
+      "expandable": true
+    },
+    {
+      "D": 25,
+      "name": "MODALITY",
+      "prime": 97,
+      "cube": 912673,
+      "source": "Falcon-draft",
+      "values": [
+        "text",
+        "voice",
+        "image",
+        "video",
+        "sensor",
+        "tactile",
+        "code",
+        "signal"
+      ],
+      "expandable": true
+    },
+    {
+      "D": 26,
+      "name": "OMNIDIRECTIONAL",
+      "prime": 101,
+      "cube": 1030301,
+      "values": [
+        "receive",
+        "approve",
+        "issue",
+        "relay",
+        "bilateral",
+        "unidirectional_gap",
+        "document_share_v0",
+        "omni_submit",
+        "type_relay"
+      ],
+      "expandable": true,
+      "added": "2026-04-09",
+      "source": "Asolaria-ratified-2026-04-13",
+      "ratified_from": "tools/hilbert-omni-47D.json",
+      "falcon_draft_name": "ENCODING"
+    },
+    {
+      "D": 27,
+      "name": "CIPHER",
+      "prime": 103,
+      "cube": 1092727,
+      "source": "Falcon-draft",
+      "values": [
+        "plaintext",
+        "aes-256",
+        "rsa",
+        "tls",
+        "age",
+        "signal",
+        "noise",
+        "wireguard",
+        "mtls"
+      ],
+      "expandable": true
+    },
+    {
+      "D": 28,
+      "name": "PROVENANCE",
+      "prime": 107,
+      "cube": 1225043,
+      "source": "Falcon-draft",
+      "fields": [
+        "origin",
+        "author_chain",
+        "signature",
+        "witness_count",
+        "first_seen",
+        "canonical_source"
+      ],
+      "expandable": true
+    },
+    {
+      "D": 29,
+      "name": "VERSION",
+      "prime": 109,
+      "cube": 1295029,
+      "source": "Falcon-draft",
+      "fields": [
+        "semver",
+        "build",
+        "git_sha",
+        "revision",
+        "compat_min",
+        "compat_max"
+      ],
+      "expandable": true
+    },
+    {
+      "D": 30,
+      "name": "DEPENDENCY",
+      "prime": 113,
+      "cube": 1442897,
+      "source": "Falcon-draft",
+      "fields": [
+        "required_cubes",
+        "required_catalogs",
+        "required_gates",
+        "required_profiles"
+      ],
+      "expandable": true
+    },
+    {
+      "D": 31,
+      "name": "SHADOW_MIRROR",
+      "prime": 127,
+      "cube": 2048383,
+      "values": [
+        "live_C_drive",
+        "shadow_E_drive",
+        "bilateral_mirror",
+        "partial_mirror",
+        "sovereignty_USB_snapshot",
+        "local_cache_snapshot"
+      ],
+      "expandable": true,
+      "added": "2026-04-09",
+      "source": "Asolaria-ratified-2026-04-13",
+      "ratified_from": "tools/hilbert-omni-47D.json",
+      "falcon_draft_name": "QUOTA"
+    },
+    {
+      "D": 32,
+      "name": "PRICE",
+      "prime": 131,
+      "cube": 2248091,
+      "source": "Falcon-draft",
+      "fields": [
+        "dollars",
+        "tokens_in",
+        "tokens_out",
+        "joules",
+        "credits"
+      ],
+      "expandable": true
+    },
+    {
+      "D": 33,
+      "name": "DEADLINE",
+      "prime": 137,
+      "cube": 2571353,
+      "source": "Falcon-draft",
+      "fields": [
+        "by_when",
+        "timeout_ms",
+        "ttl",
+        "not_before",
+        "hard_stop"
+      ],
+      "expandable": true
+    },
+    {
+      "D": 34,
+      "name": "CROSS_COLONY",
+      "prime": 139,
+      "cube": 2685619,
+      "values": [
+        "local_only",
+        "cross_host_lan",
+        "document_share_v0",
+        "omni_submit",
+        "peer_relay",
+        "multi_hop_via_acer",
+        "amy_mac_side",
+        "amy_win_side"
+      ],
+      "expandable": true,
+      "added": "2026-04-09",
+      "source": "Asolaria-ratified-2026-04-13",
+      "ratified_from": "tools/hilbert-omni-47D.json",
+      "falcon_draft_name": "PRIORITY"
+    },
+    {
+      "D": 35,
+      "name": "HYPERLANGUAGE",
+      "prime": 149,
+      "cube": 3307949,
+      "values": [
+        "24D",
+        "35D",
+        "47D",
+        "N-dim",
+        "self_referential",
+        "expansion_in_progress"
+      ],
+      "expandable": true,
+      "added": "2026-04-09",
+      "updated": "2026-04-10 — 47D value added after COSIGN_47D_001",
+      "source": "Asolaria-ratified-2026-04-13",
+      "ratified_from": "tools/hilbert-omni-47D.json",
+      "falcon_draft_name": "MEMORY"
+    },
+    {
+      "D": 36,
+      "name": "SENSOR",
+      "prime": 151,
+      "cube": 3442951,
+      "source": "Falcon-draft",
+      "values": [
+        "camera",
+        "mic",
+        "gps",
+        "nfc",
+        "accelerometer",
+        "gyro",
+        "magnetic",
+        "thermal",
+        "light",
+        "proximity",
+        "fingerprint",
+        "barometer",
+        "heart_rate",
+        "humidity"
+      ],
+      "expandable": true
+    },
+    {
+      "D": 37,
+      "name": "ENVIRONMENT",
+      "prime": 157,
+      "cube": 3869893,
+      "source": "Falcon-draft",
+      "fields": [
+        "temp_c",
+        "humidity_pct",
+        "noise_db",
+        "light_lux",
+        "battery_pct",
+        "thermal_zone",
+        "power_source"
+      ],
+      "expandable": true
+    },
+    {
+      "D": 38,
+      "name": "ENCRYPTION",
+      "prime": 163,
+      "cube": 4330747,
+      "values": [
+        "plaintext",
+        "bearer_token",
+        "nl2xfw_firmware_encrypted",
+        "7zip_aes256",
+        "sha256_attestation",
+        "tls_transit",
+        "vault_encrypted",
+        "sovereignty_usb_encrypted"
+      ],
+      "expandable": true,
+      "added": "2026-04-10",
+      "cosign": "COSIGN_47D_001",
+      "trinity_link": "LX-490+LX-491",
+      "wh": "HOW is data protected?",
+      "source": "Asolaria-ratified-2026-04-13",
+      "ratified_from": "tools/hilbert-omni-47D.json",
+      "falcon_draft_name": "AFFECT"
+    },
+    {
+      "D": 39,
+      "name": "JURISDICTION",
+      "prime": 167,
+      "cube": 4657463,
+      "source": "Falcon-draft",
+      "values": [
+        "US",
+        "BR",
+        "EU-GDPR",
+        "CN",
+        "UK",
+        "CA",
+        "AU",
+        "sovereign",
+        "none"
+      ],
+      "expandable": true
+    },
+    {
+      "D": 40,
+      "name": "CONSENT",
+      "prime": 173,
+      "cube": 5177717,
+      "source": "Falcon-draft",
+      "values": [
+        "granted",
+        "revoked",
+        "pending",
+        "not-required",
+        "jesse-implicit",
+        "owner-only"
+      ],
+      "expandable": true
+    },
+    {
+      "D": 41,
+      "name": "AUDIT",
+      "prime": 179,
+      "cube": 5735339,
+      "source": "Falcon-draft",
+      "values": [
+        "none",
+        "log",
+        "ndjson",
+        "signed",
+        "chain-of-custody",
+        "compliance"
+      ],
+      "expandable": true
+    },
+    {
+      "D": 42,
+      "name": "CAPABILITY",
+      "prime": 181,
+      "cube": 5929741,
+      "source": "Falcon-draft",
+      "fields": [
+        "token",
+        "scopes",
+        "expires_at",
+        "issuer"
+      ],
+      "expandable": true
+    },
+    {
+      "D": 43,
+      "name": "QUORUM",
+      "prime": 191,
+      "cube": 6967871,
+      "source": "Falcon-draft",
+      "fields": [
+        "required",
+        "achieved",
+        "tier",
+        "agents"
+      ],
+      "expandable": true
+    },
+    {
+      "D": 44,
+      "name": "HEARTBEAT",
+      "prime": 193,
+      "cube": 7189057,
+      "values": [
+        "alive",
+        "stale",
+        "dead",
+        "recovering",
+        "hibernating"
+      ],
+      "expandable": true,
+      "added": "2026-04-10",
+      "cosign": "COSIGN_47D_001",
+      "trinity_link": "LX-489",
+      "wh": "IS IT alive?",
+      "source": "Asolaria-ratified-2026-04-13",
+      "ratified_from": "tools/hilbert-omni-47D.json",
+      "falcon_draft_name": "LINEAGE"
+    },
+    {
+      "D": 45,
+      "name": "MANIFOLD",
+      "prime": 197,
+      "cube": 7645373,
+      "source": "Falcon-draft",
+      "fields": [
+        "cluster_id",
+        "graph_distance",
+        "embedding",
+        "neighborhood"
+      ],
+      "expandable": true
+    },
+    {
+      "D": 46,
+      "name": "SIGNATURE",
+      "prime": 199,
+      "cube": 7880599,
+      "source": "Falcon-draft",
+      "fields": [
+        "algo",
+        "pubkey",
+        "sig",
+        "digest"
+      ],
+      "expandable": true
+    },
+    {
+      "D": 47,
+      "name": "OMEGA",
+      "prime": 211,
+      "cube": 9393931,
+      "source": "Falcon-draft",
+      "values": [
+        "open",
+        "terminal",
+        "closure",
+        "sealed",
+        "archived",
+        "dropped"
+      ],
+      "expandable": true
+    }
+  ],
+  "growth_law": "Appending D48 uses the next prime (223). Every existing cube address remains stable — no repacking. Hilbert Hotel invariant.",
+  "ratified_catalogs": [
+    26,
+    31,
+    34,
+    35,
+    38,
+    44
+  ],
+  "ratified_from": "tools/hilbert-omni-47D.json",
+  "ratified_at": "2026-04-13T00:00:00Z"
+}

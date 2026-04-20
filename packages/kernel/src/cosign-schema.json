@@ -1,0 +1,142 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://asolaria.local/schemas/cosign-entry.v1.json",
+  "title": "COSIGN Entry v1",
+  "description": "One line of COSIGN_CHAIN.ndjson. Rolling-chain hash scheme: prev_sha[i] = sha256(lines[0..i-1].join('\\n') + '\\n'). seq=1 is genesis (prev_sha=null). Schema derived from observation of 21 entries in liris:9999/cosign-chain.ndjson 2026-04-18.",
+  "type": "object",
+  "required": ["seq", "ts", "event", "authority", "apex", "operator_witness", "prev_sha", "glyph_sentence"],
+  "properties": {
+    "seq": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Monotonic sequence number. seq=1 is genesis. Every append increments by exactly 1."
+    },
+    "ts": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 UTC timestamp of when the entry was appended."
+    },
+    "event": {
+      "type": "string",
+      "pattern": "^COSIGN-[A-Z0-9-]+$",
+      "description": "Canonical event name. Examples: COSIGN-GENESIS-ENVELOPE-V1, COSIGN-A-008-ACER-LEGACY-INVENTORY, COSIGN-SECTION-A-CLOSED-ACER."
+    },
+    "authority": {
+      "type": "string",
+      "description": "Authority label. Current universe: COSIGN-MERGED-034 (week-override 2026-04-24T23:59:59Z)."
+    },
+    "apex": {
+      "type": "string",
+      "description": "Federation apex glyph. Current: COL-ASOLARIA."
+    },
+    "operator_witness": {
+      "type": "string",
+      "description": "Who witnessed this entry. Typical: 'jesse+rayssa' or 'jesse+rayssa (week-override expires <ts>)'."
+    },
+    "prev_sha": {
+      "oneOf": [
+        { "type": "null", "description": "Only allowed on seq=1 (genesis)." },
+        {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$",
+          "description": "Rolling-chain sha256: sha256(all prior lines joined with \\n + trailing \\n). Tampering with any prior seq breaks every subsequent prev_sha, making per-entry forgery infeasible without rewriting the entire tail."
+        }
+      ]
+    },
+    "glyph_sentence": {
+      "type": "string",
+      "pattern": "^(META|COSIGN|EVT)-.+@ M-[A-Z]+ \\.$",
+      "description": "Canonical glyph sentence summarizing the entry. Ends with @ M-<MOOD> . where MOOD ∈ {INDICATIVE, EYEWITNESS, SUBJUNCTIVE, ...}."
+    },
+    "node": {
+      "type": "string",
+      "pattern": "^DEV-[A-Z][A-Z0-9-]*$",
+      "description": "Optional. Which DEV-* node produced the underlying work (e.g. DEV-ACER, DEV-LIRIS). Present in 19/21 observed entries."
+    },
+    "artifacts": {
+      "type": "object",
+      "description": "Optional. Map of logical-name → {path, sha256, bytes?, pass?, fail?, checks_green?, checks_total?, ...}. Pins exact file versions referenced by this entry. Present in 19/21 observed entries.",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "path": { "type": "string" },
+          "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+          "bytes": { "type": ["integer", "null"] }
+        }
+      }
+    },
+    "acer_commit": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{7,40}$",
+      "description": "Optional. Acer-side git commit hash if this entry corresponds to acer-produced work. Present in 8/21 observed entries."
+    },
+    "smp_items_closed": {
+      "type": "array",
+      "items": { "type": "string", "pattern": "^[A-Z]+-[0-9]+[a-z-]*$" },
+      "description": "Optional. SMP-V5 item IDs closed by this entry (e.g. ['A-008'], ['H-038','H-046'])."
+    },
+    "smp_items_unblocked_next": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Optional. SMP items that become actionable after this entry."
+    },
+    "smp_items_pending": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "smp_items_partial": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "smp_items_additional": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "promotions": {
+      "type": "object",
+      "description": "Optional. D11 level promotions recorded by this entry.",
+      "properties": {
+        "D11_PROMOTED":          { "type": "array", "items": { "type": "string" } },
+        "D11_PROMOTED_PREPARED": { "type": "array", "items": { "type": "string" } },
+        "D11_ASSUMED_TRACKED":   { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "elapsed":           { "type": "string", "description": "Wall-clock time the work took (e.g. '<8min')." },
+    "eta_was":           { "type": "string", "description": "Original ETA when the item was claimed." },
+    "under_budget_pct":  { "type": ["number", "string"], "description": "Percentage under original budget." },
+    "verdict":           { "type": "string", "description": "Pass/fail/partial/verdict descriptor (e.g. 'ALL_GREEN', 'AUDIT_PARTIAL_PENDING_ARTIFACT_EXPOSURE')." },
+    "capabilities":      { "description": "Optional. Capability coverage matrix." },
+    "recommendations":   { "type": "array", "items": { "type": ["string", "object"] } },
+    "remaining_recommendations": { "type": "array" },
+    "findings":          { "description": "Optional. Audit findings (e.g. security review)." },
+    "countermeasures_verified": { "type": "array" },
+    "verdicts_covered":  { "type": "array" },
+    "round_trip":        { "type": "object" },
+    "triple":            { "type": "object" },
+    "hermes_binary_required": { "type": "boolean" },
+    "section_closed_items":   { "type": "integer" },
+    "section_total_items":    { "type": "integer" },
+    "policies":          { "type": "object" },
+    "defaults":          { "type": "object" },
+    "live_liris_probe":  { "type": "object" },
+    "live_liris_pick":   { "type": "object" },
+    "section_A_arc":     { "description": "Optional. Section A 7-commit arc summary object." },
+    "tiers":             { "type": "array", "description": "Optional. Fallback-chain tier list (H-047)." },
+    "law_014_zero_token_default": { "type": "boolean" },
+    "capacity_gate_honored":      { "type": "boolean" },
+    "key_finding":       { "type": "string" },
+    "bilateral_seal_proven_on":   { "type": "string" },
+    "route_added":       { "type": "string", "description": "New HTTP route exposed (e.g. 'GET /cosign-chain.ndjson')." },
+    "verified_served_sha256_matches_local": { "type": "boolean" },
+    "sha256":            { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+    "addresses_pre_006_recommendation":     { "type": "string" },
+    "verifications":     { "type": "array" },
+    "closes":            { "type": "array" },
+    "parity":            { "type": "object" },
+    "decision":          { "type": "string" },
+    "next_unblocked":    { "type": "array" }
+  },
+  "additionalProperties": true,
+
+  "$comment": "additionalProperties=true — the cosign format is intentionally append-extensible. New custom fields can be added per-event without breaking existing validators. If you add a new field that becomes common (appears in ≥5 entries), propose it for the 'well-known' list above."
+}

@@ -1,0 +1,112 @@
+{
+  "gateway": {
+    "bind": "0.0.0.0",
+    "port": 4791,
+    "auth": {
+      "mode": "token",
+      "tokenFile": "data/vault/owner/gateway/gateway.token.txt"
+    },
+    "controlUi": {
+      "enabled": true,
+      "allowedOrigins": [
+        "http://127.0.0.1:3001",
+        "http://localhost:3001",
+        "http://127.0.0.1:4791",
+        "http://localhost:4791"
+      ]
+    },
+    "heartbeatDaemon": {
+      "namedProfileId": "kuromi-heartbeat-primary",
+      "alertsEnabled": true
+    }
+  },
+  "tools": {
+    "enabled": true,
+    "denyByDefault": true,
+    "allow": [
+      "registry.list",
+      "health.get",
+      "heartbeat.run",
+      "cron.list",
+      "cron.run",
+      "github.status",
+      "github.repos",
+      "browser.task",
+      "localops.run"
+    ],
+    "requireApproval": [
+      "localops.run",
+      "sandbox.execute"
+    ],
+    "approvals": {
+      "storeFile": "data/gateway-approvals.json",
+      "ttlMs": 900000
+    },
+    "logging": {
+      "redact": [
+        "token",
+        "secret",
+        "password",
+        "refresh_token",
+        "private_key",
+        "authorization"
+      ]
+    }
+  },
+  "scheduler": {
+    "timezone": "America/Sao_Paulo",
+    "heartbeatEveryMinutes": 15,
+    "heartbeatRetryBackoff": {
+      "maxMultiplier": 8
+    },
+    "jobs": {
+      "connector_health_every_5m": "*/5 * * * *",
+      "model_router_check_daily": "0 6 * * *",
+      "security_audit_weekly": "0 7 * * 1"
+    }
+  },
+  "sandbox": {
+    "baseUrl": "",
+    "noNetworkDefault": true
+  },
+  "memory": {
+    "indexerUrl": ""
+  },
+  "authority": {
+    "defaultMode": "operator_primary",
+    "storeFile": "data/gateway-authority-state.json",
+    "transitionTtlMs": 600000,
+    "confirmationPhrase": "ASSUME_COMMAND",
+    "sharedControlAllowTools": [
+      "github.status",
+      "github.repos",
+      "browser.task"
+    ],
+    "asolariaActorPatterns": [
+      "asolaria*",
+      "scheduler*",
+      "auto*"
+    ],
+    "handoverGuards": {
+      "enabled": true,
+      "enforceForAsolariaPrimary": true,
+      "requireAuditIntegrity": true,
+      "requireAuditGateOpen": true,
+      "requireRecentHeartbeatOk": true,
+      "maxHeartbeatAgeMinutes": 30,
+      "requireNoPendingApprovals": false,
+      "maxPendingApprovals": 0
+    }
+  },
+  "audit": {
+    "enabled": true,
+    "eventsFile": "data/gateway-audit.ndjson",
+    "maxListLimit": 500,
+    "verifyEveryMinutes": 10,
+    "gateControlWritesOnFailure": true
+  },
+  "selfUpdate": {
+    "mode": "patch_only",
+    "requireHumanMerge": true
+  }
+}

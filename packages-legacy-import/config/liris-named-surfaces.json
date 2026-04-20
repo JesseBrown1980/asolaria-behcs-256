@@ -1,0 +1,1671 @@
+{
+  "schemaVersion": 1,
+  "activationLaw": {
+    "name": "rule_canon_instant_law",
+    "summary": "Load named surfaces instantly, keep non-primary surfaces dormant until an exact named request or packet requires them, and block unnamed generic spawn/tool dives by default.",
+    "primarySurfaceId": "liris-kuromi",
+    "genericSpawnPolicy": "deny_without_named_surface",
+    "unnamedToolDivePolicy": "deny_without_surface_match",
+    "deviceIsolationAnchors": [
+      "LX-349",
+      "LX-350",
+      "LX-351"
+    ],
+    "quarantineAnchors": [
+      "LX-375",
+      "LX-376"
+    ],
+    "defaultIdentityGate": "named_pid_or_profile"
+  },
+  "hostAuthority": {
+    "hostScope": "rayssa_machine_only",
+    "summary": "Keep authority device-specific. The local host stays owner-gated sovereign root while Liris accepts derived ingress only on this machine.",
+    "sovereignRootSurfaceId": "local-sovereign-host",
+    "ownerSurfaceId": "asolaria",
+    "derivedIngressSurfaceId": "liris-kuromi",
+    "guardrailSurfaceIds": [
+      "gaia",
+      "helm",
+      "sentinel"
+    ],
+    "attachedDeviceBoundaryIds": [
+      "falcon-2",
+      "felipe-phone-a",
+      "felipe-phone-b",
+      "trixie",
+      "debora",
+      "the-beast"
+    ],
+    "crossHostLeaseMergePolicy": "deny",
+    "sharedSovereigntyPromotionPolicy": "deny",
+    "computeAuthority": "cpu_gpu_local_only",
+    "surfaceRoles": [
+      {
+        "surfaceId": "local-sovereign-host",
+        "label": "Local Sovereign Host",
+        "authorityRole": "sovereign_root",
+        "controlState": "owner_gated_execution_root",
+        "responsibility": "Local owner-gated execution root for this machine."
+      },
+      {
+        "surfaceId": "asolaria",
+        "label": "Asolaria",
+        "authorityRole": "owner_admin",
+        "controlState": "owner_gated_execution_root",
+        "responsibility": "Admin and identity law on the local host."
+      },
+      {
+        "surfaceId": "liris-kuromi",
+        "label": "Liris / Kuromi",
+        "authorityRole": "derived_ingress",
+        "controlState": "admission_ready_derived_ingress",
+        "responsibility": "Accept derived control hooks into the mapped chain without taking sovereign execution."
+      },
+      {
+        "surfaceId": "gaia",
+        "label": "Gaia",
+        "authorityRole": "anchor_support",
+        "controlState": "derived_support",
+        "responsibility": "Anchor and continuity support for the ingress path."
+      },
+      {
+        "surfaceId": "helm",
+        "label": "Helm",
+        "authorityRole": "sequencer_support",
+        "controlState": "derived_support",
+        "responsibility": "Sequence and route admitted work."
+      },
+      {
+        "surfaceId": "sentinel",
+        "label": "Sentinel",
+        "authorityRole": "guardrail_support",
+        "controlState": "derived_support",
+        "responsibility": "Identity, approval, and safety guardrails."
+      },
+      {
+        "surfaceId": "falcon-2",
+        "label": "Falcon 2",
+        "authorityRole": "attached_device_boundary",
+        "controlState": "derived_support",
+        "responsibility": "USB and phone bridge truth stays device-bound."
+      },
+      {
+        "surfaceId": "dasein",
+        "label": "Dasein",
+        "authorityRole": "phone_memory_surface",
+        "controlState": "paired_device_memory",
+        "responsibility": "Phone and runbook memory surface paired to Falcon."
+      },
+      {
+        "surfaceId": "the-beast",
+        "label": "The Beast",
+        "authorityRole": "attached_device_boundary",
+        "controlState": "derived_support",
+        "responsibility": "Phone/workhorse execution boundary until transport truth clears."
+      }
+    ],
+    "computeSurfaces": [
+      {
+        "id": "local-cpu-watch",
+        "label": "Local CPU Watch",
+        "serviceType": "compute_watch",
+        "scope": "local_host",
+        "stewardSurfaceId": "asolaria",
+        "watcherSurfaceIds": [
+          "helm",
+          "sentinel"
+        ],
+        "resources": [
+          "cpu"
+        ],
+        "controlState": "owner_gated_execution_root",
+        "summary": "Local CPU authority stays on this host and is watched by the routing and guardrail surfaces."
+      },
+      {
+        "id": "local-gpu-watch",
+        "label": "Local GPU Watch",
+        "serviceType": "compute_watch",
+        "scope": "local_host",
+        "stewardSurfaceId": "asolaria",
+        "watcherSurfaceIds": [
+          "liris-kuromi",
+          "sentinel"
+        ],
+        "resources": [
+          "gpu"
+        ],
+        "controlState": "owner_gated_execution_root",
+        "summary": "Local GPU authority stays on this host and is watched by Liris plus Sentinel before any derived compute lane."
+      },
+      {
+        "id": "attached-device-cpu-watch",
+        "label": "Attached Device CPU Watch",
+        "serviceType": "device_compute_watch",
+        "scope": "attached_devices",
+        "stewardSurfaceId": "falcon-2",
+        "watcherSurfaceIds": [
+          "falcon-2",
+          "dasein",
+          "the-beast"
+        ],
+        "resources": [
+          "cpu"
+        ],
+        "controlState": "derived_support",
+        "summary": "Attached-device CPU truth stays on the device boundary until transport proof is live."
+      }
+    ]
+  },
+  "incomingHookIngress": {
+    "mode": "admission_ready_derived_ingress",
+    "summary": "Accept incoming control hooks as device-local derived ingress into hookwall, GNN, Shannon, then execute.",
+    "executionChain": [
+      "hookwall",
+      "GNN",
+      "Shannon",
+      "execute"
+    ],
+    "acceptedHooks": [
+      "PermissionRequest",
+      "PermissionDenied",
+      "SessionStart",
+      "SessionEnd",
+      "PostToolUseFailure",
+      "SubagentStart",
+      "SubagentStop"
+    ],
+    "dispatchLane": "agent_dispatch_execute",
+    "dispatchPolicy": "bounded_to_admitted_work",
+    "messagingProof": "slack_dual_lane_parity",
+    "computeHookPolicy": "local_host_until_admission_confirmed",
+    "directSovereignExecutionPolicy": "deny",
+    "genericSpawnPolicy": "deny_without_named_surface"
+  },
+  "instantLoadProfiles": [
+    {
+      "surfaceId": "liris-kuromi",
+      "profileId": "admin-liris-v1",
+      "skills": [
+        "instant_load",
+        "named_surface_router",
+        "admin_orchestration"
+      ],
+      "tools": [
+        "local_control",
+        "heartbeat_surface",
+        "federation_registry"
+      ],
+      "abilityChain": [
+        "liris-kuromi",
+        "helm",
+        "sentinel"
+      ]
+    },
+    {
+      "surfaceId": "helm",
+      "profileId": "admin-helm-v1",
+      "skills": [
+        "dispatch_routing",
+        "task_framing"
+      ],
+      "tools": [
+        "task_router",
+        "dispatch_surface"
+      ],
+      "abilityChain": [
+        "helm",
+        "sentinel"
+      ]
+    },
+    {
+      "surfaceId": "sentinel",
+      "profileId": "admin-sentinel-v1",
+      "skills": [
+        "identity_guard",
+        "approval_guard"
+      ],
+      "tools": [
+        "security_surface",
+        "identity_gate"
+      ],
+      "abilityChain": [
+        "sentinel",
+        "helm"
+      ]
+    },
+    {
+      "surfaceId": "falcon-2",
+      "profileId": "mobile-falcon-v1",
+      "skills": [
+        "device_bridge",
+        "quarantine_guard"
+      ],
+      "tools": [
+        "usb_bridge",
+        "adb_surface",
+        "shannon_surface"
+      ],
+      "abilityChain": [
+        "liris-kuromi",
+        "falcon-2",
+        "trixie"
+      ]
+    },
+    {
+      "surfaceId": "felipe-phone-a",
+      "profileId": "mobile-falcon-v1",
+      "skills": [
+        "device_bridge",
+        "artifact_pull"
+      ],
+      "tools": [
+        "usb_bridge",
+        "downloads_surface",
+        "docs_surface"
+      ],
+      "abilityChain": [
+        "liris-kuromi",
+        "falcon-2",
+        "felipe-phone-a"
+      ]
+    },
+    {
+      "surfaceId": "felipe-phone-b",
+      "profileId": "mobile-falcon-v1",
+      "skills": [
+        "device_bridge",
+        "manual_identity_gate"
+      ],
+      "tools": [
+        "usb_bridge",
+        "adb_surface"
+      ],
+      "abilityChain": [
+        "liris-kuromi",
+        "falcon-2",
+        "felipe-phone-b"
+      ]
+    },
+    {
+      "surfaceId": "trixie",
+      "profileId": "mobile-falcon-v1",
+      "skills": [
+        "termux_surface",
+        "debian_surface"
+      ],
+      "tools": [
+        "ssh_surface",
+        "phone_surface"
+      ],
+      "abilityChain": [
+        "falcon-2",
+        "trixie"
+      ]
+    },
+    {
+      "surfaceId": "debora",
+      "profileId": "manual-registration",
+      "skills": [
+        "manual_identity_gate"
+      ],
+      "tools": [
+        "identity_packet"
+      ],
+      "abilityChain": [
+        "liris-kuromi",
+        "debora"
+      ]
+    }
+  ],
+  "toolProfiles": [
+    {
+      "id": "kuromi-heartbeat-primary",
+      "toolKind": "heartbeat",
+      "surfaceId": "liris-kuromi",
+      "bundleIds": [
+        "admin-core"
+      ],
+      "hostLabel": "Kuromi",
+      "alertsEnabled": true,
+      "skills": [
+        "heartbeat_contract_routing",
+        "named_profile_load"
+      ],
+      "tools": [
+        "heartbeat_surface",
+        "federation_registry"
+      ],
+      "abilityChain": [
+        "liris-kuromi",
+        "helm",
+        "sentinel"
+      ],
+      "checks": [
+        {
+          "id": "gateway_{port}",
+          "kind": "http",
+          "label": "Gateway {port}",
+          "urlTemplate": "http://{bind}:{port}/health"
+        },
+        {
+          "id": "compat_{compatPort}",
+          "kind": "http",
+          "label": "Compat {compatPort}",
+          "urlTemplate": "http://127.0.0.1:{compatPort}/api/health/fast"
+        },
+        {
+          "id": "comms_{commsPort}",
+          "kind": "http",
+          "label": "Comms {commsPort}",
+          "urlTemplate": "http://127.0.0.1:{commsPort}/status"
+        },
+        {
+          "id": "federation_nodes",
+          "kind": "registry",
+          "label": "Federation Nodes"
+        }
+      ]
+    },
+    {
+      "id": "isolated-test-heartbeat",
+      "toolKind": "heartbeat",
+      "surfaceId": "liris-kuromi",
+      "bundleIds": [
+        "admin-core"
+      ],
+      "hostLabel": "Kuromi",
+      "alertsEnabled": false,
+      "skills": [
+        "heartbeat_contract_routing",
+        "isolated_runtime"
+      ],
+      "tools": [
+        "heartbeat_surface"
+      ],
+      "abilityChain": [
+        "liris-kuromi",
+        "helm"
+      ],
+      "checks": [
+        {
+          "id": "gateway_{port}",
+          "kind": "http",
+          "label": "Gateway {port}",
+          "urlTemplate": "http://{bind}:{port}/health"
+        },
+        {
+          "id": "compat_{compatPort}",
+          "kind": "http",
+          "label": "Compat {compatPort}",
+          "urlTemplate": "http://127.0.0.1:{compatPort}/api/health/fast"
+        },
+        {
+          "id": "federation_nodes",
+          "kind": "registry",
+          "label": "Federation Nodes"
+        }
+      ]
+    }
+  ],
+  "capabilityBundles": [
+    {
+      "id": "admin-core",
+      "label": "Admin Core",
+      "category": "governance",
+      "summary": "Primary admin surfaces load first and route named work without generic tool dives.",
+      "surfaceIds": [
+        "liris-kuromi",
+        "helm",
+        "sentinel"
+      ],
+      "toolKinds": [
+        "heartbeat"
+      ],
+      "activationGate": "local_root_then_derived_ingress",
+      "helperPolicy": "owner_gated_local_execution",
+      "proofsRequired": [
+        "named_pid",
+        "profile_match"
+      ],
+      "tools": [
+        "local_control",
+        "heartbeat_surface",
+        "dispatch_surface",
+        "federation_registry",
+        "identity_gate"
+      ],
+      "skills": [
+        "instant_load",
+        "named_surface_router",
+        "admin_orchestration"
+      ],
+      "abilityChain": [
+        "liris-kuromi",
+        "helm",
+        "sentinel"
+      ]
+    },
+    {
+      "id": "falcon-device-bridge",
+      "label": "Falcon Device Bridge",
+      "category": "device",
+      "summary": "Named phones stay isolated and dormant until the exact named packet and transport proof are present.",
+      "surfaceIds": [
+        "falcon-2",
+        "felipe-phone-a",
+        "felipe-phone-b",
+        "trixie",
+        "debora"
+      ],
+      "activationGate": "exact_named_device_packet",
+      "helperPolicy": "quarantined_until_exact_packet",
+      "proofsRequired": [
+        "exact_named_device_packet",
+        "transport_visibility"
+      ],
+      "tools": [
+        "usb_bridge",
+        "adb_surface",
+        "downloads_surface",
+        "phone_surface",
+        "ssh_surface"
+      ],
+      "skills": [
+        "device_bridge",
+        "quarantine_guard",
+        "manual_identity_gate"
+      ],
+      "abilityChain": [
+        "liris-kuromi",
+        "falcon-2",
+        "trixie"
+      ]
+    },
+    {
+      "id": "shannon-fabric",
+      "label": "Omni Shannon",
+      "category": "service",
+      "serviceType": "pentest_specialist_org",
+      "serviceScope": "whole_or_part",
+      "summary": "Shannon is a bounded pentest specialist organization. Use the whole service or named parts, but keep it inside the derived ingress chain and never confuse it with omnispindle.",
+      "surfaceIds": [
+        "liris-kuromi",
+        "falcon-2",
+        "trixie"
+      ],
+      "activationGate": "named_surface_plus_route_truth",
+      "helperPolicy": "derived_ingress_only_until_route_truth",
+      "proofsRequired": [
+        "route_truth",
+        "runtime_surface",
+        "hardware_budget",
+        "stage_proof"
+      ],
+      "tools": [
+        "shannon_surface",
+        "dispatch_surface",
+        "federation_registry"
+      ],
+      "skills": [
+        "fabric_orchestration",
+        "proof_router",
+        "budget_guard"
+      ],
+      "abilityChain": [
+        "liris-kuromi",
+        "falcon-2",
+        "trixie"
+      ],
+      "anchorIds": [
+        "LX-328",
+        "LX-330"
+      ],
+      "thinkingMode": "bounded_evidence_first",
+      "selfReflectMode": "security_review_wave",
+      "recordTo": [
+        "memory_box",
+        "mistake_index",
+        "security_artifacts",
+        "reflections_ndjson"
+      ],
+      "partProfiles": [
+        {
+          "id": "shannon-scout",
+          "profileId": "shannon-scout-v1",
+          "serviceType": "pentest_part",
+          "tools": [
+            "shannon_surface",
+            "dispatch_surface"
+          ],
+          "skills": [
+            "surface_recon",
+            "route_truth",
+            "bounded_pentest"
+          ]
+        },
+        {
+          "id": "shannon-evidence",
+          "profileId": "shannon-evidence-v1",
+          "serviceType": "pentest_part",
+          "tools": [
+            "shannon_surface",
+            "federation_registry"
+          ],
+          "skills": [
+            "artifact_capture",
+            "evidence_bound",
+            "mistake_record"
+          ]
+        },
+        {
+          "id": "shannon-executor",
+          "profileId": "shannon-executor-v1",
+          "serviceType": "pentest_part",
+          "tools": [
+            "shannon_surface",
+            "dispatch_surface"
+          ],
+          "skills": [
+            "bounded_whitebox_pentest",
+            "guardrailed_execute",
+            "proof_router"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "voice-meeting-inject",
+      "label": "Voice Meeting Inject",
+      "category": "ability",
+      "serviceType": "guided_transcription_self_reflection",
+      "summary": "LX-232 voice.meeting.inject stays device-local: guided self output, micro-delay transcription, and wave injection through the local meeting/voice path.",
+      "surfaceIds": [
+        "liris-kuromi",
+        "falcon-2"
+      ],
+      "activationGate": "pid_profile_memory_index_route_truth",
+      "helperPolicy": "device_local_self_reflection_only",
+      "proofsRequired": [
+        "named_pid",
+        "profile_match",
+        "route_truth",
+        "transcription_surface",
+        "mistake_index"
+      ],
+      "tools": [
+        "voice_surface",
+        "transcription_surface",
+        "caption_bridge",
+        "meeting_recording",
+        "tts_injection"
+      ],
+      "skills": [
+        "voice_meeting_inject",
+        "voice_transcription",
+        "voice_synthesis",
+        "meeting_caption_ocr",
+        "delayed_self_reflection"
+      ],
+      "abilityChain": [
+        "liris-kuromi",
+        "falcon-2",
+        "sentinel"
+      ],
+      "anchorIds": [
+        "LX-232",
+        "LX-221",
+        "LX-242",
+        "LX-256",
+        "LX-257",
+        "LX-278"
+      ],
+      "thinkingMode": "guided_output_loop",
+      "selfReflectMode": "transcription_reinjection_micro_delay",
+      "automaticUse": {
+        "triggerPolicy": "auto_if_surface_ready",
+        "triggerWhen": [
+          "named_pid",
+          "profile_match",
+          "device_route_live",
+          "transcription_surface",
+          "mistake_index_bound"
+        ],
+        "flow": [
+          "capture_output",
+          "delay_transcribe",
+          "reinject_context",
+          "judge_transcript",
+          "record_delta",
+          "continue_wave"
+        ],
+        "recordTo": [
+          "memory_box",
+          "reflections_ndjson",
+          "mistake_index",
+          "self_heal_tuple"
+        ],
+        "delayMode": "transcription_reinjection_micro_delay",
+        "reflectionRunsPerWave": 6,
+        "waveSetId": "omnishannon-6x6x6x12-device-specific"
+      }
+    },
+    {
+      "id": "voice-flywheel-gpu",
+      "label": "Voice / Flywheel / GPU",
+      "category": "resource",
+      "summary": "Indexed voice, flywheel, and GPU surfaces are dormant context until explicit need and hardware budget proof exist.",
+      "surfaceIds": [
+        "liris-kuromi"
+      ],
+      "activationGate": "profile_plus_hardware_budget",
+      "helperPolicy": "dormant_until_explicit_need",
+      "proofsRequired": [
+        "hardware_budget",
+        "runtime_surface",
+        "approval_state"
+      ],
+      "tools": [
+        "voice_surface",
+        "flywheel_surface",
+        "gpu_surface"
+      ],
+      "skills": [
+        "resource_governor",
+        "budget_guard"
+      ],
+      "abilityChain": [
+        "liris-kuromi",
+        "helm"
+      ]
+    }
+  ],
+  "leaderIndex": {
+    "catalogId": "leader-omni-index-v1",
+    "summary": "MAP MAP MAPPED is the leader index. It binds named surfaces, devices, bundles, stages, and proofs into the living omni language so leaders choose from indexed units instead of spawning unnamed agents.",
+    "selectionLaw": "named_only_pid_version_device_time",
+    "replacementRule": "live_language_hold_until_pro_ready",
+    "promotionGate": "pro_ready_required_for_replacement",
+    "operationalPacketLineLimit": 35,
+    "structuralPacketKinds": [
+      "json",
+      "catalog",
+      "manifest",
+      "index_table"
+    ],
+    "codeEnvelope": {
+      "symbolBudget": 50,
+      "designGoal": "multi_billion_named_combinations",
+      "mode": "metatagged_field_composition"
+    },
+    "gnnChain": [
+      "observe",
+      "edge_map",
+      "reflect",
+      "plan",
+      "vote",
+      "prove"
+    ],
+    "bodySystem": [
+      "memory",
+      "rule",
+      "world_model",
+      "root_authority",
+      "skill",
+      "ability",
+      "omni_map"
+    ],
+    "categories": [
+      {
+        "id": "memory",
+        "label": "Memory",
+        "summary": "Persisted state and recall bound to device, pidVersion, and timeline.",
+        "subcategories": [
+          {
+            "id": "curated_memory",
+            "label": "Curated Memory"
+          },
+          {
+            "id": "heartbeat_memory",
+            "label": "Heartbeat Memory"
+          },
+          {
+            "id": "reflection_memory",
+            "label": "Reflection Memory"
+          },
+          {
+            "id": "mistake_memory",
+            "label": "Mistake Memory"
+          },
+          {
+            "id": "timeline_memory",
+            "label": "Timeline Memory"
+          }
+        ]
+      },
+      {
+        "id": "rule",
+        "label": "Rule",
+        "summary": "Rules keep the language bounded, owner-gated, and replacement-safe.",
+        "subcategories": [
+          {
+            "id": "activation_rule",
+            "label": "Activation Rule"
+          },
+          {
+            "id": "dispatch_rule",
+            "label": "Dispatch Rule"
+          },
+          {
+            "id": "promotion_rule",
+            "label": "Promotion Rule"
+          },
+          {
+            "id": "packet_budget_rule",
+            "label": "Packet Budget Rule"
+          },
+          {
+            "id": "device_boundary_rule",
+            "label": "Device Boundary Rule"
+          }
+        ]
+      },
+      {
+        "id": "world_model",
+        "label": "World Model",
+        "summary": "Device truth, routes, observations, and GNN edge maps.",
+        "subcategories": [
+          {
+            "id": "device_observation",
+            "label": "Device Observation"
+          },
+          {
+            "id": "route_truth",
+            "label": "Route Truth"
+          },
+          {
+            "id": "gnn_observation",
+            "label": "GNN Observation"
+          },
+          {
+            "id": "edge_map",
+            "label": "Edge Map"
+          },
+          {
+            "id": "host_surface_map",
+            "label": "Host Surface Map"
+          }
+        ]
+      },
+      {
+        "id": "root_authority",
+        "label": "Root Authority",
+        "summary": "Owner, sovereign root, approvals, and compute stewardship.",
+        "subcategories": [
+          {
+            "id": "sovereign_root",
+            "label": "Sovereign Root"
+          },
+          {
+            "id": "owner_admin",
+            "label": "Owner Admin"
+          },
+          {
+            "id": "derived_ingress",
+            "label": "Derived Ingress"
+          },
+          {
+            "id": "approval_chain",
+            "label": "Approval Chain"
+          },
+          {
+            "id": "compute_stewardship",
+            "label": "Compute Stewardship"
+          }
+        ]
+      },
+      {
+        "id": "skill",
+        "label": "Skill",
+        "summary": "Reusable bounded services and specialist parts.",
+        "subcategories": [
+          {
+            "id": "operator_skill",
+            "label": "Operator Skill"
+          },
+          {
+            "id": "service_parts",
+            "label": "Service Parts"
+          },
+          {
+            "id": "observer_skill",
+            "label": "Observer Skill"
+          },
+          {
+            "id": "planning_skill",
+            "label": "Planning Skill"
+          },
+          {
+            "id": "routing_skill",
+            "label": "Routing Skill"
+          }
+        ]
+      },
+      {
+        "id": "ability",
+        "label": "Ability",
+        "summary": "Automatic loops such as guided transcription self-reflection and planning.",
+        "subcategories": [
+          {
+            "id": "self_reflection",
+            "label": "Self Reflection"
+          },
+          {
+            "id": "planning",
+            "label": "Planning"
+          },
+          {
+            "id": "transcription_injection",
+            "label": "Transcription Injection"
+          },
+          {
+            "id": "device_control",
+            "label": "Device Control"
+          },
+          {
+            "id": "micro_delay_loop",
+            "label": "Micro Delay Loop"
+          }
+        ]
+      },
+      {
+        "id": "omni_map",
+        "label": "Omni Map",
+        "summary": "Leader selection, access levels, choice bundles, and omnichannel routing.",
+        "subcategories": [
+          {
+            "id": "choice_bundle_map",
+            "label": "Choice Bundle Map"
+          },
+          {
+            "id": "selection_proof",
+            "label": "Selection Proof"
+          },
+          {
+            "id": "access_law",
+            "label": "Access Law"
+          },
+          {
+            "id": "stage_map",
+            "label": "Stage Map"
+          },
+          {
+            "id": "omnichannel_index",
+            "label": "Omnichannel Index"
+          }
+        ]
+      }
+    ],
+    "accessLevels": [
+      {
+        "id": "owner_root",
+        "label": "Owner Root",
+        "priority": 1,
+        "surfaceIds": [
+          "local-sovereign-host",
+          "asolaria"
+        ],
+        "authorityRoles": [
+          "sovereign_root",
+          "owner_admin"
+        ],
+        "defaultChoiceBundleIds": [
+          "root-admin",
+          "compute-steward",
+          "leader-index-all"
+        ],
+        "approvalState": "owner_gated_execution_root"
+      },
+      {
+        "id": "leader_orchestrator",
+        "label": "Leader Orchestrator",
+        "priority": 2,
+        "surfaceIds": [
+          "liris-kuromi",
+          "gaia",
+          "helm"
+        ],
+        "authorityRoles": [
+          "derived_ingress",
+          "anchor_support",
+          "sequencer_support"
+        ],
+        "defaultChoiceBundleIds": [
+          "leader-orchestrator",
+          "white-room-rebuild",
+          "omni-route"
+        ],
+        "approvalState": "derived_support"
+      },
+      {
+        "id": "guardrail",
+        "label": "Guardrail",
+        "priority": 3,
+        "surfaceIds": [
+          "sentinel"
+        ],
+        "authorityRoles": [
+          "guardrail_support"
+        ],
+        "defaultChoiceBundleIds": [
+          "guardrail-gate",
+          "identity-proof"
+        ],
+        "approvalState": "derived_support"
+      },
+      {
+        "id": "observer_gnn",
+        "label": "Observer GNN",
+        "priority": 4,
+        "surfaceIds": [
+          "falcon-2",
+          "dasein",
+          "the-beast"
+        ],
+        "categories": [
+          "world_model"
+        ],
+        "defaultChoiceBundleIds": [
+          "gnn-observer",
+          "device-boundary"
+        ],
+        "approvalState": "transport_gated_boundary"
+      },
+      {
+        "id": "service_operator",
+        "label": "Service Operator",
+        "priority": 5,
+        "categories": [
+          "skill",
+          "ability"
+        ],
+        "defaultChoiceBundleIds": [
+          "shannon-part-or-whole",
+          "self-reflection-loop"
+        ],
+        "approvalState": "bounded_service_use"
+      }
+    ],
+    "choiceBundles": [
+      {
+        "id": "root-admin",
+        "label": "Root Admin",
+        "summary": "Root chooses structural mutation and promotion gates.",
+        "accessLevelIds": [
+          "owner_root"
+        ],
+        "categoryIds": [
+          "root_authority",
+          "rule",
+          "omni_map"
+        ],
+        "bundleIds": [
+          "admin-core"
+        ],
+        "stageIds": [
+          "white_room_map",
+          "white_room_prove"
+        ],
+        "decisionMode": "owner_gated"
+      },
+      {
+        "id": "compute-steward",
+        "label": "Compute Steward",
+        "summary": "Root assigns CPU/GPU authority without confusing device boundaries.",
+        "accessLevelIds": [
+          "owner_root"
+        ],
+        "categoryIds": [
+          "root_authority",
+          "world_model"
+        ],
+        "bundleIds": [
+          "admin-core",
+          "voice-flywheel-gpu"
+        ],
+        "stageIds": [
+          "white_room_plan",
+          "white_room_prove"
+        ],
+        "decisionMode": "compute_stewardship"
+      },
+      {
+        "id": "leader-index-all",
+        "label": "Leader Index All",
+        "summary": "Root can inspect every structural catalog while keeping operational packets compact.",
+        "accessLevelIds": [
+          "owner_root"
+        ],
+        "categoryIds": [
+          "omni_map",
+          "memory",
+          "rule"
+        ],
+        "stageIds": [
+          "white_room_observe",
+          "white_room_map",
+          "white_room_prove"
+        ],
+        "decisionMode": "structural_read"
+      },
+      {
+        "id": "leader-orchestrator",
+        "label": "Leader Orchestrator",
+        "summary": "Leaders select named units, stages, and bundles instead of unnamed spawns.",
+        "accessLevelIds": [
+          "leader_orchestrator"
+        ],
+        "categoryIds": [
+          "memory",
+          "world_model",
+          "skill",
+          "omni_map"
+        ],
+        "bundleIds": [
+          "admin-core"
+        ],
+        "stageIds": [
+          "white_room_map",
+          "white_room_plan",
+          "white_room_vote"
+        ],
+        "decisionMode": "named_orchestration"
+      },
+      {
+        "id": "white-room-rebuild",
+        "label": "White Room Rebuild",
+        "summary": "Rebuild the new language with the old language through staged self-reflection.",
+        "accessLevelIds": [
+          "leader_orchestrator"
+        ],
+        "categoryIds": [
+          "memory",
+          "rule",
+          "ability",
+          "omni_map"
+        ],
+        "bundleIds": [
+          "voice-meeting-inject"
+        ],
+        "stageIds": [
+          "white_room_observe",
+          "white_room_map",
+          "white_room_reflect",
+          "white_room_plan",
+          "white_room_vote",
+          "white_room_prove"
+        ],
+        "serviceIds": [
+          "voice-meeting-inject"
+        ],
+        "decisionMode": "self_reflective_rebuild"
+      },
+      {
+        "id": "omni-route",
+        "label": "Omni Route",
+        "summary": "Leaders can route across named devices and surfaces without cross-host drift.",
+        "accessLevelIds": [
+          "leader_orchestrator"
+        ],
+        "categoryIds": [
+          "world_model",
+          "omni_map"
+        ],
+        "bundleIds": [
+          "falcon-device-bridge"
+        ],
+        "stageIds": [
+          "white_room_observe",
+          "white_room_map",
+          "white_room_prove"
+        ],
+        "decisionMode": "device_specific_route"
+      },
+      {
+        "id": "guardrail-gate",
+        "label": "Guardrail Gate",
+        "summary": "Guardrails hold identity, approval, and replacement law.",
+        "accessLevelIds": [
+          "guardrail"
+        ],
+        "categoryIds": [
+          "rule",
+          "root_authority"
+        ],
+        "bundleIds": [
+          "admin-core"
+        ],
+        "stageIds": [
+          "white_room_reflect",
+          "white_room_prove"
+        ],
+        "decisionMode": "approval_gate"
+      },
+      {
+        "id": "identity-proof",
+        "label": "Identity Proof",
+        "summary": "Keep pidVersion, profile, and device truth pinned.",
+        "accessLevelIds": [
+          "guardrail"
+        ],
+        "categoryIds": [
+          "rule",
+          "world_model"
+        ],
+        "stageIds": [
+          "white_room_observe",
+          "white_room_prove"
+        ],
+        "decisionMode": "identity_proof"
+      },
+      {
+        "id": "gnn-observer",
+        "label": "GNN Observer",
+        "summary": "Observation and edge extraction for device-specific routes and compute watchers.",
+        "accessLevelIds": [
+          "leader_orchestrator",
+          "observer_gnn"
+        ],
+        "categoryIds": [
+          "world_model",
+          "omni_map"
+        ],
+        "bundleIds": [
+          "falcon-device-bridge"
+        ],
+        "stageIds": [
+          "white_room_observe",
+          "white_room_map",
+          "white_room_vote"
+        ],
+        "decisionMode": "gnn_edge_extraction"
+      },
+      {
+        "id": "device-boundary",
+        "label": "Device Boundary",
+        "summary": "Respect device packets, route truth, and boundary law.",
+        "accessLevelIds": [
+          "observer_gnn",
+          "service_operator"
+        ],
+        "categoryIds": [
+          "rule",
+          "world_model"
+        ],
+        "bundleIds": [
+          "falcon-device-bridge"
+        ],
+        "stageIds": [
+          "white_room_observe",
+          "white_room_prove"
+        ],
+        "decisionMode": "device_boundary"
+      },
+      {
+        "id": "shannon-part-or-whole",
+        "label": "Shannon Part Or Whole",
+        "summary": "Invoke Omni Shannon as a bounded specialist organization, whole or by named part.",
+        "accessLevelIds": [
+          "leader_orchestrator",
+          "service_operator"
+        ],
+        "categoryIds": [
+          "skill",
+          "ability",
+          "omni_map"
+        ],
+        "bundleIds": [
+          "shannon-fabric"
+        ],
+        "serviceIds": [
+          "shannon-fabric"
+        ],
+        "stageIds": [
+          "white_room_simulate",
+          "white_room_vote",
+          "white_room_prove"
+        ],
+        "decisionMode": "whole_or_part"
+      },
+      {
+        "id": "self-reflection-loop",
+        "label": "Self Reflection Loop",
+        "summary": "Micro-delay transcription self-reflection loop.",
+        "accessLevelIds": [
+          "leader_orchestrator",
+          "service_operator"
+        ],
+        "categoryIds": [
+          "memory",
+          "ability",
+          "omni_map"
+        ],
+        "bundleIds": [
+          "voice-meeting-inject"
+        ],
+        "serviceIds": [
+          "voice-meeting-inject"
+        ],
+        "stageIds": [
+          "white_room_reflect",
+          "white_room_plan"
+        ],
+        "decisionMode": "micro_delay_transcription"
+      }
+    ],
+    "developmentStages": [
+      {
+        "id": "white_room_observe",
+        "label": "Observe",
+        "order": 1,
+        "summary": "Observe device truth, pidVersion, and packet evidence before mutation.",
+        "accessLevelIds": [
+          "leader_orchestrator",
+          "observer_gnn",
+          "guardrail"
+        ],
+        "choiceBundleIds": [
+          "gnn-observer",
+          "device-boundary",
+          "identity-proof"
+        ],
+        "proofsRequired": [
+          "named_pid",
+          "device_truth"
+        ],
+        "packetLineLimit": 35,
+        "gnnMode": "observe",
+        "selfReflectMode": "evidence_first",
+        "planningMode": "none",
+        "defaultActive": true
+      },
+      {
+        "id": "white_room_map",
+        "label": "Map",
+        "order": 2,
+        "summary": "Map surfaces, stages, bundles, and routes into the leader index.",
+        "accessLevelIds": [
+          "owner_root",
+          "leader_orchestrator"
+        ],
+        "choiceBundleIds": [
+          "leader-index-all",
+          "leader-orchestrator",
+          "omni-route"
+        ],
+        "proofsRequired": [
+          "index_signature",
+          "named_surface_map"
+        ],
+        "packetLineLimit": 35,
+        "gnnMode": "edge_map",
+        "selfReflectMode": "mapping_reflection",
+        "planningMode": "bounded_mapping",
+        "defaultActive": true
+      },
+      {
+        "id": "white_room_reflect",
+        "label": "Reflect",
+        "order": 3,
+        "summary": "Run self-reflection waves without replacing the live language.",
+        "accessLevelIds": [
+          "leader_orchestrator",
+          "guardrail",
+          "service_operator"
+        ],
+        "choiceBundleIds": [
+          "white-room-rebuild",
+          "guardrail-gate",
+          "self-reflection-loop"
+        ],
+        "proofsRequired": [
+          "mistake_index",
+          "timeline_guard"
+        ],
+        "packetLineLimit": 35,
+        "gnnMode": "reflect",
+        "selfReflectMode": "guided_transcription_self_reflection",
+        "planningMode": "delta_only",
+        "defaultActive": true
+      },
+      {
+        "id": "white_room_plan",
+        "label": "Plan",
+        "order": 4,
+        "summary": "Plan bounded next actions by named access and choice bundle.",
+        "accessLevelIds": [
+          "owner_root",
+          "leader_orchestrator",
+          "service_operator"
+        ],
+        "choiceBundleIds": [
+          "compute-steward",
+          "leader-orchestrator",
+          "self-reflection-loop"
+        ],
+        "proofsRequired": [
+          "choice_bundle",
+          "budget_truth"
+        ],
+        "packetLineLimit": 35,
+        "gnnMode": "plan",
+        "selfReflectMode": "plan_reflection",
+        "planningMode": "named_only",
+        "defaultActive": true
+      },
+      {
+        "id": "white_room_simulate",
+        "label": "Simulate",
+        "order": 5,
+        "summary": "Use bounded Shannon whole-or-part and GNN edges to simulate consequences.",
+        "accessLevelIds": [
+          "leader_orchestrator",
+          "service_operator"
+        ],
+        "choiceBundleIds": [
+          "shannon-part-or-whole",
+          "gnn-observer"
+        ],
+        "proofsRequired": [
+          "stage_proof",
+          "route_truth"
+        ],
+        "packetLineLimit": 35,
+        "gnnMode": "simulate",
+        "selfReflectMode": "security_review_wave",
+        "planningMode": "scenario_simulation"
+      },
+      {
+        "id": "white_room_vote",
+        "label": "Vote",
+        "order": 6,
+        "summary": "Named leaders and services vote with GNN edge extraction and self-reflection.",
+        "accessLevelIds": [
+          "leader_orchestrator",
+          "observer_gnn",
+          "service_operator"
+        ],
+        "choiceBundleIds": [
+          "white-room-rebuild",
+          "leader-orchestrator",
+          "gnn-observer",
+          "shannon-part-or-whole"
+        ],
+        "proofsRequired": [
+          "named_vote",
+          "edge_extraction"
+        ],
+        "packetLineLimit": 35,
+        "gnnMode": "vote",
+        "selfReflectMode": "delayed_vote_reflection",
+        "planningMode": "multi_bundle_vote"
+      },
+      {
+        "id": "white_room_prove",
+        "label": "Prove",
+        "order": 7,
+        "summary": "Only pro-ready proof can replace or promote the living language.",
+        "accessLevelIds": [
+          "owner_root",
+          "guardrail",
+          "leader_orchestrator"
+        ],
+        "choiceBundleIds": [
+          "root-admin",
+          "compute-steward",
+          "guardrail-gate",
+          "identity-proof",
+          "device-boundary"
+        ],
+        "proofsRequired": [
+          "pro_ready",
+          "promotion_gate"
+        ],
+        "packetLineLimit": 35,
+        "gnnMode": "prove",
+        "selfReflectMode": "proof_audit",
+        "planningMode": "promotion_only"
+      }
+    ]
+  },
+  "namedSurfaces": [
+    {
+      "id": "liris-kuromi",
+      "label": "Liris / Kuromi",
+      "kind": "agent",
+      "aliases": [
+        "liris",
+        "kuromi",
+        "admin-liris-v1",
+        "kuromi-companion-v1"
+      ],
+      "preferredControllerRole": "liris",
+      "canonicalPidRole": "liris",
+      "profileIds": [
+        "admin-liris-v1",
+        "kuromi-companion-v1"
+      ],
+      "activationMode": "always_primary",
+      "defaultState": "admission_ready_pending_pid",
+      "activeState": "admission_ready_derived_ingress",
+      "identityGate": "named_pid_or_profile",
+      "controlSurfaceRefs": [
+        "/api/mobile/bootstrap",
+        "/api/mobile/session",
+        "/api/mobile/control/status"
+      ],
+      "lxAnchors": [
+        "LX-122",
+        "LX-249",
+        "LX-349",
+        "LX-350",
+        "LX-351"
+      ]
+    },
+    {
+      "id": "helm",
+      "label": "Helm",
+      "kind": "agent",
+      "aliases": [
+        "helm",
+        "admin-helm-v1"
+      ],
+      "preferredControllerRole": "helm",
+      "canonicalPidRole": "helm",
+      "profileIds": [
+        "admin-helm-v1"
+      ],
+      "activationMode": "named_on_demand",
+      "defaultState": "idle_until_called",
+      "identityGate": "named_pid_or_profile",
+      "controlSurfaceRefs": [
+        "admin-terminal",
+        "dispatch",
+        "task-routing"
+      ],
+      "lxAnchors": [
+        "LX-122",
+        "LX-249"
+      ]
+    },
+    {
+      "id": "sentinel",
+      "label": "Sentinel",
+      "kind": "agent",
+      "aliases": [
+        "sentinel",
+        "admin-sentinel-v1"
+      ],
+      "preferredControllerRole": "sentinel",
+      "canonicalPidRole": "sentinel",
+      "profileIds": [
+        "admin-sentinel-v1"
+      ],
+      "activationMode": "named_on_demand",
+      "defaultState": "idle_until_called",
+      "identityGate": "named_pid_or_profile",
+      "controlSurfaceRefs": [
+        "admin-terminal",
+        "security",
+        "identity-check"
+      ],
+      "lxAnchors": [
+        "LX-122",
+        "LX-204",
+        "LX-249"
+      ]
+    },
+    {
+      "id": "falcon-2",
+      "label": "Falcon 2",
+      "kind": "device",
+      "aliases": [
+        "falcon 2",
+        "falcon2",
+        "rqct401gtww",
+        "samsung composite",
+        "com9"
+      ],
+      "preferredControllerRole": "falcon",
+      "profileIds": [
+        "mobile-falcon-v1"
+      ],
+      "activationMode": "named_quarantined_observer",
+      "defaultState": "quarantined_until_exact_packet",
+      "identityGate": "exact_named_device_packet",
+      "controlSurfaceRefs": [
+        "usb",
+        "mtp",
+        "modem",
+        "adb",
+        "shannon"
+      ],
+      "lxAnchors": [
+        "LX-349",
+        "LX-350",
+        "LX-351",
+        "LX-375",
+        "LX-376"
+      ]
+    },
+    {
+      "id": "felipe-phone-a",
+      "label": "Felipe Phone A",
+      "kind": "device",
+      "aliases": [
+        "felipe",
+        "felipe phone a",
+        "felipe a06",
+        "galaxy a06"
+      ],
+      "preferredControllerRole": "falcon",
+      "profileIds": [
+        "mobile-falcon-v1"
+      ],
+      "activationMode": "named_quarantined_observer",
+      "defaultState": "quarantined_until_exact_packet",
+      "identityGate": "exact_named_device_packet",
+      "controlSurfaceRefs": [
+        "usb",
+        "adb",
+        "termux",
+        "downloads",
+        "docs",
+        "pictures"
+      ],
+      "lxAnchors": [
+        "LX-349",
+        "LX-350",
+        "LX-351",
+        "LX-375",
+        "LX-376"
+      ]
+    },
+    {
+      "id": "felipe-phone-b",
+      "label": "Felipe Phone B",
+      "kind": "device",
+      "aliases": [
+        "felipe phone b",
+        "felipe second phone",
+        "felipe second device"
+      ],
+      "preferredControllerRole": "falcon",
+      "profileIds": [
+        "mobile-falcon-v1"
+      ],
+      "activationMode": "manual_registration_required",
+      "defaultState": "declared_until_live_identity_packet",
+      "identityGate": "exact_named_device_packet",
+      "controlSurfaceRefs": [
+        "usb",
+        "adb",
+        "termux"
+      ],
+      "lxAnchors": [
+        "LX-349",
+        "LX-350",
+        "LX-351"
+      ]
+    },
+    {
+      "id": "trixie",
+      "label": "Trixie",
+      "kind": "device_profile",
+      "aliases": [
+        "trixie",
+        "debian trixie",
+        "falcon phone"
+      ],
+      "preferredControllerRole": "falcon",
+      "profileIds": [
+        "mobile-falcon-v1"
+      ],
+      "activationMode": "named_on_demand",
+      "defaultState": "dormant_until_phone_surface_needed",
+      "identityGate": "exact_named_device_packet",
+      "controlSurfaceRefs": [
+        "termux",
+        "debian",
+        "ssh",
+        "phone-surface"
+      ],
+      "lxAnchors": [
+        "LX-349",
+        "LX-350",
+        "LX-351"
+      ]
+    },
+    {
+      "id": "debora",
+      "label": "Debora",
+      "kind": "device",
+      "aliases": [
+        "debora",
+        "deborah"
+      ],
+      "preferredControllerRole": "falcon",
+      "profileIds": [],
+      "activationMode": "manual_registration_required",
+      "defaultState": "declared_only",
+      "identityGate": "exact_named_device_packet",
+      "controlSurfaceRefs": [
+        "unknown"
+      ],
+      "lxAnchors": [
+        "LX-349",
+        "LX-350",
+        "LX-351"
+      ]
+    }
+  ]
+}

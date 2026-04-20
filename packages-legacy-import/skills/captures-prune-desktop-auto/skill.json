@@ -1,0 +1,22 @@
+{
+  "id": "captures.prune.desktop_auto",
+  "title": "Prune Desktop Auto Captures",
+  "description": "Deletes old auto-generated desktop captures (desktop-<iso8601>.png) while keeping the newest N. Also enforces retention for _important and _trash.",
+  "version": "1.0.0",
+  "risk": "medium",
+  "tags": ["captures", "maintenance", "cleanup"],
+  "permissions": ["filesystem.write"],
+  "steps": [
+    {
+      "action": "captures_prune",
+      "note": "Prune auto desktop captures (keep newest 500).",
+      "payload": {
+        "keep": 500,
+        "minAgeMinutes": 10,
+        "pruneMode": "delete",
+        "dryRun": false
+      }
+    }
+  ]
+}
+
