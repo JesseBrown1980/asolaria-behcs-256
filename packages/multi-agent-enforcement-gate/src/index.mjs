@@ -18,6 +18,10 @@ export const ACCEPTED_AGENTS = new Set([
 const SMP_V5_PLUS_TASK_VERBS = [
   "T01", "T02", "T03", "T04", "T05", "T06", "T07", "T08", "T09",
   "SMP-V5-PLUS", "SMP-V5+", "FEDERATION-SEALED", "10-VARIANT-MERGED",
+  // FP-INFRA closures require bilateral cosign too (extended 2026-04-20 post session-1-acer-complete)
+  "FP-INFRA-SESSION-1-BASELINE-COMPLETE",
+  "FP-INFRA-SESSION-",
+  "BASELINE-COMPLETE",
 ];
 function isSmpV5PlusTask(verb) {
   if (typeof verb !== "string") return false;
@@ -58,14 +62,23 @@ export function checkMultiAgent(envelope) {
 
   collected.delete(null);
   collected.delete(undefined);
-  const accepted = [...collected].filter(a => {
-    if (!a) return false;
-    for (const acc of ACCEPTED_AGENTS) if (a === acc || a.startsWith(acc)) return true;
-    return false;
-  });
+  // Canonicalize to shortest matching ACCEPTED_AGENTS entry so "acer-namespace-coordinator"
+  // and "acer" collapse to the same canonical "acer" and count ONCE.
+  const SHORT_NAMES = ["acer", "liris", "falcon", "aether", "rose", "oracle-of-amy", "jesse-operator"];
+  function canonicalize(a) {
+    if (!a) return null;
+    for (const s of SHORT_NAMES) if (a === s || a.startsWith(s + "-") || a.startsWith(s)) return s;
+    return null;
+  }
+  const canonicalSet = new Set();
+  for (const a of collected) {
+    const c = canonicalize(a);
+    if (c) canonicalSet.add(c);
+  }
+  const accepted = [...canonicalSet];
   const count = accepted.length;
   if (count >= MIN_SIGNATURES) return { ok: true, accepted_sigs: accepted, count };
-  return { ok: false, reason: `solo-signature-refused · need ≥${MIN_SIGNATURES} from accepted set`, accepted_sigs: accepted, count };
+  return { ok: false, reason: `solo-signature-refused · need ≥${MIN_SIGNATURES} distinct canonical agents`, accepted_sigs: accepted, count };
 }
 
 function normalizeActor(a) {
