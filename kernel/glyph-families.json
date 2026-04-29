@@ -1,0 +1,306 @@
+{
+  "name": "behcs-256-glyph-families",
+  "schema_version": "0.1.0-draft",
+  "status": "DRAFT",
+  "d11_level": "ASSUMED",
+  "created": "2026-04-17",
+  "week_override": "COSIGN-MERGED-034",
+  "description": "Machine-readable registry of BEHCS-256 glyph families. Section R.3 deliverable. 14 families declared; profile family carries 4 seeds + 12 PROF-HERMES-* Phase-1+2 atoms (2026-04-18 batch-cosign).2 Acer Class corpus extraction. Every unresolved glyph reference parses to `unknown_glyph` violation.",
+  "operators": {
+    "concat": {
+      "symbol": "·",
+      "precedence": 5,
+      "phonetic_class": "vowel"
+    },
+    "nest": {
+      "symbol": "{ }",
+      "precedence": 3,
+      "phonetic_class": "vowel"
+    },
+    "modify": {
+      "symbol": "@",
+      "precedence": 1,
+      "phonetic_class": "vowel"
+    },
+    "lift": {
+      "symbol": "^",
+      "precedence": 2,
+      "phonetic_class": "vowel"
+    },
+    "pipe": {
+      "symbol": "|>",
+      "precedence": 4,
+      "phonetic_class": "vowel"
+    },
+    "mood_tone": {
+      "symbol": "@M-*",
+      "precedence": 6,
+      "phonetic_class": "tone",
+      "role": "sentence-terminal mood modifier"
+    }
+  },
+  "blast_radii": [
+    "device",
+    "instance",
+    "operation",
+    "colony"
+  ],
+  "moods": {
+    "M-INDICATIVE": {
+      "d11": "PROVEN",
+      "semantics": "deductive closure"
+    },
+    "M-EYEWITNESS": {
+      "d11": "OBSERVED",
+      "semantics": "first-person observation with on-disk evidence"
+    },
+    "M-SUBJUNCTIVE": {
+      "d11": "ASSUMED",
+      "semantics": "default; conjecture / draft"
+    }
+  },
+  "families": {
+    "dimension": {
+      "prefix": "D",
+      "default_blast": "colony",
+      "phonetic_class": "consonant",
+      "role": "cube-axis identifiers",
+      "examples": [
+        "D11",
+        "D15",
+        "D24"
+      ],
+      "notes": "D11=proof, D15=authority, D24=intent. Full axis census pending."
+    },
+    "proof": {
+      "prefix": "PROOF",
+      "default_blast": "colony",
+      "phonetic_class": "consonant",
+      "role": "evidence stamp tags",
+      "examples": [
+        "PROOF-PROVEN",
+        "PROOF-OBSERVED",
+        "PROOF-INHERITED",
+        "PROOF-ASSUMED"
+      ],
+      "source": "kernel/D11-proof-levels.json"
+    },
+    "drift": {
+      "prefix": "DRIFT",
+      "default_blast": "colony",
+      "phonetic_class": "consonant",
+      "role": "location / identity anomaly classifications",
+      "examples": [
+        "DRIFT-SANCTIONED-REMOUNT",
+        "DRIFT-NEW-LOCATION",
+        "DRIFT-MASQUERADE",
+        "DRIFT-PROFILE-BLAST-RADIUS-VIOLATION"
+      ]
+    },
+    "shannon": {
+      "prefix": "SHANNON",
+      "default_blast": "instance",
+      "phonetic_class": "consonant",
+      "role": "6-body + civ reviewers",
+      "examples": [
+        "SHANNON-IMMUNE",
+        "SHANNON-SKELETAL",
+        "SHANNON-NERVOUS",
+        "SHANNON-ENDOCRINE",
+        "SHANNON-CIRCULATORY",
+        "SHANNON-DIGESTIVE"
+      ]
+    },
+    "op": {
+      "prefix": "OP",
+      "default_blast": "operation",
+      "phonetic_class": "consonant",
+      "role": "speech acts / verbs / imperatives",
+      "examples": [
+        "OP-ADD-TOPIC",
+        "OP-RESOLVE-CONFLICT",
+        "OP-MORPH",
+        "OP-UNMORPH",
+        "OP-HALT",
+        "OP-INHERIT-FROM",
+        "OP-DOWNGRADE"
+      ],
+      "notes": "Wire-form commands remain kebab-case under Section B; event emission uses EVT family."
+    },
+    "profile": {
+      "prefix": "PROF",
+      "default_blast": "instance",
+      "phonetic_class": "consonant",
+      "role": "polymorphic specialist-knowledge slices",
+      "examples": [
+        "PROF-NOVALUM",
+        "PROF-EBACMAP",
+        "PROF-FALCON",
+        "PROF-SHANNON",
+        "PROF-HERMES-SKILLBUILD",
+        "PROF-HERMES-PROGDISCLOSE",
+        "PROF-HERMES-FREEFANOUT",
+        "PROF-HERMES-DOGFOOD",
+        "PROF-HERMES-HUBSYNC",
+        "PROF-HERMES-GUARDSCAN",
+        "PROF-HERMES-CLAUDE-CODE",
+        "PROF-HERMES-CODEX",
+        "PROF-HERMES-HERMES-AGENT",
+        "PROF-HERMES-OPENCODE",
+        "PROF-HERMES-BLACKBOX-OPT",
+        "PROF-HERMES-HONCHO-OPT"
+      ],
+      "notes": "Loaded on morph, unloaded on unmorph. Glyph-keyed per R.6."
+    },
+    "law": {
+      "prefix": "LAW",
+      "default_blast": "colony",
+      "phonetic_class": "consonant",
+      "role": "irrevocable / immutable federation rules",
+      "examples": [
+        "LAW-001",
+        "LAW-008",
+        "LAW-012"
+      ],
+      "constraints": {
+        "min_blast": "colony"
+      }
+    },
+    "device": {
+      "prefix": "DEV",
+      "default_blast": "device",
+      "phonetic_class": "consonant",
+      "role": "device-bound instances",
+      "examples": [
+        "DEV-LIRIS",
+        "DEV-ACER",
+        "DEV-FALCON",
+        "DEV-AETHER",
+        "DEV-GAIA"
+      ]
+    },
+    "colony": {
+      "prefix": "COL",
+      "default_blast": "colony",
+      "phonetic_class": "consonant",
+      "role": "federation members",
+      "examples": [
+        "COL-LIRIS",
+        "COL-ACER",
+        "COL-FALCON"
+      ]
+    },
+    "portal": {
+      "prefix": "PORT",
+      "default_blast": "device",
+      "phonetic_class": "consonant",
+      "role": "BEHCS transport portals",
+      "examples": [
+        "PORT-4947",
+        "PORT-4950",
+        "PORT-4820",
+        "PORT-4913"
+      ]
+    },
+    "wave": {
+      "prefix": "WAVE",
+      "default_blast": "operation",
+      "phonetic_class": "consonant",
+      "role": "review / heartbeat waves",
+      "examples": [
+        "WAVE-HEARTBEAT",
+        "WAVE-REVIEW-6BODY"
+      ]
+    },
+    "event": {
+      "prefix": "EVT",
+      "default_blast": "colony",
+      "phonetic_class": "consonant",
+      "role": "past-tense durable events",
+      "examples": [
+        "EVT-PROFILE-LOADED",
+        "EVT-PROFILE-UNLOADED",
+        "EVT-BLAST-RADIUS-EXCEEDED",
+        "EVT-TASK-READY",
+        "EVT-DRIFT-BROADCAST",
+        "EVT-GRAMMAR-VIOLATION"
+      ],
+      "source": "plans/section-B-event-schema.md"
+    },
+    "mood": {
+      "prefix": "M",
+      "default_blast": null,
+      "phonetic_class": "tone",
+      "role": "assertion modality (sentence-terminal)",
+      "examples": [
+        "M-INDICATIVE",
+        "M-EYEWITNESS",
+        "M-SUBJUNCTIVE"
+      ]
+    },
+    "meta": {
+      "prefix": "META",
+      "default_blast": "colony",
+      "phonetic_class": "consonant",
+      "role": "self-referential sentences",
+      "examples": [
+        "META-GRAMMAR-RULE",
+        "META-SELF-DESCRIBE",
+        "META-PROOF-OF-CLOSURE"
+      ],
+      "constraints": {
+        "min_blast": "colony"
+      }
+    }
+  },
+  "violations": {
+    "unknown_glyph": "token not present in this registry",
+    "family_ambiguity": "same symbol claimed by two families without @ disambiguation",
+    "arity_mismatch": "verb applied without required operand",
+    "requires_braces": "two legal parses exist; braces mandatory",
+    "double_mood": "two mood tones on the same sentence",
+    "colony_lift_unwitnessed": "^ raising to @COLONY without operator_witness",
+    "cross_host_privesc": "phrase resolution would write to a remote device (HALT)",
+    "closure_broken": "META-PROOF-OF-CLOSURE fails to parse under M-INDICATIVE (federation HALT)",
+    "blast_too_narrow": "e.g., LAW-* scoped narrower than colony",
+    "mood_proof_mismatch": "M-INDICATIVE on a phrase referencing PROOF-ASSUMED without OP-DOWNGRADE"
+  },
+  "open_gaps": [
+    "256-glyph phonetic census (consonant/vowel/tone exact counts)",
+    "authority-scoped op set alignment with Section B",
+    "final family count — 14 is draft",
+    "merge of D11-proof-levels.json entries without duplication",
+    "acer class corpus refinement (R.2)"
+  ],
+  "references": {
+    "spec": "plans/section-R-3-grammar-specification.md",
+    "kernel_reference": "kernel/BEHCS-256-GRAMMAR.md",
+    "umbrella": "plans/section-R-behcs256-as-language-polymorphism.md",
+    "validators_sketch": "packages/kernel/src/grammar.ts",
+    "rationale": "memory/project_behcs256_as_super_intelligent_language_polymorphic_grammar.md"
+  },
+  "last_mint": {
+    "at": "2026-04-18T15:41:52.879Z",
+    "batch_label": "hermes-phase-1-2",
+    "glyphs_added_this_batch": [
+      "PROF-HERMES-SKILLBUILD",
+      "PROF-HERMES-PROGDISCLOSE",
+      "PROF-HERMES-FREEFANOUT",
+      "PROF-HERMES-DOGFOOD",
+      "PROF-HERMES-HUBSYNC",
+      "PROF-HERMES-GUARDSCAN",
+      "PROF-HERMES-CLAUDE-CODE",
+      "PROF-HERMES-CODEX",
+      "PROF-HERMES-HERMES-AGENT",
+      "PROF-HERMES-OPENCODE",
+      "PROF-HERMES-BLACKBOX-OPT",
+      "PROF-HERMES-HONCHO-OPT"
+    ],
+    "glyphs_already_present": [],
+    "authority": "COSIGN-MERGED-034",
+    "operator_verbatim_go": "2026-04-18 — YES, AGREE. IMMEDIATELY",
+    "source": "packages/hermes-absorption/prof-hermes-delta.json",
+    "staged_ingest_ref": "W1-10-ENDOCRINE-SKILLS-GLYPHS.md §6 (Phase 1 + Phase 2)",
+    "gate": "LAW-013 META-PROOF-OF-CLOSURE green-post-mint"
+  }
+}
