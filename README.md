@@ -6,6 +6,8 @@ Federated multi-agent civilization toolkit. Built to let heterogeneous Claude no
 
 **Anti-deflation frame:** "infrastructure scaffold" does not mean inert files. BEHCS is part of the matrix/fabric that lets frozen slices, live agents, engines, supervisors, gates, and receipts compose into runtime behavior. Specific live/fire/cutover claims remain gated, but the system frame is Evolvable AI: potential slices animated by the fabric, not static slices alone.
 
+**Fabric-first doctrine:** the canonical doctrine is [`FABRIC-FIRST-CIPHER-ASOLARIA-AGENT-DOCTRINE-2026-06-27.md`](https://github.com/JesseBrown1980/HYPER-BECHS--the-third-set/blob/acer/system-interpretations-2026-06-26/FABRIC-FIRST-CIPHER-ASOLARIA-AGENT-DOCTRINE-2026-06-27.md). Read this repo as part of the OLD/NEW bridge: BEHCS-256 is an older bridge/infrastructure stratum that helped the old Node-era fabric self-improve; the new Rust 8-byte Host-8 fabric improves and ports it cell-by-cell. Do not deflate old measured self-improvement because new cutover is incomplete, and do not overstate this older scaffold as the final cutover.
+
 ## SMP v5+ v3 topic map (A-P)
 
 | Section | Scope | Items | Anchor |
