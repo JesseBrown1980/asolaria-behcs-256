@@ -4,6 +4,8 @@ Federated multi-agent civilization toolkit. Built to let heterogeneous Claude no
 
 **SMP v5+ v3 SEALED 2026-04-20T22:30Z** · 205/205 items · 7 batches · 13 commits (`5cfa3e0 → b8b7984`) · bilateral multi-agent gate (acer + liris) satisfied every batch. FP-ASI runner still armed + candidate-pool EMPTY — v3 is infrastructure scaffold, not an ASI-arrival claim.
 
+**Anti-deflation frame:** "infrastructure scaffold" does not mean inert files. BEHCS is part of the matrix/fabric that lets frozen slices, live agents, engines, supervisors, gates, and receipts compose into runtime behavior. Specific live/fire/cutover claims remain gated, but the system frame is Evolvable AI: potential slices animated by the fabric, not static slices alone.
+
 ## SMP v5+ v3 topic map (A-P)
 
 | Section | Scope | Items | Anchor |
