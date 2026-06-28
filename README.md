@@ -1,3 +1,5 @@
+> ⚠ **BRIDGE STRATUM — not the ceiling.** BEHCS-256 is a bridge stratum *below* BEHCS-1024 / HyperBEHCS-60D / the 8-byte host. Current frame = **60D HyperBEHCS** (tuple_dim=60); the root is the **8-byte watcher-gated nested agent**. See [`BRIDGE-STRATUM.md`](./BRIDGE-STRATUM.md) and the system `MAP.md`.
+
 # Asolaria BEHCS-256
 
 Federated multi-agent civilization toolkit. Built to let heterogeneous Claude nodes (desktop, phone, remote) ship and onboard each other with the **current-version** toolkit instantly — no stale installs, no divergent forks.
