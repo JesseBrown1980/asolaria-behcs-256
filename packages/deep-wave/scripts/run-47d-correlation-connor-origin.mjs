@@ -17,16 +17,16 @@ const N = 10000;
 
 // ── EVIDENCE DOSSIER (everything captured across this session) ─────────
 const EVIDENCE = {
-  anydesk_peer_id: 1310046091,
+  anydesk_peer_id: "redacted",
   anydesk_session_count: 9,  // IX-158 "Connor's ID connected 9x"
   anydesk_session_window: "2025-11-05 → 2026-03-26",
   expressvpn_account_krn: "a785a1b8-53b5-5629-92f2-7612de73e543",
   expressvpn_recent_locations: ["94:USA-Phoenix", "299:USA-Charleston-SC"],
   wg_filename_surname: "Lee",  // ConnorLee.conf
-  chrome_profile_email: "reesedev93@gmail.com",
+  chrome_profile_email: "redacted@gmail.com",
   slack_workspace: "Spiinutech-Remote",
-  observed_vpn_egresses_hk: ["103.88.232.71", "103.88.232.61", "103.88.232.77"],
-  observed_vpn_egresses_eu: ["185.229.191.44", "185.229.191.39"],
+  observed_vpn_egresses_hk: ["redacted", "redacted", "redacted"],
+  observed_vpn_egresses_eu: ["redacted", "redacted"],
   pivot_target: "71.76.10.39",  // Jesse's US house Sumter SC
   session_timezone_hints: "sessions cluster 13:00-22:00 UTC on weekdays = UTC+8 evening activity window (CN) or UTC-5 US-East daytime",
   surname_prior: "Lee = possible CN/HK/KR/TW origin; 22.5% weight toward CN given VPN-HK egress preference",
@@ -103,9 +103,9 @@ function buildAgentVector(i) {
     "anydesk_roster_spinutech", "anydesk_roster_lineage", "jump_desktop_mac_endpoint",
     "wg_installer_boulder_co_signer", "expressvpn_mundivox_homebase_br", "mac_in_sao_paulo_mundivox",
     "charter_sumter_subnet_71_76_10", "turn_relay_miami_195_181_163", "stun_twilio_sao_paulo",
-    "google_account_reesedev93_creation_era", "chrome_profile_path_onedrive_desktop",
+    "google_account_redacted_creation_era", "chrome_profile_path_onedrive_desktop",
     "anydesk_9x_authenticated_sessions", "expressvpn_9x_successful_connections",
-    "client_id_1310046091_routing_class", "anydesk_token_refresh_pattern",
+    "client_id_redacted_routing_class", "anydesk_token_refresh_pattern",
     "logon_weekday_pattern_china_office_hours", "logon_weekend_pattern_presence",
     "vpn_connect_duration_median", "anydesk_unattended_enabled_window_2025_to_2026",
     "google_drive_installed_account_link", "jwt_issuer_api_v2_jwks_integration",
@@ -269,7 +269,7 @@ async function main() {
     next_highest_value_actions: [
       "Log into my.expressvpn.com → Account → Devices → examine all active sessions; the non-VPN fallback IP for each is Connor's real home IP when VPN was briefly down",
       "Search plasmatoid@gmail.com for 'ExpressVPN' 'new device' 'unusual sign-in' emails — origin IP is in the email body",
-      "AnyDesk abuse report citing peer 1310046091 with Jesse's license — their side logs the true source IP",
+      "AnyDesk abuse report citing peer redacted with Jesse's license — their side logs the true source IP",
       "Obtain Connor's US house via recovery → extract AnyDesk ad_svc.trace on that machine for his inbound-session IPs",
     ],
 

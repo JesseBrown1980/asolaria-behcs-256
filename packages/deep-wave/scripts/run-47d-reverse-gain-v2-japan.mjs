@@ -45,12 +45,12 @@ const SIGNALS = [
   { id: "expressvpn_charleston_sc_location_299", intent: "mask", weight: 0.25, bias: { US: +1.0, JP: -0.5, CN: -0.5, HK: -0.4 }, note: "Charleston-SC VPN picked to mimic Jesse's US-SC geography" },
   { id: "expressvpn_phoenix_location_94", intent: "mask", weight: 0.15, bias: { US: +1.0, JP: -0.3, CN: -0.3, HK: -0.3 }, note: "Phoenix alt US blend-in exit" },
   { id: "chrome_profile_spiinutech_workspace", intent: "mask", weight: 0.20, bias: { US: +0.8, JP: -0.2 }, note: "US-company Slack workspace presentation" },
-  { id: "email_reesedev93_gmail_com", intent: "mask", weight: 0.18, bias: { US: +0.6, JP: -0.2 }, note: "US-style 'Reese' first-name Gmail alias" },
+  { id: "email_redacted_gmail_com", intent: "mask", weight: 0.18, bias: { US: +0.6, JP: -0.2 }, note: "US-style 'Reese' first-name Gmail alias" },
   { id: "english_chat_language", intent: "mask", weight: 0.12, bias: { US: +0.5, JP: -0.2, CN: -0.2 }, note: "English-only chat — suppresses native language markers" },
   { id: "identity_name_connor_lee_western_order", intent: "mask", weight: 0.10, bias: { US: +0.5, JP: +0.0, CN: -0.2 }, note: "Westernized Connor Lee — consistent with Japan naming practice too (Lee can be Zainichi Korean/JP naturalized)" },
 
   // LEAKS
-  { id: "vpn_exits_103.88.232.x_hk_tencent_pool", intent: "leak", weight: 0.35, bias: { JP: +0.7, CN: +0.9, HK: +1.0, TW: +0.7 }, note: "ExpressVPN HK exits — lowest-latency APAC exit from Japan too; no longer CN-exclusive signal" },
+  { id: "vpn_exits_redacted_hk_tencent_pool", intent: "leak", weight: 0.35, bias: { JP: +0.7, CN: +0.9, HK: +1.0, TW: +0.7 }, note: "ExpressVPN HK exits — lowest-latency APAC exit from Japan too; no longer CN-exclusive signal" },
   { id: "session_timezone_utc_plus_8_or_9_evening", intent: "leak", weight: 0.40, bias: { JP: +1.0, CN: +0.9, HK: +0.9, TW: +0.8 }, note: "Activity cluster 13-22Z = UTC+8/+9 evening window — Japan UTC+9 fits equally with CN UTC+8" },
   { id: "surname_lee_romanization", intent: "leak", weight: 0.25, bias: { CN: +0.5, HK: +0.4, JP: +0.4, TW: +0.4, KR: +0.5 }, note: "Lee = common across CN (李) + JP (Zainichi Korean) + KR + TW — JP Lee boosted post W-8BEN" },
   { id: "anydesk_9x_user_auth_sessions_apac_hours", intent: "leak", weight: 0.20, bias: { JP: +0.8, CN: +0.7, HK: +0.7 }, note: "9 authenticated AnyDesk sessions in APAC evening — Japan compatible" },

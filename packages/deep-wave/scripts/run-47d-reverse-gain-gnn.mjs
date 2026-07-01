@@ -28,12 +28,12 @@ const SIGNALS = [
   { id: "expressvpn_charleston_sc_location_299", intent: "mask", weight: 0.25, bias: { US: +1.0, CN: -0.7, HK: -0.5 }, note: "Charleston-SC VPN picked to mimic Jesse's US-SC geography" },
   { id: "expressvpn_phoenix_location_94", intent: "mask", weight: 0.15, bias: { US: +1.0, CN: -0.5, HK: -0.4 }, note: "Phoenix alt-location for generic US blend-in" },
   { id: "chrome_profile_spiinutech_workspace", intent: "mask", weight: 0.20, bias: { US: +0.8, CN: -0.3 }, note: "Spinutech US employment history presentation" },
-  { id: "email_reesedev93_gmail_com", intent: "mask", weight: 0.18, bias: { US: +0.6, CN: -0.2 }, note: "Gmail account with US-style 'Reese' first-name alias" },
+  { id: "email_redacted_gmail_com", intent: "mask", weight: 0.18, bias: { US: +0.6, CN: -0.2 }, note: "Gmail account with US-style 'Reese' first-name alias" },
   { id: "english_chat_language_in_slack", intent: "mask", weight: 0.15, bias: { US: +0.7, CN: -0.4 }, note: "English-only Slack DMs — deliberately suppresses CN language markers" },
   { id: "identity_name_connor_lee_western_order", intent: "mask", weight: 0.12, bias: { US: +0.5, CN: -0.3 }, note: "Western name order (given-surname) vs CN (surname-given) = presentation choice" },
 
   // ── LEAKS (signals he couldn't help emitting) → POSITIVE in reverse-gain
-  { id: "vpn_exits_103.88.232.x_hk_tencent_pool", intent: "leak", weight: 0.45, bias: { CN: +0.9, HK: +1.0 }, note: "ExpressVPN HK-Tencent exits chosen 9+ times = needs HK-adjacency = Shenzhen/GD or actually HK" },
+  { id: "vpn_exits_redacted_hk_tencent_pool", intent: "leak", weight: 0.45, bias: { CN: +0.9, HK: +1.0 }, note: "ExpressVPN HK-Tencent exits chosen 9+ times = needs HK-adjacency = Shenzhen/GD or actually HK" },
   { id: "session_timezone_utc_plus_8_evening", intent: "leak", weight: 0.40, bias: { CN: +1.0, HK: +1.0, TW: +0.9, SG: +0.8 }, note: "Session clustering 13-22Z on weekdays = UTC+8 evening-hours activity pattern" },
   { id: "surname_lee_romanization", intent: "leak", weight: 0.35, bias: { CN: +0.8, HK: +0.7, TW: +0.6, KR: +0.4 }, note: "Lee = 李 most common CN surname + common HK/TW" },
   { id: "wireguard_filename_ConnorLee_conf", intent: "leak", weight: 0.20, bias: { CN: +0.5, HK: +0.4 }, note: "Connor chose to retain Lee surname in internal config filename — identity anchor" },
