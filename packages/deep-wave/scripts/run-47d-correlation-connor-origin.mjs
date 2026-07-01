@@ -263,12 +263,12 @@ async function main() {
       "True /24 cannot be resolved without an actual packet from his real egress (ExpressVPN masks at capture time)",
       "Ranking reflects relative likelihood given: surname-Lee prior + VPN-HK-egress-preference + timezone UTC+8 window + city dev-hub priors + rustdesk-SG-signer anchor",
       "Lee is a common romanization across CN/HK/TW/KR — jurisdiction-level inference is stronger than city-level",
-      "ExpressVPN's privacy policy means the account dashboard may retain a 'first-connect' IP for new-device alerts; checking the plasmatoid@gmail.com inbox for those alerts is the single highest-value next step",
+      "ExpressVPN's privacy policy means the account dashboard may retain a 'first-connect' IP for new-device alerts; checking the redacted@gmail.com inbox for those alerts is the single highest-value next step",
     ],
 
     next_highest_value_actions: [
       "Log into my.expressvpn.com → Account → Devices → examine all active sessions; the non-VPN fallback IP for each is Connor's real home IP when VPN was briefly down",
-      "Search plasmatoid@gmail.com for 'ExpressVPN' 'new device' 'unusual sign-in' emails — origin IP is in the email body",
+      "Search redacted@gmail.com for 'ExpressVPN' 'new device' 'unusual sign-in' emails — origin IP is in the email body",
       "AnyDesk abuse report citing peer redacted with Jesse's license — their side logs the true source IP",
       "Obtain Connor's US house via recovery → extract AnyDesk ad_svc.trace on that machine for his inbound-session IPs",
     ],
