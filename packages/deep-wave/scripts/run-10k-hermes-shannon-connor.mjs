@@ -195,7 +195,7 @@ async function main() {
   console.log(`  profiles: ${HERMES_PROFILES.length}`);
   console.log(`  agents:   ${N}`);
   console.log(`  bus:      ${ACER_BUS}`);
-  console.log(`  external packets to 103.88.232.71: ZERO (internal forensic pass only)`);
+  console.log(`  external packets to redacted: ZERO (internal forensic pass only)`);
   console.log("");
 
   const now = new Date().toISOString();
