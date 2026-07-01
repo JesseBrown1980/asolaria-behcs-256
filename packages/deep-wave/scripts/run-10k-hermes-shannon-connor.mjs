@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 // run-10k-hermes-shannon-connor.mjs
 // Jesse directive 2026-04-19: "straight to him with hermes and shannon FULL BLAST 10000 free agents"
-// Target subject: Connor (ExpressVPN-HK + ExpressVPN-EU rotator, fired stealth worker, AnyDesk ID 1310046091).
+// Target subject: Connor (ExpressVPN-HK + ExpressVPN-EU rotator, fired stealth worker, AnyDesk ID redacted00).
 // This runs 10,000 internal Shannon-scan-dispatch envelopes against Connor as SUBJECT, producing
 // a forensic dossier through the L0-L6 pipeline + 23-stage loop + GNN scoring. NO external packets.
 
@@ -37,16 +37,16 @@ const ACER_BUS = "http://127.0.0.1:4947/behcs/send";
 
 // Connor threat subject enumeration
 const CONNOR_SUBJECTS = [
-  { id: "connor-expressvpn-hk-103.88.232.71", ip: "103.88.232.71", type: "vpn-egress-HK", confidence: 0.75 },
-  { id: "connor-expressvpn-hk-103.88.232.61", ip: "103.88.232.61", type: "vpn-egress-HK", confidence: 0.70 },
-  { id: "connor-expressvpn-hk-103.88.232.77", ip: "103.88.232.77", type: "vpn-egress-HK", confidence: 0.70 },
-  { id: "connor-expressvpn-eu-185.229.191.44", ip: "185.229.191.44", type: "vpn-egress-EU", confidence: 0.65 },
-  { id: "connor-expressvpn-eu-185.229.191.39", ip: "185.229.191.39", type: "vpn-egress-EU", confidence: 0.60 },
-  { id: "connor-anydesk-id-1310046091", anydesk: "1310046091", type: "anydesk-peer", confidence: 0.90 },
-  { id: "connor-alias-reesedev93", email: "reesedev93@gmail.com", type: "google-account", confidence: 0.85 },
-  { id: "connor-alias-ConnorLee", wg_file: "D:\\projects\\connor\\ConnorLee.conf", type: "wireguard-config-name", confidence: 0.80 },
-  { id: "connor-spiinutech-host", slack_workspace: "Spiinutech-Remote", type: "prior-workplace", confidence: 0.70 },
-  { id: "connor-physical-us-house-pivot", ip: "71.76.10.39", type: "pivot-target-jesse-house", confidence: 1.00 },
+  { id: "connor-expressvpn-hk-redacted", ip: "redacted", type: "vpn-egress-HK", confidence: 0.75 },
+  { id: "connor-expressvpn-hk-redacted", ip: "redacted", type: "vpn-egress-HK", confidence: 0.70 },
+  { id: "connor-expressvpn-hk-redacted", ip: "redacted", type: "vpn-egress-HK", confidence: 0.70 },
+  { id: "connor-expressvpn-eu-redacted", ip: "redacted", type: "vpn-egress-EU", confidence: 0.65 },
+  { id: "connor-expressvpn-redacted", ip: "redacted", type: "vpn-egress-EU", confidence: 0.60 },
+  { id: "connor-anydesk-id-redacted", anydesk: "redacted", type: "anydesk-peer", confidence: 0.90 },
+  { id: "connor-alias-redacted", email: "redacted@gmail.com", type: "google-account", confidence: 0.85 },
+  { id: "connor-alias-redacted", wg_file: "D:\\projects\\redacted\\redacted.conf", type: "wireguard-config-name", confidence: 0.80 },
+  { id: "connor-redacted-host", slack_workspace: "redacted-Remote", type: "prior-workplace", confidence: 0.70 },
+  { id: "connor-physical-us-house-pivot", ip: "redacted", type: "pivot-target-jesse-house", confidence: 1.00 },
 ];
 
 // 10 Hermes recon angles
@@ -257,7 +257,7 @@ async function main() {
     ts: new Date().toISOString(),
     directive: "Jesse 2026-04-19: straight to him with hermes and shannon FULL BLAST 10000 free agents",
     scope: "INTERNAL FORENSIC — zero external packets; bus=127.0.0.1:4947 only",
-    target: "Connor (fired stealth worker, ExpressVPN-HK pivoter, AnyDesk 1310046091)",
+    target: "Connor (fired stealth worker, ExpressVPN-HK pivoter, AnyDesk redacted)",
     agents: N,
     subjects: CONNOR_SUBJECTS,
     hermes_profiles: HERMES_PROFILES,
