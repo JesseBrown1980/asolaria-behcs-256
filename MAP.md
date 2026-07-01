@@ -64,6 +64,40 @@ multiple emitters · multiple languages** (index / pixels-first / BEHCS-256 / BE
 it (old decodes new). The **kernel** is `asolaria-federation-1024` (the Rust 8-byte host). The current
 effort is **"map while upgrading"** — and **this repo web is that map**.
 
+## Prism/Comb 0-loss (2026-07-01) — satellite entry: BEHCS-256 is the PROVEN base rung
+
+**What landed for THIS repo:** the "old decodes new" bridge-stratum claim (see `BRIDGE-STRATUM.md`)
+is no longer only provenance framing — the 256↔1024 rung is now a **MEASURED bijection**
+(Q-PRISM commit `53023b6`; also `79e8d63`, `de00aca`):
+
+- Bytes are base-2⁸ digits and BEHCS-1024 glyphs are base-2¹⁰ digits of the **same integer `N`**
+  (`sⱼ = ⌊N / 1024^(m−1−j)⌋ mod 1024`). Exact packing at `lcm(8,10) = 40` bits ⇒
+  **5 bytes ⇄ 4 symbols** (a 3,200-byte cube tuple ⇄ 2,560 symbols, remainder 0).
+- Round-trip proven: `transcode₁₀₂₄→₂₅₆ ∘ transcode₂₅₆→₁₀₂₄ = id` — sha256-identical,
+  Rust==Python symbol-identical. Code rate exactly **1.0**: the alphabet changes, the information doesn't.
+- Consequence for this repo: **BEHCS-256 = the base rung.** "Bridge stratum below BEHCS-1024" means
+  the 256 alphabet losslessly re-expresses the 1024 frame (and back) — a re-relation, never a loss.
+
+**Scope discipline (tag claims exactly):**
+- **MEASURED** — the 256↔1024 rung only (commit `53023b6` round-trip proof above).
+- **CANON frame** — the 43+ level ladder as a groupoid of translators (`T_ji ∘ T_ij = id`,
+  `T_jk ∘ T_ij = T_ik` ⇒ omnidirectional, path-independent translation). BEHCS-256 sits at its base.
+- **UNVERIFIED** — every other rung, until it earns its own round-trip proof.
+
+**Boundary that keeps this repo's claims true:** a bijection preserves entropy (`H(f(X)) = H(X)`),
+so the transcode **re-relates with 0 loss but never compresses below entropy** (Shannon's
+`E[bits] ≥ H(X)` stands). Likewise `glyph() = sha256-first-8-bytes` (GLYPH-GENESIS) is a
+**coordinate against a content-addressed store** (`H(content | store) = 0`) — infinite ADDRESSING
+capacity, not infinite compression. Hold that line here exactly as `BRIDGE-STRATUM.md` holds
+"bridge, not ceiling."
+
+**One fabric, two directions:** forward = **comb** (collision-avoidance, execution isolation);
+backward = **prism** (collision-causation, interference-as-search, many→1) — see
+`Asolaria-waves-and-cascades-avoiding-collsions-and-causing-them` (duality),
+`what-is-asolaria-…-reductions` (reductions boundary), `N-Nest-Prime-…` (integrity dual:
+verification = applying the inverse map), and the Metatagging repo (physics grounding).
+E=0 throughout — this entry describes; nothing fires.
+
 ## How it all fits
 The **emitter [2]** produces 200ns PID signals; the **router [1]** delivers them; the **fleet [0]**
 materialises spindles. Each spindle obeys the **reduction principle [3]** / **algorithm [4]** and the
