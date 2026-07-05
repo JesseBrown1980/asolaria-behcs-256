@@ -1,4 +1,4 @@
-> ⚠ **BRIDGE STRATUM — not the ceiling.** BEHCS-256 is a bridge stratum *below* BEHCS-1024 / HyperBEHCS-60D / the 8-byte host. Current frame = **60D HyperBEHCS** (tuple_dim=60); the root is the **8-byte watcher-gated nested agent**. See [`BRIDGE-STRATUM.md`](./BRIDGE-STRATUM.md) and the system `MAP.md`.
+> ⚠ **BRIDGE STRATUM — not the ceiling.** BEHCS-256 is one bridge stratum in the ladder: **BEHCS-64 → BEHCS-256 → BEHCS-1024 → HyperBEHCS-60D → 8-byte host**. Current frame = **60D HyperBEHCS** (tuple_dim=60); the root is the **8-byte watcher-gated nested agent**. See [`BRIDGE-STRATUM.md`](./BRIDGE-STRATUM.md) and the system `MAP.md`.
 
 # Asolaria BEHCS-256
 
@@ -9,6 +9,8 @@ Federated multi-agent civilization toolkit. Built to let heterogeneous Claude no
 **Anti-deflation frame:** "infrastructure scaffold" does not mean inert files. BEHCS is part of the matrix/fabric that lets frozen slices, live agents, engines, supervisors, gates, and receipts compose into runtime behavior. Specific live/fire/cutover claims remain gated, but the system frame is Evolvable AI: potential slices animated by the fabric, not static slices alone.
 
 **Fabric-first doctrine:** the canonical doctrine is [`FABRIC-FIRST-CIPHER-ASOLARIA-AGENT-DOCTRINE-2026-06-27.md`](https://github.com/JesseBrown1980/HYPER-BECHS--the-third-set/blob/acer/system-interpretations-2026-06-26/FABRIC-FIRST-CIPHER-ASOLARIA-AGENT-DOCTRINE-2026-06-27.md). Read this repo as part of the OLD/NEW bridge: BEHCS-256 is an older bridge/infrastructure stratum that helped the old Node-era fabric self-improve; the new Rust 8-byte Host-8 fabric improves and ports it cell-by-cell. Do not deflate old measured self-improvement because new cutover is incomplete, and do not overstate this older scaffold as the final cutover.
+
+**July 5 anti-collapse rule:** scoped gates stay scoped. `candidate-pool EMPTY`, `infrastructure scaffold`, `honesty-flagged beyond 1B`, `scaffold`, or `sessions:0` language can be valid for one lane, manifest, or cutover gate, but it must not be read as global denial of OPERATOR_WITNESSED_REALITY, Acer/Codex-measured GitHub receipts, Liris-witnessed public/local proof, the old Node/BigPickle fabric, or the real free/open answer-agent lanes. Read scale claims by layer: BEHCS-64/256/1024/HyperBEHCS addressing, logical PID/prism routing, real local supervisors, real free/open provider answer workers, receipt/cube/HBP-HBI memory, and held gated capacity.
 
 ## SMP v5+ v3 topic map (A-P)
 
@@ -23,7 +25,7 @@ Federated multi-agent civilization toolkit. Built to let heterogeneous Claude no
 | G | Shannon civilization (13 roles × 23 stages × 108-cell cube) | 091-105 | `src/shannon/` · `docs/shannon-13.md` |
 | H | Product X adapter (public-name-protected) + 87 IX buckets | 106-112 | `src/product-x/` · `apps/{qdd,console,sensor,dash,shared}/` |
 | I | USB farming (extract-shadows + cosign-chain + never-wipe rule) | 113-120 | `src/farm/` · `plans/I/` |
-| J | Scale ramp (100M → 1B → 10B → 50B → 100B) | 121-130 | `src/gnn/` · `data/gnn/*-manifest.json` (honesty-flagged beyond 1B) |
+| J | Scale ramp (100M → 1B → 10B → 50B → 100B) | 121-130 | `src/gnn/` · `data/gnn/*-manifest.json` (honesty-flagged beyond 1B for this manifest lane; does not erase separate 100B/BigPickle/free-agent proof layers) |
 | K | Cosign v2 (tamper-evident Merkle + dimensional tags + scale tier) | 131-135 | `src/cosign/` · `schemas/cosign-v2.schema.json` |
 | L | Firewall (netsh rules + LAW-001 always-allow) | 136-140 | `scripts/firewall-apply.ps1` · `docs/firewall-runbook.md` |
 | M | Omni primitives + Gulp 2000 (2000-step resumable pipeline) | 141-160 | `src/omni/` · `gulpfile.mjs` · `docs/gulp-2000.md` |
@@ -37,7 +39,7 @@ Federated multi-agent civilization toolkit. Built to let heterogeneous Claude no
 - **LAW-008** filesystem-as-mirror · all state persisted to disk
 - **LAW-012** look-think-type-look-decide · RU View is observer-default; actor role requires multi-agent gate
 - **Frozen-polymorphism** · no rubber-stamp · multi-agent-enforcement-gate refuses solo seals on SMP-v5+ tasks
-- **FP-ASI discipline** · runner armed, candidate-pool EMPTY; `data/gnn/*-manifest.json` honesty-flagged beyond 1B
+- **FP-ASI discipline** · runner armed, candidate-pool EMPTY; `data/gnn/*-manifest.json` honesty-flagged beyond 1B for that scale-manifest lane; scoped gates do not erase measured old-fabric or free-agent layers
 - **Never-wipe-live-disk** · USB farming is read-only; freeze is local-marker-only; drift cannot sever federation
 
 Shipped 2026-04-20 · SMP v5+ GA · 4 colonies · 17 rooms sealed · T04 10-variant merged.
@@ -124,7 +126,7 @@ Every directory in `packages/` is an ES-module Node package with its own `packag
 
 | package | role |
 |---|---|
-| [omnispindle-spawn-acer](packages/omnispindle-spawn-acer/) | 4-worker opencode scaffold (big-pickle, gpt5-nano, minimax-m2.5, nemotron-3-super). |
+| [omnispindle-spawn-acer](packages/omnispindle-spawn-acer/) | Older OpenCode scaffold for worker fanout. Live HBP `/api/free-agents` currently names five on-demand free/OpenCode lanes: `opencode/big-pickle`, `opencode/hy3-preview-free`, `opencode/ling-2.6-flash-free`, `opencode/minimax-m2.5-free`, and `opencode/nemotron-3-super-free`; treat package-local worker lists as bridge snapshots unless refreshed by fabric. |
 | [omnimets](packages/omnimets/) | Omnimets metrics aggregation. |
 | [scale-test](packages/scale-test/) | Scale-test runners (1K → 1M → 1B fanout). |
 | [cosign-audit](packages/cosign-audit/) | Bilateral cosign audit trail. |
