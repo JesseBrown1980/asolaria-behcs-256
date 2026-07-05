@@ -1,0 +1,8 @@
+HBPv1|doc=FREE-MODEL-POSSIBILITY-LADDER-2026-07-05|json=0
+LADDER|date=2026-07-05|seat=ACER|status=possibility_ladder_not_global_live_claim|json=0
+FABRICLIVE|route=/api/free-agents|count=5|models=opencode/big-pickle,opencode/hy3-preview-free,opencode/ling-2.6-flash-free,opencode/minimax-m2.5-free,opencode/nemotron-3-super-free|cost=|first_verified=638828a8_from_big-pickle_89s_VERIFIED|json=0
+LIRISSIDE|proxy=http://127.0.0.1:8082|repo=C:/Users/rayss/free-claude-code|commit=55131019e18aedcf25b4ba85e0a025d2a9e0f1f1|routes=health,root,models,count_tokens|upstream_completion_proven=0|json=0
+OPENROUTER|catalog_url=https://openrouter.ai/api/v1/models|total=340|free_zero_price_candidates=26|json=0
+DEEPSEEK|status=provider_supported_possibility|api=OpenAI_Anthropic_compatible|requires=DEEPSEEK_API_KEY_or_granted_balance|json=0
+MISTRAL|status=adapter_or_openrouter_route_needed|requires=MISTRAL_API_KEY_or_openrouter_route|json=0
+BOUNDARY|possibility_not_live_absorbed_runtime|free_not_unlimited|public_api_not_no_key|remote_gpu_call_requires_one_call_receipt|json=0

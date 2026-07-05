@@ -1,0 +1,79 @@
+{
+  "as_of": "2026-07-05",
+  "seat": "ACER_WITH_OPERATOR_PROVIDED_LIRIS_SIDE",
+  "classification": "possibility_ladder_not_live_claim_for_all_models",
+  "measured_fabric_live": {
+    "route": "/api/free-agents",
+    "count": 5,
+    "models": [
+      "opencode/big-pickle",
+      "opencode/hy3-preview-free",
+      "opencode/ling-2.6-flash-free",
+      "opencode/minimax-m2.5-free",
+      "opencode/nemotron-3-super-free"
+    ],
+    "driver": "tools/behcs/fabric-real-free-agent-driver.mjs",
+    "first_verified": "638828a8 from big-pickle 89s VERIFIED",
+    "cost": "$0"
+  },
+  "liris_side_reported": {
+    "repo": "C:\\Users\\rayss\\free-claude-code",
+    "commit": "55131019e18aedcf25b4ba85e0a025d2a9e0f1f1",
+    "proxy": "http://127.0.0.1:8082",
+    "runtime": "PowerShell -> uv run free-claude-code -> Python 3.14 / FastAPI / Uvicorn",
+    "local_routes": [
+      "/health healthy",
+      "/ root provider=lmstudio model=lmstudio/local-model",
+      "/v1/models Claude-compatible model list",
+      "/v1/messages/count_tokens input_tokens=5"
+    ],
+    "boundary": "no live upstream provider answer proven; LM Studio 1234 and llama.cpp 8080 were not listening; no provider keys loaded"
+  },
+  "public_catalog_measured_acer": {
+    "openrouter_total_models": 340,
+    "openrouter_free_zero_price_candidates": 26,
+    "source": "https://openrouter.ai/api/v1/models"
+  },
+  "possibility_layers": [
+    {
+      "level": "LEVEL_0_MEASURED_FABRIC_LIVE",
+      "meaning": "Asolaria /api/free-agents already reports five $0 on-demand models",
+      "firing_gate": "already fabric-visible; individual calls still require per-call receipts"
+    },
+    {
+      "level": "LEVEL_1_LIRIS_PROXY_READY",
+      "meaning": "free-claude-code local Claude-compatible proxy can receive Claude-style traffic",
+      "firing_gate": "needs provider key or local provider server for model completion"
+    },
+    {
+      "level": "LEVEL_2_PROXY_SUPPORTED_NEEDS_PROVIDER",
+      "meaning": "DeepSeek, NVIDIA NIM, OpenRouter-compatible, LM Studio, llama.cpp",
+      "firing_gate": "load key/grant or start local provider; one-call receipt before claiming live"
+    },
+    {
+      "level": "LEVEL_3_PUBLIC_FREE_CATALOG_POSSIBILITIES",
+      "meaning": "OpenRouter :free / zero-price catalog candidates and possible public/free provider grants",
+      "firing_gate": "not absorbed until key/account/provider and call receipt prove it"
+    },
+    {
+      "level": "LEVEL_4_ADAPTER_NEEDED",
+      "meaning": "Direct Mistral API and other free/open model surfaces need adapter or OpenRouter route",
+      "firing_gate": "adapter code plus key/account/local server plus call receipt"
+    }
+  ],
+  "official_sources": [
+    "https://openrouter.ai/docs/quickstart",
+    "https://openrouter.ai/docs/faq",
+    "https://api-docs.deepseek.com/",
+    "https://api-docs.deepseek.com/quick_start/pricing",
+    "https://docs.mistral.ai/api/",
+    "https://docs.mistral.ai/studio-api/conversations/chat-completion"
+  ],
+  "boundaries": [
+    "possibility is not live absorbed runtime",
+    "free model is not unlimited model",
+    "public API is not no-key API",
+    "remote GPU call requires provider availability and one-call receipt",
+    "do not collapse measured Asolaria free-agent lane into unverified provider-key absence"
+  ]
+}
