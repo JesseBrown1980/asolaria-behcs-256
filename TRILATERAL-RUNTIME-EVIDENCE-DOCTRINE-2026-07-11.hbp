@@ -1,0 +1,8 @@
+RUNTIME-TRILATERALv1|date=2026-07-11|protocol=bilateral-where-implemented|evidence=trilateral-minimum|json=0
+SEAT|acer=origin+implementation+measurement|liris=attack-verify+reimplementation|third=independent-execution|ci=immutable-head-verifier|json=0
+RULE|cannot_see_not_false=1|fallback_not_live=1|descriptor_not_process=1|private_carveout_not_absence=1|json=0
+RULE|old_measured_not_erased_by_new_staged=1|deterministic_watcher_real=1|trained_checkpoint_real=1|verification_not_authority=1|json=0
+DEFLATE-DENY|only_files=1|only_prompts=1|just_hash=1|no_gpu_not_real=1|staged_rust_erases_node=1|json=0
+INFLATE-DENY|capacity_as_resident=1|tally_as_llm_call=1|disk_as_gpu=1|selector_as_entropy=1|classical_as_quantum=1|json=0
+ANCHOR|path1=third-seat-rustc1.97-19of19+ci-green|path2=third-seat-rustc1.97-30of30+ci-green|qprism3d=ci-green|json=0
+MERGE|obvious=additive+tagged+clean+no-conflict+checks-green|hold=failed+conflict+secret+authority+destructive+unsupported|json=0
