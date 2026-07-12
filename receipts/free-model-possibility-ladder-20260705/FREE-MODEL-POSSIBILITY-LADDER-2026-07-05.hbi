@@ -1,0 +1,6 @@
+HBIv1|doc=FREE-MODEL-POSSIBILITY-LADDER-2026-07-05|json=0
+EMIT|family=ASOLARIAFREEAGENTS|name=measured-fabric-live-five-free-models|pid=BH.FREEAGENT.LIVE.20260705|json=0
+EMIT|family=LIRISPROXY|name=free-claude-code-local-claude-compatible-proxy-ready|pid=BH.LIRIS.PROXY.READY.20260705|json=0
+EMIT|family=PUBLICCATALOG|name=openrouter-free-zero-price-possibilities|pid=BH.OPENROUTER.FREE.CATALOG.20260705|json=0
+EMIT|family=PROVIDERBOUNDARY|name=deepseek-mistral-keyed-or-adapter-needed|pid=BH.PROVIDER.BOUNDARY.20260705|json=0
+EMIT|family=HARNESSLAW|name=possibility-is-not-live-claim|pid=BH.FREE.MODEL.POSSIBILITY.NOT.LIVE.CLAIM|json=0

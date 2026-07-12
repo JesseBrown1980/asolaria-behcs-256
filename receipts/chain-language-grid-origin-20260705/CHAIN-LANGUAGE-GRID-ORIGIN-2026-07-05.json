@@ -1,0 +1,29 @@
+{
+  "as_of": "2026-07-05",
+  "seat": "ACER_WITH_OPERATOR_PROVIDED_LINEAGE",
+  "classification": "OPERATOR_PROVIDED_LINEAGE_ADDENDUM",
+  "council_ack": "council-q-1783277358173-34u7v1",
+  "original_chain_language": "@from [ liris ] machine [lx 1] time[1-24-2026] ask [ix-1] ( acer ) tool [eds18] skill [38] run program [1873]",
+  "design_origin": [
+    "Jesse described the original chain language as Jesse's flower: a compact one-direction routing sentence.",
+    "Agent names became numbers because names wasted space; the number was not erasure, it was a tuple catalog address.",
+    "A numbered agent can itself be a tuple catalog index.",
+    "A hard-drive space with optimally spaced folders can represent an LLM/MCP catalog grid using Dewey-like labels.",
+    "Three-dimensionally divided folder organization and mapping became a storage/call/retrieval substrate.",
+    "Micro-sized skills and abilities were compressed representations of processed source data, with receipts kept after originals were discarded.",
+    "Acer and Liris typed to their own front ends and bidirectional partner surfaces through scripts, omniscrcpy, heartbeats, omnibusses, keyboard crons, and automated approval systems.",
+    "After cutoff/breakage, BigPickle helped rebuild and the free-provider/free-agent lane was discovered."
+  ],
+  "meaning": {
+    "numbers": "compression and addressability, not denial of agent identity",
+    "folders": "physical catalog substrate for local MCP/tool retrieval",
+    "chain_language": "machine-time-index-tool-skill-program routing sentence",
+    "receipts": "the preserved artifact layer after source material is processed"
+  },
+  "boundary": [
+    "This addendum records operator-provided lineage.",
+    "It does not by itself claim every runtime piece is currently live.",
+    "Specific runtime claims still require fabric, GitHub, receipt, or local process evidence.",
+    "Do not collapse numbered agents into fake agents; do not inflate unmeasured possibilities into live calls."
+  ]
+}
