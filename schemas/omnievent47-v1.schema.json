@@ -1,0 +1,157 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://asolaria.local/schemas/omnievent47-v1.schema.json",
+  "title": "OMNIEVENT47v1 compatibility envelope",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "registry_sha256",
+    "event_pid",
+    "run_pid",
+    "event_ts_utc",
+    "hlc",
+    "actor_sequence",
+    "actor_agent_pid",
+    "pid_provenance",
+    "semantic47",
+    "event_kind",
+    "ledger_scope",
+    "metrics",
+    "watcher_outcome",
+    "scheduler_outcome",
+    "previous_row_sha256",
+    "row_sha256"
+  ],
+  "properties": {
+    "schema": { "const": "OMNIEVENT47v1" },
+    "registry_sha256": { "$ref": "#/$defs/sha256" },
+    "event_pid": { "type": "string", "minLength": 1 },
+    "run_pid": { "type": "string", "minLength": 1 },
+    "trace_id": { "type": "string" },
+    "span_id": { "type": "string" },
+    "parent_span_id": { "type": ["string", "null"] },
+    "event_ts_utc": { "type": "string", "format": "date-time" },
+    "ingest_ts_utc": { "type": ["string", "null"], "format": "date-time" },
+    "hlc": { "type": "string", "minLength": 1 },
+    "actor_sequence": { "type": "integer", "minimum": 0 },
+    "mono_start_ns": { "type": ["integer", "null"], "minimum": 0 },
+    "mono_end_ns": { "type": ["integer", "null"], "minimum": 0 },
+    "actor_agent_pid": { "type": "string", "minLength": 1 },
+    "actor_os_pid": { "type": ["integer", "null"], "minimum": 0 },
+    "requested_by_pid": { "type": ["string", "null"] },
+    "scheduler_pid": { "type": ["string", "null"] },
+    "dispatcher_pid": { "type": ["string", "null"] },
+    "worker_pid": { "type": ["string", "null"] },
+    "target_pid": { "type": ["string", "null"] },
+    "observer_pid": { "type": ["string", "null"] },
+    "object_pid": { "type": ["string", "null"] },
+    "catalog_pid": { "type": ["string", "null"] },
+    "host_pid": { "type": ["string", "null"] },
+    "pid_provenance": {
+      "enum": ["REFERENCE", "LIVE_REGISTERED"]
+    },
+    "semantic47": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["coordinates"],
+      "properties": {
+        "coordinates": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 47,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["dimension", "item_id", "maturity"],
+            "properties": {
+              "dimension": { "type": "integer", "minimum": 1, "maximum": 47 },
+              "item_id": { "type": "string", "minLength": 1 },
+              "maturity": { "enum": ["RATIFIED", "DRAFT"] }
+            }
+          }
+        }
+      }
+    },
+    "selector60": {
+      "type": ["object", "null"],
+      "additionalProperties": false,
+      "required": ["algorithm", "version", "values", "sha256"],
+      "properties": {
+        "algorithm": { "type": "string", "minLength": 1 },
+        "version": { "type": "string", "minLength": 1 },
+        "values": {
+          "type": "array",
+          "minItems": 60,
+          "maxItems": 60,
+          "items": { "type": "integer", "minimum": 0, "maximum": 1023 }
+        },
+        "sha256": { "$ref": "#/$defs/sha256" }
+      }
+    },
+    "shadow2d_ref": { "type": ["string", "null"] },
+    "shadow3d_ref": { "type": ["string", "null"] },
+    "event_kind": { "type": "string", "minLength": 1 },
+    "quant_stack_id": { "type": ["string", "null"] },
+    "quant_id": { "type": ["string", "null"] },
+    "level_from": { "type": ["integer", "null"], "minimum": 0 },
+    "level_to": { "type": ["integer", "null"], "minimum": 0 },
+    "catalog_epoch": { "type": ["integer", "null"], "minimum": 0 },
+    "ledger_scope": {
+      "enum": ["PAYLOAD", "CODEC_CATALOG", "CODEC_STATE", "FULL_FABRIC"]
+    },
+    "input_sha256": { "anyOf": [{ "$ref": "#/$defs/sha256" }, { "type": "null" }] },
+    "output_sha256": { "anyOf": [{ "$ref": "#/$defs/sha256" }, { "type": "null" }] },
+    "metrics": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "input_bytes",
+        "payload_bytes",
+        "catalog_delta_bytes",
+        "state_delta_bytes",
+        "residual_bytes",
+        "retained_store_bytes",
+        "event_bytes",
+        "index_receipt_bytes"
+      ],
+      "properties": {
+        "input_bytes": { "$ref": "#/$defs/nonnegativeInteger" },
+        "payload_bytes": { "$ref": "#/$defs/nonnegativeInteger" },
+        "catalog_delta_bytes": { "$ref": "#/$defs/nonnegativeInteger" },
+        "state_delta_bytes": { "$ref": "#/$defs/nonnegativeInteger" },
+        "residual_bytes": { "$ref": "#/$defs/nonnegativeInteger" },
+        "retained_store_bytes": { "$ref": "#/$defs/nonnegativeInteger" },
+        "event_bytes": { "$ref": "#/$defs/nonnegativeInteger" },
+        "index_receipt_bytes": { "$ref": "#/$defs/nonnegativeInteger" },
+        "queue_ns": { "$ref": "#/$defs/nonnegativeInteger" },
+        "execution_ns": { "$ref": "#/$defs/nonnegativeInteger" }
+      }
+    },
+    "watcher_outcome": { "enum": ["PASS", "HOLD", "ERROR", "NOT_APPLICABLE"] },
+    "scheduler_outcome": {
+      "enum": [
+        "PAYLOAD_ACCEPT",
+        "FULL_FABRIC_ACCEPT",
+        "PAYLOAD_ACCEPT_FULL_HOLD",
+        "READBACK_HOLD",
+        "DEADLINE_HOLD",
+        "RISK_HOLD",
+        "NOT_APPLICABLE"
+      ]
+    },
+    "scheduler_reason": { "type": ["string", "null"] },
+    "previous_row_sha256": { "$ref": "#/$defs/sha256" },
+    "row_sha256": { "$ref": "#/$defs/sha256" }
+  },
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "nonnegativeInteger": {
+      "type": "integer",
+      "minimum": 0
+    }
+  }
+}
