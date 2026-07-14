@@ -1,0 +1,5 @@
+FINDHDR|seat=LIRIS|date=2026-07-14|repo=asolaria-behcs-256|tier=MEASURED_REPO|discipline=SHADOW_MEASURED_ISOLATED,formation_HELD,promotion_HELD|json=0
+FINDREV|axes=3_involutions:R_byteorder,N_nibble,Q_bitsinnibble|info_rate=8of8_1.0|RNQ=total_bit_reversal_antiparticle|pairs=i<->nqr;r<->nq;n<->qr;q<->nr|cube_sha=995c8d28|json=0
+FINDOMEGA|run=29357558667|omega=cc0c4ee328387788e31b686bbcaa07c0c39fd7abe2dadaca7c69972c96951b57|avalanche=129of256_50pct|completeness=drop1leaf_different|oneway=sha_skin_only|recursion=seeds_next_epoch_1|reversible_hub=1|json=0
+FINDISO|spread_pct=0.18|exact_ties=17of27|distinct_view_digests=8|claim=isotropy_of_power_not_redundancy|retract=orientation_is_noise|json=0
+FINDEND|state=LIRIS_VERIFIED_MEASURED_REPO|json=0
