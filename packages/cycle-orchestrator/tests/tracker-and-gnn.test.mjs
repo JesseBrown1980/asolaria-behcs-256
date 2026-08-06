@@ -136,10 +136,10 @@ console.log("\n=== Tracker · snapshot reports quorums ===");
 
 console.log("\n=== GNN · symmetric speed-up multiplier (0.8) ===");
 {
-  // Isolate: force score > 2.0 then one tick to verify exactly one 0.8× applied above damper band.
+  // Isolate: force score_pm > 2000 then one tick to verify exactly one 0.8× applied above damper band.
   const g = new GNNFeedbackCadenceAdjuster({ min_ms: 1000, max_ms: 1_000_000, initial_ms: 10_000, decay: 1.0 });
   // decay=1 so score accumulates predictably
-  g.score = 3.0; // pre-seed above threshold
+  g.score_pm = 3000; // pre-seed above threshold
   const before = g.nextIntervalMs();
   // neutral tick carries no delta; with decay=1 score stays 3.0; damper skipped; speed-up applied
   g.onOutcome({ verdict: "neutral" });
@@ -150,7 +150,7 @@ console.log("\n=== GNN · symmetric speed-up multiplier (0.8) ===");
 console.log("\n=== GNN · symmetric slow-down multiplier (1.25) ===");
 {
   const g = new GNNFeedbackCadenceAdjuster({ min_ms: 1000, max_ms: 1_000_000, initial_ms: 10_000, decay: 1.0 });
-  g.score = -3.0;
+  g.score_pm = -3000;
   const before = g.nextIntervalMs();
   g.onOutcome({ verdict: "neutral" });
   const after = g.nextIntervalMs();
@@ -166,18 +166,18 @@ console.log("\n=== GNN · speed-up and slow-down are inverses (symmetric) ===");
 console.log("\n=== GNN · neutral verdict delta=0, decay still applied ===");
 {
   const g = new GNNFeedbackCadenceAdjuster({ decay: 0.5, initial_ms: 10_000 });
-  g.score = 4.0;
+  g.score_pm = 4000;
   g.onOutcome({ verdict: "neutral" });
-  assert(near(g.score, 2.0, 1e-9), `neutral: score = decay·prior (got ${g.score})`);
+  assert(g.score_pm === 2000, `neutral: score_pm = decay·prior (got ${g.score_pm})`);
   const last = g.history[g.history.length - 1];
   assert(last.verdict === "neutral", "history records neutral verdict");
-  assert(last.delta === 0, "neutral delta = 0");
+  assert(last.delta_pm === 0, "neutral delta_pm = 0");
 }
 
-console.log("\n=== GNN · oscillation damper (|score| < 0.5) ===");
+console.log("\n=== GNN · oscillation damper (|score_pm| < 500) ===");
 {
   const g = new GNNFeedbackCadenceAdjuster({ min_ms: 1000, max_ms: 1_000_000, initial_ms: 10_000, decay: 1.0 });
-  g.score = 0.3;
+  g.score_pm = 300;
   const before = g.nextIntervalMs();
   const r = g.onOutcome({ verdict: "neutral" });
   assert(r.damped === true, "damped flag true inside band");
@@ -185,13 +185,13 @@ console.log("\n=== GNN · oscillation damper (|score| < 0.5) ===");
   assert(g.dampers_skipped === 1, "dampers_skipped incremented");
 }
 
-console.log("\n=== GNN · damper does NOT apply when |score| >= 0.5 ===");
+console.log("\n=== GNN · damper does NOT apply when |score_pm| >= 500 ===");
 {
   const g = new GNNFeedbackCadenceAdjuster({ min_ms: 1000, max_ms: 1_000_000, initial_ms: 10_000, decay: 1.0 });
-  g.score = 2.5; // above speed-up threshold
+  g.score_pm = 2500; // above speed-up threshold
   const r = g.onOutcome({ verdict: "neutral" });
   assert(r.damped === false, "damped flag false outside band");
-  assert(g.nextIntervalMs() < 10_000, "cadence adjusted (sped up) when score > 2.0");
+  assert(g.nextIntervalMs() < 10_000, "cadence adjusted (sped up) when score_pm > 2000");
 }
 
 console.log("\n=== GNN · clamp to [min_ms, max_ms] ===");
@@ -206,17 +206,17 @@ console.log("\n=== GNN · clamp to [min_ms, max_ms] ===");
 console.log("\n=== GNN · unknown verdict contributes 0 (fallthrough) ===");
 {
   const g = new GNNFeedbackCadenceAdjuster({ decay: 1.0, initial_ms: 10_000 });
-  g.score = 0;
+  g.score_pm = 0;
   g.onOutcome({ verdict: "bogus" });
-  assert(g.score === 0, "unknown verdict does not move score");
+  assert(g.score_pm === 0, "unknown verdict does not move score_pm");
 }
 
 console.log("\n=== GNN · snapshot exposes factors ===");
 {
   const g = new GNNFeedbackCadenceAdjuster();
   const s = g.snapshot();
-  assert(s.factors && s.factors.speed_up === 0.8, "snapshot.factors.speed_up = 0.8");
-  assert(near(s.factors.slow_down, 1.25), "snapshot.factors.slow_down = 1.25");
+  assert(s.factors_pm && s.factors_pm.speed_up_pm === 800, "snapshot.factors_pm.speed_up_pm = 800 (was 0.8)");
+  assert(s.factors_pm.slow_down_pm === 1250, "snapshot.factors_pm.slow_down_pm = 1250 (was 1.25)");
   assert(typeof s.dampers_skipped === "number", "snapshot.dampers_skipped present");
 }
 
