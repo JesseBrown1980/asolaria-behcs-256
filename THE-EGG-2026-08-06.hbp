@@ -1,0 +1,17 @@
+hbp=1|json=0|kind=the-egg|date=2026-08-06|rule=integer_arithmetic_only_never_float
+self_audit=19_items|delivered=9|DROPPED=10|drop_rate=52pct
+pattern=toolchain_lane_got_patches|verification_lane_got_reports_only
+hatched=asolaria-behcs-256|slo-gate.mjs+gnn-feedback-cadence-adjuster.mjs+integer-gate.yml+acceptance_test
+repo_own_tests=5of5_baseline_PASS|after_patches_6of6_PASS|expected_values_unchanged_units_only
+grid_agreement=2003001_pairs_0_disagreements|float_step=MEASURED_PASS_scanned=10_unexempt=0
+falsification=doubled_threshold_turned_slo-extended_RED
+own_false_claim_caught=5/4_after_4/5_is_NOT_exactly_identity|both_forms_deviate_1ms
+still_dropped=7_named_items
+checks=62..66|timers_used=0
+file=.github/workflows/integer-gate.yml|bytes=4035|sha16=7c3bd83c503957dd
+file=README-THE-EGG.md|bytes=5767|sha16=44e12fa6a1d03e35
+file=THE-EGG-2026-08-06.hbp|bytes=833|sha16=43b68bd239cee055
+file=packages/cycle-orchestrator/src/gnn-feedback-cadence-adjuster.mjs|bytes=5592|sha16=d534b5e76026da1f
+file=packages/cycle-orchestrator/src/slo-gate.mjs|bytes=10203|sha16=cbca4f2c8f4c96c1
+file=packages/cycle-orchestrator/tests/slo-gate-integer.test.mjs|bytes=2330|sha16=7d80d35ffe307c41
+file=packages/cycle-orchestrator/tests/tracker-and-gnn.test.mjs|bytes=10509|sha16=5ebc6babf817ea49
