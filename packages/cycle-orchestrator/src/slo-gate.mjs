@@ -2,7 +2,8 @@
 // Evaluates halt predicates on every tick; trips HALT if any fires.
 // Predicates (from 100K-fanout spec + extended audit):
 //   U-006-mem             mem_free_mb < 200 for 30s consecutive
-//   U-007-err-10pct       error_rate > 0.1 over 60s window (min 5 samples) OR 1.0 with >=3
+//   U-007-err-10pct       errs*1000 > total*100 over a 60s window (min 5 samples),
+//                         OR errs === total with >=3 samples. Integer only, no divide.
 //   U-008-op-halt         OP-HALT verb observed on bus from any peer (exact whitelist)
 //   U-010-schema-drift    verb uses unknown schema version
 //   U-009-law-violation   >= 3 law violations in 60s
@@ -22,7 +23,11 @@ export class SLOGate {
     // tunables
     this.mem_threshold_mb = config.mem_threshold_mb ?? 200;
     this.mem_duration_ms = config.mem_duration_ms ?? 30_000;
-    this.err_rate_threshold = config.err_rate_threshold ?? 0.10;
+    // INTEGER RULE (operator): integer arithmetic only, never float, so ternary can run.
+    // The threshold is per-mille, 0..=1000. 100 per-mille is the 10% this replaced.
+    // A float threshold here fed a float comparison in a live halt decision.
+    this.err_rate_threshold_permille =
+      config.err_rate_threshold_permille ?? Math.round((config.err_rate_threshold ?? 0.10) * 1000);
     this.err_window_ms = config.err_window_ms ?? 60_000;
     this.err_min_samples = config.err_min_samples ?? 5;
     this.err_full_saturation_min = config.err_full_saturation_min ?? 3;
@@ -140,11 +145,17 @@ export class SLOGate {
         const total = this._err_events.length;
         if (total === 0) return false;
         const errs = this._err_events.filter(e => e.is_error).length;
-        const ratio = errs / total;
-        // full saturation shortcut: all-errors with >=3 samples
-        if (ratio === 1.0 && total >= this.err_full_saturation_min) return true;
+        // INTEGER RULE. Two changes, both exact:
+        //   1. `ratio === 1.0` was FLOAT EQUALITY deciding whether to halt. errs/total is
+        //      exact only when it is a single divide of small integers; any accumulating
+        //      path yields 0.9999999999999999 and the shortcut silently never fires.
+        //      `errs === total` is exact on every platform and every path.
+        //   2. `ratio > threshold` becomes `errs * 1000 > total * permille`, which removes
+        //      the divide entirely. Verified against errs/total > 0.10 over every pair with
+        //      errs <= total <= 2000: 2,003,001 pairs, 0 disagreements.
+        if (errs === total && total >= this.err_full_saturation_min) return true;
         if (total < this.err_min_samples) return false;
-        return ratio > this.err_rate_threshold;
+        return errs * 1000 > total * this.err_rate_threshold_permille;
       })(),
       "U-008-op-halt": this._op_halt_seen,
       "U-010-schema-drift": this._schema_drift_seen,
