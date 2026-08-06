@@ -1,0 +1,84 @@
+name: Integer gate (operator rule) — the repo that had no CI
+
+# OPERATOR RULE: integer arithmetic only, never float, so ternary (trits) can run.
+# This repository held a LIVE SLO gate that decided whether to halt a cycle in float,
+# including `ratio === 1.0` as a control decision, and had NO .github/workflows at all.
+# The absence of the check is what let it stand -- not a failure of the check.
+#
+# Three-valued per AGENT-DISCIPLINE.md section 12: MEASURED_PASS | MEASURED_FAIL |
+# NOT_MEASURED with a mandatory reason. Fails only on MEASURED_FAIL.
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  integer-gate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Acceptance test for the integer SLO gate
+        id: slo
+        working-directory: packages/cycle-orchestrator
+        run: |
+          set -u
+          if [ ! -f tests/slo-gate-integer.test.mjs ]; then
+            echo "SLO|status=NOT_MEASURED|reason=TEST_FILE_ABSENT"
+            echo "verdict=NOT_MEASURED" >> "$GITHUB_OUTPUT"; exit 0
+          fi
+          if node tests/slo-gate-integer.test.mjs; then
+            echo "verdict=MEASURED_PASS" >> "$GITHUB_OUTPUT"
+          else
+            echo "verdict=MEASURED_FAIL" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Assert no float in DECISION context in the orchestrator
+        id: floats
+        run: |
+          set -u
+          # Scope: the cycle-orchestrator, which makes halt decisions. A float literal
+          # next to a comparison operator, or assigned to a threshold, is a decision in
+          # float. Display formatting is not matched. Exempt files declare themselves in
+          # their first 5 lines and are PRINTED BY NAME so nothing hides behind a marker.
+          files=$(find packages/cycle-orchestrator/src -name '*.mjs' | wc -l)
+          if [ "$files" -eq 0 ]; then
+            echo "FLOATS|status=NOT_MEASURED|reason=NO_SOURCES|scanned=0"
+            echo "verdict=NOT_MEASURED" >> "$GITHUB_OUTPUT"; exit 0
+          fi
+          exempt=0; : > /tmp/hits.txt
+          while IFS= read -r f; do
+            n=$(grep -cE '(>=?|<=?|===?|!==?)[[:space:]]*[0-9]+\.[0-9]+|[0-9]+\.[0-9]+[[:space:]]*(>=?|<=?|===?|!==?)|threshold[a-z_]*[[:space:]]*[:=][[:space:]]*[0-9]+\.[0-9]+' "$f" || true)
+            [ "${n:-0}" -eq 0 ] && continue
+            if head -5 "$f" | grep -q 'FLOAT-WITNESS-EXEMPT\|FLOAT-WIRE-BOUNDARY-EXEMPT'; then
+              echo "FLOAT_EXEMPT|file=$f|hits=$n"; exempt=$((exempt + n)); continue
+            fi
+            grep -nE '(>=?|<=?|===?|!==?)[[:space:]]*[0-9]+\.[0-9]+|[0-9]+\.[0-9]+[[:space:]]*(>=?|<=?|===?|!==?)|threshold[a-z_]*[[:space:]]*[:=][[:space:]]*[0-9]+\.[0-9]+' "$f" \
+              | grep -vE '^[0-9]+:[[:space:]]*(//|\*)' | sed "s|^|$f:|" >> /tmp/hits.txt || true
+          done < <(find packages/cycle-orchestrator/src -name '*.mjs')
+          unexempt=$(wc -l < /tmp/hits.txt)
+          if [ "$unexempt" -gt 0 ]; then
+            cat /tmp/hits.txt
+            echo "FLOATS|status=MEASURED_FAIL|scanned=$files|exempt=$exempt|unexempt=$unexempt"
+            echo "verdict=MEASURED_FAIL" >> "$GITHUB_OUTPUT"
+          else
+            echo "FLOATS|status=MEASURED_PASS|scanned=$files|exempt=$exempt|unexempt=0"
+            echo "verdict=MEASURED_PASS" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Gate — fail only on MEASURED_FAIL
+        run: |
+          set -u
+          f=0; n=0
+          for v in "${{ steps.slo.outputs.verdict }}" "${{ steps.floats.outputs.verdict }}"; do
+            [ "$v" = "MEASURED_FAIL" ] && f=$((f+1))
+            [ "$v" = "NOT_MEASURED" ] && n=$((n+1))
+          done
+          echo "GATE|measured_fail=$f|not_measured=$n"
+          [ "$f" -gt 0 ] && { echo "GATE|result=RED|reason=a check ran and failed"; exit 1; }
+          [ "$n" -eq 2 ] && { echo "GATE|result=NOT_MEASURED|reason=nothing measurable"; exit 0; }
+          echo "GATE|result=GREEN|every check that could run, passed"
